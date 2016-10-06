@@ -71,6 +71,10 @@ export default {
 </style>
 ```
 
+## Todo
+
+- Have the style sections do something!
+
 ## License
 
 Apache-2.0 © [Daniel Cherubini](https://cherubini.casa)
