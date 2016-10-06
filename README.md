@@ -22,6 +22,31 @@ app.engine('vue', expressVue);
 app.set('view engine', 'vue');
 ```
 
+In your route, assuming you have a main.vue
+
+```js
+router.get('/', (req, res, next) => {
+    res.render('main', {
+        title: 'Page Title',
+        otherData: 'Something Else'
+    });
+})
+```
+
+To use Data binding into the vue files you need to use this syntax `'$parent'.attribute`
+
+So If you had {{title}} it would be `'$parent'.title`
+
+Example:
+
+```js
+data () {
+    return {
+        title: '$parent'.title
+    }
+},
+```
+
 ## Requirements
 
 It requires you to have a file called layout.vue file similar to this in the `app/components/` directory
@@ -56,7 +81,7 @@ export default {
     el: 'head',
     data () {
         return {
-            title: 'dog'
+            title: '$parent'.title
         }
     },
     computed: {},
