@@ -47,6 +47,8 @@ data () {
 },
 ```
 
+A full example can be found at: [danmademe/express-vue-example](https://github.com/danmademe/express-vue-example)
+
 ## Requirements
 
 It requires you to have a file called layout.vue file similar to this in the `app/components/` directory
