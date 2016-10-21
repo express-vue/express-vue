@@ -20,7 +20,7 @@ function expressVue(filePath, options, callback) {
     defaults.layoutPath = defaults.layoutsDir + defaults.defaultLayout + '.vue';
     defaults.options = options;
 
-    Promise.all([layoutParser(defaults.layoutPath), templateParser(filePath)]).then(function (data) {
+    Promise.all([layoutParser(defaults.layoutPath), componentParser(filePath)]).then(function (data) {
         var layout = data[0];
         var template = data[1];
         var html = layout.replace(layoutRegex, template);
@@ -66,7 +66,7 @@ function layoutParser(layoutPath) {
     });
 }
 
-function templateParser(template) {
+function componentParser(template) {
     return new Promise(function (resolve, reject) {
         fs.readFile(template, function (err, content) {
             if (err) {
