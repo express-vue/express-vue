@@ -10,6 +10,7 @@ var coveralls = require('gulp-coveralls');
 var babel = require('gulp-babel');
 var del = require('del');
 var isparta = require('isparta');
+const concat = require('gulp-concat');
 
 // Initialize the babel transpiler so ES2015 files gets compiled
 // when they're loaded

@@ -3,84 +3,39 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var fs = require('fs');
-var bodyRegx = /(<template>)([\s\S]*?)(<\/template>)/gm;
-var scriptRegex = /(export default {)([\s\S]*?)(^};?$)/gm;
-var dataRegex = /(\'\$parent\').(\w*)/gm;
-var layoutRegex = /{{{body}}}/igm;
-var defaults = {
-    layoutsDir: '/app/components/',
-    defaultLayout: 'layout',
-    options: undefined
-};
 
-function expressVue(filePath, options, callback) {
+var _defaults = require('./defaults');
 
-    defaults = options.settings.vue;
+var _parser = require('./parser');
+
+var _utils = require('./utils');
+
+function expressVue(componentPath, options, callback) {
+
+    var defaults = new _defaults.Defaults(options.settings.vue);
+    var types = new _defaults.Types();
     defaults.layoutPath = defaults.layoutsDir + defaults.defaultLayout + '.vue';
     defaults.options = options;
 
-    Promise.all([layoutParser(defaults.layoutPath), componentParser(filePath)]).then(function (data) {
-        var layout = data[0];
-        var template = data[1];
-        var html = layout.replace(layoutRegex, template);
+    var componentArray = [(0, _parser.layoutParser)(defaults.layoutPath, defaults, types.LAYOUT), (0, _parser.componentParser)(componentPath, defaults, types.COMPONENT)];
 
+    if (defaults.options.components) {
+        for (var component in defaults.options.components) {
+            if (defaults.options.components.hasOwnProperty(component)) {
+                var componentFile = defaults.componentsDir + defaults.options.components[component] + '.vue';
+                componentArray.push((0, _parser.componentParser)(componentFile, defaults, types.SUBCOMPONENT));
+            }
+        }
+    }
+
+    Promise.all(componentArray).then(function (components) {
+        var html = (0, _utils.renderHtmlUtil)(components, defaults);
         callback(null, html);
     }, function (error) {
         callback(new Error(error));
     });
 }
 
-function bodyParser(body) {
-    var bodyString = body.match(bodyRegx)[0];
-    if (bodyString) {
-        bodyString = bodyString.replace(bodyRegx, '$2');
-    }
-    return bodyString;
-}
-
-function scriptParser(script) {
-    var scriptString = script.match(scriptRegex)[0];
-    if (scriptString) {
-        scriptString = scriptString.replace(scriptRegex, '({$2})').replace(dataRegex, function (match, p1, p2) {
-            return JSON.stringify(defaults.options[p2]);
-        });
-    }
-    return scriptString;
-}
-
-function layoutParser(layoutPath) {
-    return new Promise(function (resolve, reject) {
-        fs.readFile(layoutPath, function (err, content) {
-            if (err) {
-                reject(new Error(err));
-            }
-            var contentString = content.toString();
-            var body = bodyParser(contentString);
-            var script = scriptParser(contentString);
-
-            var layout = body.replace('{{{script}}}', '<script>new Vue(' + script + ')</script>');
-
-            resolve(layout);
-        });
-    });
-}
-
-function componentParser(template) {
-    return new Promise(function (resolve, reject) {
-        fs.readFile(template, function (err, content) {
-            if (err) {
-                reject(new Error(err));
-            }
-            var contentString = content.toString();
-            var body = bodyParser(contentString);
-            var script = scriptParser(contentString);
-
-            var template = body + '<script>new Vue(' + script + ')</script>';
-
-            resolve(template);
-        });
-    });
-}
+expressVue.componentParser = _parser.componentParser;
 
 exports.default = expressVue;
