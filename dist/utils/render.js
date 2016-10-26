@@ -16,12 +16,8 @@ var titleRegex = /{{{title}}}/igm;
 var types = new _defaults.Types();
 
 function createApp(script) {
+    var Vue = require('vue');
     return new Vue(script);
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = createApp;
-    } else {
-        this.app = createApp();
-    }
 }
 
 function layoutUtil(components) {
@@ -72,7 +68,6 @@ function layoutUtil(components) {
 
 function renderUtil(layout, renderedScriptString, defaults) {
     var html = '';
-    global.Vue = require('vue');
     renderer.renderToString(createApp(layout.script), function (error, renderedHtml) {
         html = layout.template.replace(appRegex, '<div id="app">' + renderedHtml + '</div>');
         html = html.replace(scriptRegex, renderedScriptString);

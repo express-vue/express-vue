@@ -15,7 +15,9 @@ var expressVue = require('express-vue');
 
 var app = express();
 app.set('vue', {
+    rootPath: __dirname + '/',
     layoutsDir: 'app/components/',
+    componentsDir: 'components/',
     defaultLayout: 'layout'
 });
 app.engine('vue', expressVue);
@@ -28,24 +30,53 @@ In your route, assuming you have a main.vue
 router.get('/', (req, res, next) => {
     res.render('main', {
         title: 'Page Title',
-        otherData: 'Something Else'
+        data {
+            otherData: 'Something Else'
+        }
     });
 })
 ```
 
-To use Data binding into the vue files you need to use this syntax `'$parent'.attribute`
+To use Data binding into the vue files you need to pass data in through the `data` object as above.
+express-vue will automatically add anything you put here to the root element of your Vue components.
+You do not need to have anything in data in your .vue file, but if you did what you put in res.render
+will overwrite it.
 
-So If you had {{title}} it would be `'$parent'.title`
+### Remember to always write your data objects in your .vue files as functions!
 
-Example:
+## Components
+
+To add components to your .vue files you can either write them in manually.. or pass them in through res.render
 
 ```js
-data () {
-    return {
-        title: '$parent'.title
-    }
-},
+router.get('/', (req, res, next) => {
+    res.render('main', {
+        title: 'Page Title',
+        data {
+            otherData: 'Something Else'
+        }
+        components: ['myheader', 'myfooter']
+    });
+})
 ```
+
+This will trigger the library to look in the `componentsDir` folder for any component matching, it _MUST_ be an array
+
+Then in your .vue file you can just use the element directive and it will work out of the box
+
+```vue
+<template>
+    <div>
+        <myheader></myheader>
+        <h1>{{otherData}}</h1>
+        <myfooter></myfooter>
+    </div>
+</template>
+```
+
+Note: This isn't available in the layout.vue file yet, only the .vue files you specify in your express route.
+
+## Example
 
 A full example can be found at: [danmademe/express-vue-example](https://github.com/danmademe/express-vue-example)
 
@@ -53,7 +84,8 @@ A full example can be found at: [danmademe/express-vue-example](https://github.c
 
 It requires you to have a file called layout.vue file similar to this in the `app/components/` directory
 
-It's required to set the `{{{body}}}` and `{{{script}}}` tags where you want the layout body and script to go.
+It's required to set the `{{{app}}}` and `{{{script}}}` tags where you want the layout body and script to go.
+`{{{title}}}` is set in your res.render using the data attribute `{title: 'A Vue Example'}`, look to the example above for more info
 
 Finally you'll need to set the link to your copy of vue.js in the script... (this will become automatic soon)
 
@@ -64,34 +96,18 @@ Finally you'll need to set the link to your copy of vue.js in the script... (thi
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-            <title>{{title}}</title>
-            <script src="assets/vue.js" charset="utf-8"></script>
+            <title>{{{title}}}</title>
+            <script src="assets/scripts/vue.js" charset="utf-8"></script>
         </head>
         <body>
-            <div class="content">
-                <div class="content-inner">
-                    {{{body}}}
-                </div>
-            </div>
+            {{{app}}}
             {{{script}}}
+            <script>app.$mount('#app')</script>
         </body>
     </html>
 </template>
 
 <script>
-export default {
-    el: 'head',
-    data () {
-        return {
-            title: '$parent'.title
-        }
-    },
-    computed: {},
-    ready () {},
-    attached () {},
-    methods: {},
-    components: {}
-}
 </script>
 
 <style>
