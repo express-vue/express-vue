@@ -35,7 +35,6 @@ function layoutUtil(components) {
                     layout = component;
                     break;
                 case types.COMPONENT:
-                    layout.template = layout.template.replace(appRegex, '<div id="app">' + component.script.template + '</div>');
                     layout.script = component.script;
                     break;
                 case types.SUBCOMPONENT:

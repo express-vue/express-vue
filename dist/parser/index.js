@@ -17,6 +17,8 @@ var _defaults = require('../defaults');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 var htmlMinifier = _htmlMinifier2.default.minify;
 var htmlRegex = /(<template?.*>)([\s\S]*?)(<\/template>)/gm;
 var scriptRegex = /(<script?.*>)([\s\S]*?)(<\/script>)/gm;
@@ -37,39 +39,30 @@ function htmlParser(body, minify) {
     return bodyString;
 }
 
-function dataMatcher(vueData, controllerData, type) {
-    var obj = {};
-    for (var controllerDataKey in controllerData) {
-        if (controllerData.hasOwnProperty(controllerDataKey)) {
-            for (var vueDataKey in vueData) {
-                if (vueData.hasOwnProperty(vueDataKey)) {
-                    switch (type) {
-                        case types.LAYOUT:
-                            break;
-                        case types.COMPONENT:
-                            obj[controllerDataKey] = controllerData[controllerDataKey];
-                            obj[vueDataKey] = vueData[vueDataKey];
-                            break;
-                        case types.SUBCOMPONENT:
-                            obj[vueDataKey] = vueData[vueDataKey];
-                            break;
-                    }
-                }
-            }
-        }
+var DataObject = function DataObject(componentData, defaultData, type) {
+    _classCallCheck(this, DataObject);
+
+    switch (type) {
+        case types.COMPONENT:
+            this.data = Object.assign({}, componentData, defaultData);
+            break;
+        case types.SUBCOMPONENT:
+            this.data = componentData;
+            break;
     }
-    var output = 'data: () => {return ' + JSON.stringify(obj) + ';};';
-    return output;
-}
+};
 
 function dataParser(script, defaults, type) {
     var finalScript = {};
     for (var element in script) {
         if (script.hasOwnProperty(element)) {
             if (element === 'data') {
-                var data = script.data();
-                var output = dataMatcher(data, defaults.options.data, type);
-                finalScript[element] = eval(output);
+                (function () {
+                    var data = new DataObject(script.data(), defaults.options.data, type).data;
+                    finalScript[element] = function () {
+                        return data;
+                    };
+                })();
             } else {
                 finalScript[element] = script[element];
             }
@@ -79,9 +72,14 @@ function dataParser(script, defaults, type) {
 }
 
 function scriptParser(script, defaults, type) {
+    var options = {
+        'presets': ['es2015'],
+        'plugins': ['add-module-exports']
+    };
     var scriptString = script.match(scriptRegex)[0].replace(scriptRegex, '$2');
-    var babelScript = require('babel-core').transform(scriptString, { 'presets': ['es2015'] }).code;
-    var evalScript = eval(babelScript);
+    var babelScript = require('babel-core').transform(scriptString, options);
+    // TODO: Remove EVAL!!!!!
+    var evalScript = eval(babelScript.code);
     var finalScript = dataParser(evalScript, defaults, type);
     return finalScript;
 }
