@@ -29,9 +29,13 @@ In your route, assuming you have a main.vue
 ```js
 router.get('/', (req, res, next) => {
     res.render('main', {
-        title: 'Page Title',
-        data {
+        data: {
             otherData: 'Something Else'
+        },
+        vue: {
+            meta: {
+                title: 'Page Title',
+            }    
         }
     });
 })
@@ -51,11 +55,16 @@ To add components to your .vue files you can either write them in manually.. or 
 ```js
 router.get('/', (req, res, next) => {
     res.render('main', {
-        title: 'Page Title',
-        data {
+        data : {
             otherData: 'Something Else'
+        },
+        vue: {
+            meta: {
+                title: 'Page Title',
+            },
+            components: ['myheader', 'myfooter']
         }
-        components: ['myheader', 'myfooter']
+
     });
 })
 ```
@@ -85,7 +94,9 @@ A full example can be found at: [danmademe/express-vue-example](https://github.c
 It requires you to have a file called layout.vue file similar to this in the `app/components/` directory
 
 It's required to set the `{{{app}}}` and `{{{script}}}` tags where you want the layout body and script to go.
-`{{{title}}}` is set in your res.render using the data attribute `{title: 'A Vue Example'}`, look to the example above for more info
+If you want to set a title or other meta data, you can add them to the vue metadata object, you can look at the above
+examples for how to do that.
+
 
 Finally you'll need to set the link to your copy of vue.js in the script... (this will become automatic soon)
 

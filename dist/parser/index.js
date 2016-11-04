@@ -15,6 +15,10 @@ var _htmlMinifier2 = _interopRequireDefault(_htmlMinifier);
 
 var _defaults = require('../defaults');
 
+var _requireFromString = require('require-from-string');
+
+var _requireFromString2 = _interopRequireDefault(_requireFromString);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -78,8 +82,7 @@ function scriptParser(script, defaults, type) {
     };
     var scriptString = script.match(scriptRegex)[0].replace(scriptRegex, '$2');
     var babelScript = require('babel-core').transform(scriptString, options);
-    // TODO: Remove EVAL!!!!!
-    var evalScript = eval(babelScript.code);
+    var evalScript = (0, _requireFromString2.default)(babelScript.code);
     var finalScript = dataParser(evalScript, defaults, type);
     return finalScript;
 }

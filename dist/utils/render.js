@@ -9,10 +9,16 @@ var _defaults = require('../defaults');
 
 var _string = require('./string');
 
+var _meta = require('./meta');
+
+var _meta2 = _interopRequireDefault(_meta);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var renderer = require('vue-server-renderer').createRenderer();
 var appRegex = /{{{app}}}/igm;
 var scriptRegex = /{{{script}}}/igm;
-var titleRegex = /{{{title}}}/igm;
+var headRegex = /<\/head>/igm;
 var types = new _defaults.Types();
 
 function createApp(script) {
@@ -67,10 +73,17 @@ function layoutUtil(components) {
 
 function renderUtil(layout, renderedScriptString, defaults) {
     var html = '';
+    var meta = '';
     renderer.renderToString(createApp(layout.script), function (error, renderedHtml) {
         html = layout.template.replace(appRegex, '<div id="app">' + renderedHtml + '</div>');
         html = html.replace(scriptRegex, renderedScriptString);
-        html = html.replace(titleRegex, layout.script.data.title || defaults.options.title);
+        if (defaults.options.vue && defaults.options.vue.meta) {
+            meta = (0, _meta2.default)(defaults.options.vue.meta);
+        } else {
+            meta = (0, _meta2.default)({});
+        }
+
+        html = html.replace(headRegex, meta);
     });
     return html;
 }

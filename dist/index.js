@@ -19,10 +19,10 @@ function expressVue(componentPath, options, callback) {
 
     var componentArray = [(0, _parser.layoutParser)(defaults.layoutPath, defaults, types.LAYOUT), (0, _parser.componentParser)(componentPath, defaults, types.COMPONENT)];
 
-    if (defaults.options.components) {
-        for (var component in defaults.options.components) {
-            if (defaults.options.components.hasOwnProperty(component)) {
-                var componentFile = defaults.componentsDir + defaults.options.components[component] + '.vue';
+    if (defaults.options.vue && defaults.options.vue.components) {
+        for (var component in defaults.options.vue.components) {
+            if (defaults.options.vue.components.hasOwnProperty(component)) {
+                var componentFile = defaults.componentsDir + defaults.options.vue.components[component] + '.vue';
                 componentArray.push((0, _parser.componentParser)(componentFile, defaults, types.SUBCOMPONENT));
             }
         }
