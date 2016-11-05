@@ -159,6 +159,13 @@ Finally you'll need to set the link to your copy of vue.js in the script... (thi
 
 - Have the style sections do something!
 
+## Changelog
+
+v3 has seriously changed the object you pass into the vue file.. so please if migrating from
+an earlier version (and you should). Take the time to look at the new object.
+
+Sorry for the breaking change, but I'm only one person.
+
 ## License
 
 Apache-2.0 © [Daniel Cherubini](https://cherubini.casa)
