@@ -36,6 +36,10 @@ router.get('/', (req, res, next) => {
         vue: {
             meta: {
                 title: 'Page Title',
+                head: [
+                    { property:'og:title' content: 'Page Title'},
+                    { name:'twitter:title' content: 'Page Title'},
+                ]
             }    
         }
     });
@@ -86,6 +90,33 @@ Then in your .vue file you can just use the element directive and it will work o
 
 Note: This isn't available in the layout.vue file yet, only the .vue files you specify in your express route.
 
+## Meta
+
+This library takes the wonderful inspiration from [vue-head](https://github.com/ktquez/vue-head) and adapts it to
+work here. Just add a `meta` array into your `head` object, with support for both `content` and `property` types.
+(Note we don't support shorthand here, and no support for google+ just yet, that will come soon).
+
+```js
+head: {
+    title: {
+      inner: 'It will be a pleasure'
+    },
+    // Meta tags
+    meta: [
+      { name: 'application-name', content: 'Name of my application' },
+      { name: 'description', content: 'A description of the page', id: 'desc' } // id to replace intead of create element
+      // ...
+      // Twitter
+      { name: 'twitter:title', content: 'Content Title' },
+      // ...
+      // Facebook / Open Graph
+      { property: 'fb:app_id', content: '123456789' },
+      { property: 'og:title', content: 'Content Title' },
+      // ...
+    ],
+}
+```
+
 ## Example
 
 A full example can be found at: [danmademe/express-vue-example](https://github.com/danmademe/express-vue-example)
@@ -108,7 +139,6 @@ Finally you'll need to set the link to your copy of vue.js in the script... (thi
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-            <title>{{{title}}}</title>
             <script src="assets/scripts/vue.js" charset="utf-8"></script>
         </head>
         <body>
@@ -129,6 +159,13 @@ Finally you'll need to set the link to your copy of vue.js in the script... (thi
 ## Todo
 
 - Have the style sections do something!
+
+## Changelog
+
+v3 has seriously changed the object you pass into the vue file.. so please if migrating from
+an earlier version (and you should). Take the time to look at the new object.
+
+Sorry for the breaking change, but I'm only one person.
 
 ## License
 
