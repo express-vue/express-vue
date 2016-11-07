@@ -90,14 +90,15 @@ function scriptParser(script, defaults, type) {
 function layoutParser(layoutPath, defaults, type) {
 
     return new Promise(function (resolve, reject) {
-        _fs2.default.readFile(layoutPath, function (err, content) {
+        _fs2.default.readFile(layoutPath, 'utf-8', function (err, content) {
             if (err) {
                 reject(new Error(err));
             }
-            var layoutString = content.toString();
-            var body = htmlParser(layoutString);
-            layoutString = layoutString.replace(htmlRegex, '');
-            var script = scriptParser(layoutString, defaults, type);
+
+            var body = htmlParser(content);
+            content = content.replace(htmlRegex, '');
+            var script = scriptParser(content, defaults, type);
+
             resolve({
                 type: type,
                 template: body,
@@ -109,16 +110,14 @@ function layoutParser(layoutPath, defaults, type) {
 
 function componentParser(templatePath, defaults, type) {
     return new Promise(function (resolve, reject) {
-        _fs2.default.readFile(templatePath, function (err, content) {
+        _fs2.default.readFile(templatePath, 'utf-8', function (err, content) {
             if (err) {
                 reject(new Error(err));
             }
 
-            var componentString = content.toString();
-
-            var body = htmlParser(componentString, true);
-            componentString = componentString.replace(htmlRegex, '');
-            var script = scriptParser(componentString, defaults, type);
+            var body = htmlParser(content, true);
+            content = content.replace(htmlRegex, '');
+            var script = scriptParser(content, defaults, type);
 
             var componentScript = script;
             componentScript.template = body;
