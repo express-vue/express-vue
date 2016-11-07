@@ -14,6 +14,7 @@ $ npm install --save express-vue
 var expressVue = require('express-vue');
 
 var app = express();
+app.set('views', 'PATH_TO_VIEWS/routes');
 app.set('vue', {
     rootPath: __dirname + '/',
     layoutsDir: 'app/components/',

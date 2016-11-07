@@ -46,3 +46,4 @@ function metaUtil(metaObject) {
 }
 
 exports.default = metaUtil;
+module.exports = exports['default'];

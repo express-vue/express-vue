@@ -26,6 +26,7 @@
     "eslint": "^3.1.1",
     "eslint-config-xo-space": "^0.14.0",
     "eslint-plugin-babel": "^3.3.0",
+    "express": "^4.14.0",
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.2",
     "gulp-concat": "^2.6.0",
@@ -47,7 +48,7 @@
   },
   "repository": "danmademe/express-vue",
   "scripts": {
-    "prepublish": "gulp prepublish",
+    "prepublish": "gulp build",
     "test": "gulp"
   },
   "license": "Apache-2.0",
