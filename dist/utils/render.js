@@ -72,20 +72,25 @@ function layoutUtil(components) {
 }
 
 function renderUtil(layout, renderedScriptString, defaults) {
-    var html = '';
-    var meta = '';
-    renderer.renderToString(createApp(layout.script), function (error, renderedHtml) {
-        html = layout.template.replace(appRegex, '<div id="app">' + renderedHtml + '</div>');
-        html = html.replace(scriptRegex, renderedScriptString);
-        if (defaults.options.vue && defaults.options.vue.meta) {
-            meta = (0, _meta2.default)(defaults.options.vue.meta);
-        } else {
-            meta = (0, _meta2.default)({});
-        }
+    return new Promise(function (resolve, reject) {
+        renderer.renderToString(createApp(layout.script), function (error, renderedHtml) {
+            if (error) {
+                reject(error);
+            }
+            var html = '';
+            var meta = '';
+            html = layout.template.replace(appRegex, '<div id="app">' + renderedHtml + '</div>');
+            html = html.replace(scriptRegex, renderedScriptString);
+            if (defaults.options.vue && defaults.options.vue.meta) {
+                meta = (0, _meta2.default)(defaults.options.vue.meta);
+            } else {
+                meta = (0, _meta2.default)({});
+            }
 
-        html = html.replace(headRegex, meta);
+            html = html.replace(headRegex, meta);
+            resolve(html);
+        });
     });
-    return html;
 }
 
 function renderedScript(script) {

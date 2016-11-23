@@ -27,10 +27,12 @@ function expressVue(componentPath, options, callback) {
             }
         }
     }
-
     Promise.all(componentArray).then(function (components) {
-        var html = (0, _utils.renderHtmlUtil)(components, defaults);
-        callback(null, html);
+        (0, _utils.renderHtmlUtil)(components, defaults).then(function (html) {
+            callback(null, html);
+        }).catch(function (error) {
+            callback(new Error(error));
+        });
     }, function (error) {
         callback(new Error(error));
     });
