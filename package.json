@@ -49,7 +49,10 @@
   "repository": "danmademe/express-vue",
   "scripts": {
     "prepublish": "gulp build",
-    "test": "gulp"
+    "test": "gulp",
+    "preversion": "npm test",
+    "version": "npm run build && git add -A",
+    "postversion": "git push && git push --tags"
   },
   "license": "Apache-2.0",
   "dependencies": {
