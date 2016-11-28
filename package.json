@@ -1,6 +1,6 @@
 {
   "name": "express-vue",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "description": "Vue rendering engine for Express.js",
   "homepage": "https://github.com/danmademe/express-vue",
   "author": {
@@ -51,7 +51,7 @@
     "prepublish": "gulp build",
     "test": "gulp",
     "preversion": "npm test",
-    "version": "npm run build && git add -A",
+    "version": "gulp build && git add -A",
     "postversion": "git push && git push --tags"
   },
   "license": "Apache-2.0",
