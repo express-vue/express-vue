@@ -1,4 +1,4 @@
-<p align="center"><img width="100"src="http://i.imgur.com/qs9EUdv.png"></p>
+<p align="center"><img width="150"src="http://i.imgur.com/qs9EUdv.png"></p>
 
 <p align="center">
     <a href="https://npmjs.org/package/express-vue"><img src="https://badge.fury.io/js/express-vue.svg" alt="Version"></a>
