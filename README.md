@@ -99,20 +99,31 @@ work here. Just add a `meta` array into your `head` object, with support for bot
 ```js
 head: {
     title: {
-      inner: 'It will be a pleasure'
+        inner: 'It will be a pleasure'  
     },
     // Meta tags
     meta: [
-      { name: 'application-name', content: 'Name of my application' },
-      { name: 'description', content: 'A description of the page', id: 'desc' } // id to replace intead of create element
-      // ...
-      // Twitter
-      { name: 'twitter:title', content: 'Content Title' },
-      // ...
-      // Facebook / Open Graph
-      { property: 'fb:app_id', content: '123456789' },
-      { property: 'og:title', content: 'Content Title' },
-      // ...
+        { name: 'application-name', content: 'Name of my application' },
+        { name: 'description', content: 'A description of the page', id: 'desc' } // id to replace intead of create element
+        // ...
+        // Twitter
+        { name: 'twitter:title', content: 'Content Title' },
+        // ...
+        // Facebook / Open Graph
+        { property: 'fb:app_id', content: '123456789' },
+        { property: 'og:title', content: 'Content Title' },
+        // ...
+        // Scripts
+        { script: '/assets/scripts/hammer.min.js' },
+        { script: '/assets/scripts/vue-touch.min.js', charset: 'utf-8' },
+        // Note with Scripts [charset] is optional defaults to utf-8
+        // ...
+        // Styles
+        { style: '/assets/rendered/style.css' }
+        { style: '/assets/rendered/style.css', type: 'text/css' }
+        { style: '/assets/rendered/style.css', type: 'text/css', rel: 'stylesheet' }
+        // Note with Styles, [type] and [rel] are optional...
+        // ...
     ],
 }
 ```
