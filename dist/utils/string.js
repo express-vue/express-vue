@@ -31,6 +31,8 @@ function scriptToString(script) {
             case 'object':
                 if (member === 'data') {
                     string += member + ': ' + (0, _xss2.default)(JSON.stringify(script[member])) + ',';
+                } else if (script[member].constructor === Array) {
+                    string += member + ': ' + (0, _xss2.default)(JSON.stringify(script[member])) + ',';
                 } else {
                     string += member + ': ' + scriptToString(script[member]) + ',';
                 }
