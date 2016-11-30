@@ -20,6 +20,13 @@ function metaUtil(metaObject) {
                     metaTags += '<meta name="' + metaItem.name + '" content="' + metaItem.content + '" />';
                 } else if (metaItem.property) {
                     metaTags += '<meta property="' + metaItem.property + '" content="' + metaItem.content + '" />';
+                } else if (metaItem.script) {
+                    var charset = metaItem.charset || 'utf-8';
+                    metaTags += '<script src="' + metaItem.script + '" charset="' + charset + '"></script>';
+                } else if (metaItem.style) {
+                    var type = metaItem.type || 'text/css';
+                    var rel = metaItem.rel || 'stylesheet';
+                    metaTags += '<link rel="' + rel + '" type="' + type + '" href="' + metaItem.style + '">';
                 }
             }
         } catch (err) {

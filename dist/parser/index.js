@@ -88,7 +88,6 @@ function scriptParser(script, defaults, type) {
 }
 
 function layoutParser(layoutPath, defaults, type) {
-
     return new Promise(function (resolve, reject) {
         _fs2.default.readFile(layoutPath, 'utf-8', function (err, content) {
             if (err) {

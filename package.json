@@ -1,6 +1,6 @@
 {
   "name": "express-vue",
-  "version": "3.0.7",
+  "version": "3.1.0",
   "description": "Vue rendering engine for Express.js",
   "homepage": "https://github.com/danmademe/express-vue",
   "author": {
