@@ -19,9 +19,9 @@ var Defaults = function Defaults() {
 
     _classCallCheck(this, Defaults);
 
-    this.rootPath = obj.rootPath || __dirname + '/../';
-    this.layoutsDir = obj.rootPath + obj.layoutsDir || '/app/routes/';
-    this.componentsDir = obj.rootPath + obj.componentsDir || '/app/components/';
+    this.rootPath = obj.rootPath || '';
+    this.layoutsDir = this.rootPath + obj.layoutsDir || '/app/routes/';
+    this.componentsDir = this.rootPath + obj.componentsDir || '/app/components/';
     this.defaultLayout = obj.defaultLayout || 'layout';
     this.options = obj.options || undefined;
 };
