@@ -1,6 +1,22 @@
+<p align="center"><img width="100"src="http://i.imgur.com/qs9EUdv.png"></p>
 
-# express-vue [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
-> Vue rendering engine for Express.js
+<p align="center">
+    <a href="https://npmjs.org/package/express-vue"><img src="https://badge.fury.io/js/express-vue.svg" alt="Version"></a>
+    <a href="https://travis-ci.org/danmademe/express-vue"><img src="https://travis-ci.org/danmademe/express-vue.svg?branch=master" alt="Build Status"></a>
+    <a href="https://david-dm.org/danmademe/express-vue"><img src="https://david-dm.org/danmademe/express-vue.svg?theme=shields.io" alt="Dependency Status"></a>
+    <a href="https://coveralls.io/r/danmademe/express-vue"><img src="https://coveralls.io/repos/danmademe/express-vue/badge.svg" alt="Coverage Status"></a>
+</p>
+
+
+# express-vue
+
+A Simple way of using Server Side rendered Vue.js natively in Express using `res.render()`
+
+If you want to use vue.js and setup a large scale web application that is server side rendered, using Node+Express, but you want to use all the fantastic tools
+given to you by Vue.js. Then this is the library for you.
+
+The idea is simple use Node+Express for your Controller and Models, and Vue.js for your Views.. you can have a secure server side rendered website without all the hassle. Your Controller will pass in the data to your View through `res.render('view', {data})`.
+
 
 ## Installation
 
@@ -184,10 +200,6 @@ Sorry for the breaking change, but I'm only one person.
 Apache-2.0 © [Daniel Cherubini](https://cherubini.casa)
 
 
-[npm-image]: https://badge.fury.io/js/express-vue.svg
-[npm-url]: https://npmjs.org/package/express-vue
-[travis-image]: https://travis-ci.org/danmademe/express-vue.svg?branch=master
-[travis-url]: https://travis-ci.org/danmademe/express-vue
 [daviddm-image]: https://david-dm.org/danmademe/express-vue.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/danmademe/express-vue
 [coveralls-image]: https://coveralls.io/repos/danmademe/express-vue/badge.svg
