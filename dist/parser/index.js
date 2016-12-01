@@ -24,8 +24,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var htmlMinifier = _htmlMinifier2.default.minify;
-var htmlRegex = /(<template?.*>)([\s\S]*?)(<\/template>)/gm;
-var scriptRegex = /(<script?.*>)([\s\S]*?)(<\/script>)/gm;
+var htmlRegex = /(<template.*?>)([\s\S]*?)(<\/template>)/gm;
+var scriptRegex = /(<script.*?>)([\s\S]*?)(<\/script>)/gm;
 var types = new _defaults.Types();
 
 function htmlParser(body, minify) {
@@ -91,9 +91,9 @@ function layoutParser(layoutPath, defaults, type) {
     return new Promise(function (resolve, reject) {
         _fs2.default.readFile(layoutPath, 'utf-8', function (err, content) {
             if (err) {
-                reject(new Error(err));
+                content = defaults.backupLayout;
             }
-
+            console.log(layoutPath);
             var body = htmlParser(content);
             content = content.replace(htmlRegex, '');
             var script = scriptParser(content, defaults, type);
@@ -113,7 +113,7 @@ function componentParser(templatePath, defaults, type) {
             if (err) {
                 reject(new Error(err));
             }
-
+            console.log(templatePath);
             var body = htmlParser(content, true);
             content = content.replace(htmlRegex, '');
             var script = scriptParser(content, defaults, type);

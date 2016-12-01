@@ -12,7 +12,7 @@ var _utils = require('./utils');
 
 function expressVue(componentPath, options, callback) {
 
-    var defaults = new _defaults.Defaults(options.settings.vue);
+    var defaults = new _defaults.Defaults(options.settings.vue, options.settings.views);
     var types = new _defaults.Types();
     defaults.layoutPath = defaults.layoutsDir + defaults.defaultLayout + '.vue';
     defaults.options = options;
