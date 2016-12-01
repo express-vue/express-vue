@@ -24,6 +24,13 @@ The idea is simple use Node+Express for your Controller and Models, and Vue.js f
 $ npm install --save express-vue
 ```
 
+## Examples
+
+A Super Simple example can be found at [danmademe/express-vue-super-simple](https://github.com/danmademe/express-vue-super-simple)
+
+A full example can be found at: [danmademe/express-vue-example](https://github.com/danmademe/express-vue-example)
+
+
 ## Usage
 
 ```js
@@ -145,10 +152,6 @@ head: {
     ],
 }
 ```
-
-## Example
-
-A full example can be found at: [danmademe/express-vue-example](https://github.com/danmademe/express-vue-example)
 
 ## Requirements
 
