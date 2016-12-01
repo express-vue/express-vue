@@ -30,11 +30,12 @@ $ npm install --save express-vue
 var expressVue = require('express-vue');
 
 var app = express();
-app.set('views', 'PATH_TO_VIEWS/routes');
+app.set('views', __dirname + '/app/views');
 app.set('vue', {
-    rootPath: __dirname + '/',
-    layoutsDir: 'app/components/',
-    componentsDir: 'components/',
+    //ComponentsDir is optional if you are storing your components in a different directory than your views
+    componentsDir: __dirname + '/components',
+    //Default layout is optional it's a file and relative to the views path, it does not require a .vue extention.
+    //If you want a custom layout set this to the location of your layout.vue file.
     defaultLayout: 'layout'
 });
 app.engine('vue', expressVue);
@@ -152,7 +153,9 @@ A full example can be found at: [danmademe/express-vue-example](https://github.c
 
 Requires Node V4 or greater
 
-It requires you to have a file called layout.vue file similar to this in the `app/components/` directory
+## Optional
+
+If you want to have a custom layout you can, here is an example layout.vue file which you can place relative to your views path.
 
 It's required to set the `{{{app}}}` and `{{{script}}}` tags where you want the layout body and script to go.
 If you want to set a title or other meta data, you can add them to the vue metadata object, you can look at the above
