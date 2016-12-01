@@ -31,6 +31,7 @@ var expressVue = require('express-vue');
 
 var app = express();
 app.set('views', __dirname + '/app/views');
+//Optional if you want to specify the components directory seperate to your views, and/or specify a custom layout.
 app.set('vue', {
     //ComponentsDir is optional if you are storing your components in a different directory than your views
     componentsDir: __dirname + '/components',
