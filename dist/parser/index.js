@@ -88,12 +88,12 @@ function scriptParser(script, defaults, type) {
 }
 
 function layoutParser(layoutPath, defaults, type) {
-    return new Promise(function (resolve, reject) {
+    return new Promise(function (resolve) {
         _fs2.default.readFile(layoutPath, 'utf-8', function (err, content) {
             if (err) {
                 content = defaults.backupLayout;
             }
-            console.log(layoutPath);
+
             var body = htmlParser(content);
             content = content.replace(htmlRegex, '');
             var script = scriptParser(content, defaults, type);
@@ -113,7 +113,7 @@ function componentParser(templatePath, defaults, type) {
             if (err) {
                 reject(new Error(err));
             }
-            console.log(templatePath);
+
             var body = htmlParser(content, true);
             content = content.replace(htmlRegex, '');
             var script = scriptParser(content, defaults, type);

@@ -26,7 +26,6 @@ var Defaults = function Defaults() {
     this.defaultLayout = obj.defaultLayout === undefined ? '' : obj.layoutsDir === undefined ? this.rootPath + obj.defaultLayout : obj.defaultLayout;
     this.options = obj.options === undefined ? '' : obj.options;
     this.backupLayout = '<template><!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><script src="https://unpkg.com/vue/dist/vue.js"></script></head><body>{{{app}}}{{{script}}}<script>app.$mount("#app")</script></body></html></template><script></script><style></style>';
-    console.log(this);
 };
 
 exports.Types = Types;
