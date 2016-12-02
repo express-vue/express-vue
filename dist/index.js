@@ -38,7 +38,5 @@ function expressVue(componentPath, options, callback) {
     });
 }
 
-expressVue.componentParser = _parser.componentParser;
-
 exports.default = expressVue;
 module.exports = exports['default'];

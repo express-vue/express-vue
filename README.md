@@ -122,12 +122,10 @@ work here. Just add a `meta` array into your `head` object, with support for bot
 (Note we don't support shorthand here, and no support for google+ just yet, that will come soon).
 
 ```js
-head: {
-    title: {
-        inner: 'It will be a pleasure'  
-    },
+meta: {
+    title: 'It will be a pleasure',
     // Meta tags
-    meta: [
+    head: [
         { name: 'application-name', content: 'Name of my application' },
         { name: 'description', content: 'A description of the page', id: 'desc' } // id to replace intead of create element
         // ...

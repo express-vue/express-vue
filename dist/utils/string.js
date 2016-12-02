@@ -25,9 +25,6 @@ function scriptToString(script) {
                     string += member + ': ' + String(script[member]) + ',';
                 }
                 break;
-            case 'string':
-                string += member + ': ' + JSON.stringify(script[member]) + ',';
-                break;
             case 'object':
                 if (member === 'data') {
                     string += member + ': ' + (0, _xss2.default)(JSON.stringify(script[member])) + ',';
@@ -37,7 +34,9 @@ function scriptToString(script) {
                     string += member + ': ' + scriptToString(script[member]) + ',';
                 }
                 break;
-
+            default:
+                string += member + ': ' + JSON.stringify(script[member]) + ',';
+                break;
         }
     }
     return '{' + string + '}';
