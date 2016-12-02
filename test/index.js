@@ -130,7 +130,6 @@ describe('express-vue', function () {
         ];
         Promise.all(componentArray).then(function(components) {
             renderHtmlUtil(components, defaultObject).then(function(html) {
-                console.log(html);
                 assert(true, 'it cant parse components');
             }).catch(function(error) {
                 assert(false, 'it cant parse components' + error);
