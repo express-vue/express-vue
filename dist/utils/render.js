@@ -13,6 +13,10 @@ var _meta = require('./meta');
 
 var _meta2 = _interopRequireDefault(_meta);
 
+var _paramCase = require('param-case');
+
+var _paramCase2 = _interopRequireDefault(_paramCase);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var renderer = require('vue-server-renderer').createRenderer();
@@ -93,14 +97,28 @@ function renderUtil(layout, renderedScriptString, defaults) {
     });
 }
 
-function renderedScript(script) {
+function renderedScript(script, components) {
+
+    var componentsString = '';
+
+    for (var component in components) {
+        if (components.hasOwnProperty(component)) {
+            var currentComponent = components[component];
+            if (currentComponent.type === types.SUBCOMPONENT) {
+                delete script.components[currentComponent.name];
+                componentsString = componentsString + ('Vue.component(\'' + (0, _paramCase2.default)(currentComponent.name) + '\', ' + (0, _string.scriptToString)(currentComponent.script) + ');\n');
+            }
+        }
+    }
+
     var scriptString = (0, _string.scriptToString)(script);
-    return '<script>\n        (function () {\n            \'use strict\'\n            var createApp = function () {\n                return new Vue(\n                    ' + scriptString + '\n                )\n            }\n            if (typeof module !== \'undefined\' && module.exports) {\n                module.exports = createApp\n            } else {\n                this.app = createApp()\n            }\n        }).call(this)\n    </script>';
+
+    return '<script>\n        (function () {\n            \'use strict\'\n            ' + componentsString + '\n            var createApp = function () {\n                return new Vue(\n                    ' + scriptString + '\n                )\n            }\n            if (typeof module !== \'undefined\' && module.exports) {\n                module.exports = createApp\n            } else {\n                this.app = createApp()\n            }\n        }).call(this)\n    </script>';
 }
 
 function renderHtmlUtil(components, defaults) {
     var layout = layoutUtil(components);
-    var renderedScriptString = renderedScript(layout.script);
+    var renderedScriptString = renderedScript(layout.script, components);
     return renderUtil(layout, renderedScriptString, defaults);
 }
 
