@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.renderHtmlUtil = exports.layoutUtil = exports.renderUtil = undefined;
+exports.renderVueMixins = exports.renderVueComponents = exports.renderHtmlUtil = exports.layoutUtil = exports.renderUtil = undefined;
 
 var _defaults = require('../defaults');
 
@@ -97,11 +97,8 @@ function renderUtil(layout, renderedScriptString, defaults) {
     });
 }
 
-function renderedScript(script, components, mixins) {
-
+function renderVueComponents(script, components) {
     var componentsString = '';
-    var mixinString = '';
-
     for (var component in components) {
         if (components.hasOwnProperty(component)) {
             var currentComponent = components[component];
@@ -111,13 +108,23 @@ function renderedScript(script, components, mixins) {
             }
         }
     }
+    return componentsString;
+}
 
+function renderVueMixins(mixins) {
+    var mixinString = '';
     for (var mixin in mixins) {
         if (mixins.hasOwnProperty(mixin)) {
             mixinString = mixinString + ('Vue.mixin(' + (0, _string.scriptToString)(mixins[mixin]) + ');\n');
         }
     }
+    return mixinString;
+}
 
+function renderedScript(script, components, mixins) {
+
+    var componentsString = renderVueComponents(script, components);
+    var mixinString = mixins !== undefined ? renderVueMixins(mixins) : '';
     var scriptString = (0, _string.scriptToString)(script);
 
     return '<script>\n        (function () {\n            \'use strict\'\n            ' + mixinString + '\n            ' + componentsString + '\n            var createApp = function () {\n                return new Vue(\n                    ' + scriptString + '\n                )\n            }\n            if (typeof module !== \'undefined\' && module.exports) {\n                module.exports = createApp\n            } else {\n                this.app = createApp()\n            }\n        }).call(this)\n    </script>';
@@ -132,3 +139,5 @@ function renderHtmlUtil(components, defaults) {
 exports.renderUtil = renderUtil;
 exports.layoutUtil = layoutUtil;
 exports.renderHtmlUtil = renderHtmlUtil;
+exports.renderVueComponents = renderVueComponents;
+exports.renderVueMixins = renderVueMixins;
