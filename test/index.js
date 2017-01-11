@@ -5,6 +5,8 @@ import {
     renderUtil,
     layoutUtil,
     renderHtmlUtil,
+    renderVueComponents,
+    renderVueMixins,
     scriptToString,
     metaUtil
 } from '../lib/utils';
@@ -124,6 +126,9 @@ describe('express-vue', function () {
         };
         const viewsPath = '/foo/bar';
         const defaultObject = new Defaults(object, viewsPath);
+        defaultObject.options = {
+            vue: {}
+        }
         const componentArray = [
             layoutParser('', defaultObject, types.LAYOUT),
             componentParser(component, defaultObject, types.COMPONENT)
@@ -137,6 +142,37 @@ describe('express-vue', function () {
         }, function(error) {
             assert(false, 'it cant parse components' + error);
         });
-
     });
+
+    it('it should render global mixins', function() {
+        var mixin = {
+            created: function () {
+                var myOption = this.$options.myOption
+                if (myOption) {
+                    console.log(myOption)
+                }
+            }
+        }
+        const mixinString = renderVueMixins([mixin]);
+        const hasMixinString = mixinString.includes('Vue.mixin')
+
+        assert(hasMixinString, 'it cant render global mixins')
+    })
+
+        // it('it should render global components', function() {
+        //     var component = {
+        //         name: 'headerComponent',
+        //         script: {props: ["user"],data: function(){return {}}}
+        //     }
+        //     var script = {
+        //         components: {
+        //             headerComponent: component
+        //         }
+        //     }
+        //     const componentString = renderVueComponents(script, [component]);
+        //     console.log(componentString);
+        //     const hasComponentString = componentString.includes('Vue.component')
+        //
+        //     assert(hasComponentString, 'it cant render global components')
+        // })
 });
