@@ -97,9 +97,10 @@ function renderUtil(layout, renderedScriptString, defaults) {
     });
 }
 
-function renderedScript(script, components) {
+function renderedScript(script, components, mixins) {
 
     var componentsString = '';
+    var mixinString = '';
 
     for (var component in components) {
         if (components.hasOwnProperty(component)) {
@@ -111,14 +112,20 @@ function renderedScript(script, components) {
         }
     }
 
+    for (var mixin in mixins) {
+        if (mixins.hasOwnProperty(mixin)) {
+            mixinString = mixinString + ('Vue.mixin(' + (0, _string.scriptToString)(mixins[mixin]) + ');\n');
+        }
+    }
+
     var scriptString = (0, _string.scriptToString)(script);
 
-    return '<script>\n        (function () {\n            \'use strict\'\n            ' + componentsString + '\n            var createApp = function () {\n                return new Vue(\n                    ' + scriptString + '\n                )\n            }\n            if (typeof module !== \'undefined\' && module.exports) {\n                module.exports = createApp\n            } else {\n                this.app = createApp()\n            }\n        }).call(this)\n    </script>';
+    return '<script>\n        (function () {\n            \'use strict\'\n            ' + mixinString + '\n            ' + componentsString + '\n            var createApp = function () {\n                return new Vue(\n                    ' + scriptString + '\n                )\n            }\n            if (typeof module !== \'undefined\' && module.exports) {\n                module.exports = createApp\n            } else {\n                this.app = createApp()\n            }\n        }).call(this)\n    </script>';
 }
 
 function renderHtmlUtil(components, defaults) {
     var layout = layoutUtil(components);
-    var renderedScriptString = renderedScript(layout.script, components);
+    var renderedScriptString = renderedScript(layout.script, components, defaults.options.vue.mixins);
     return renderUtil(layout, renderedScriptString, defaults);
 }
 
