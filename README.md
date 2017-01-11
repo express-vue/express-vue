@@ -115,6 +115,47 @@ Then in your .vue file you can just use the element directive and it will work o
 
 Note: This isn't available in the layout.vue file yet, only the .vue files you specify in your express route.
 
+## mixins
+
+You can now use Mixins, lets say you have an file called `exampleMixin.js` and it looks like this:
+
+`examplemixin.js`
+```js
+export default {
+    methods: {
+        hello: function () {
+            console.log('Hello')
+        }
+    }
+}
+```
+
+In your route you would declare it by placing `mixins: [exampleMixin]` in your vue object.
+
+```js
+import exampleMixin from '.exampleMixin';
+router.get('/', (req, res, next) => {
+    res.render('main', {
+        data : {
+            otherData: 'Something Else'
+        },
+        vue: {
+            meta: {
+                title: 'Page Title',
+            },
+            components: ['myheader', 'myfooter'],
+            mixins: [exampleMixin]
+        }
+
+    });
+})
+```
+You can now use this in your .Vue file, like so
+
+```html
+<button @click="hello()">Click me and look at console logs</button>
+```
+
 ## Meta
 
 This library takes the wonderful inspiration from [vue-head](https://github.com/ktquez/vue-head) and adapts it to
