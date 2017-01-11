@@ -5,6 +5,7 @@ node_js:
 - v5
 - v4
 deploy:
+  skip_cleanup: true
   provider: npm
   email: daniel@cherubini.casa
   api_key:
