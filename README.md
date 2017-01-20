@@ -192,6 +192,10 @@ meta: {
 }
 ```
 
+## DevTools
+
+To use the amazing Vue.js DevTools please set the environment variable `VUE_DEV=true`
+
 ## Requirements
 
 Requires Node V4 or greater
@@ -218,7 +222,6 @@ Finally you'll need to set the link to your copy of vue.js in the script... (thi
         <body>
             {{{app}}}
             {{{script}}}
-            <script>app.$mount('#app')</script>
         </body>
     </html>
 </template>
