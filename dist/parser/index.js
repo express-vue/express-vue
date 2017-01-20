@@ -77,13 +77,12 @@ function dataParser(script, defaults, type) {
 
 function scriptParser(script, defaults, type) {
     var options = {
-        'presets': ['es2015'],
-        'plugins': ['add-module-exports']
+        'presets': ['es2015']
     };
     var scriptString = script.match(scriptRegex)[0].replace(scriptRegex, '$2');
     var babelScript = require('babel-core').transform(scriptString, options);
     var evalScript = (0, _requireFromString2.default)(babelScript.code);
-    var finalScript = dataParser(evalScript, defaults, type);
+    var finalScript = dataParser(evalScript.default, defaults, type);
     return finalScript;
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "express-vue",
-  "version": "3.4.2",
+  "version": "3.4.3",
   "description": "Vue rendering engine for Express.js",
   "homepage": "https://github.com/danmademe/express-vue",
   "author": {
@@ -20,6 +20,8 @@
   "devDependencies": {
     "babel-core": "^6.18.2",
     "babel-eslint": "^7.1.1",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-flow-strip-types": "^6.18.0",
     "babel-preset-es2015": "6.18.0",
     "babel-register": "^6.18.0",
     "del": "^2.2.2",
@@ -57,8 +59,6 @@
   "license": "Apache-2.0",
   "dependencies": {
     "babel-core": "^6.18.0",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-transform-flow-strip-types": "^6.18.0",
     "babel-preset-es2015": "^6.9.0",
     "html-minifier": "^3.2.3",
     "param-case": "^2.1.0",
