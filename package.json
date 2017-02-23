@@ -19,11 +19,9 @@
     "node"
   ],
   "devDependencies": {
-    "babel-core": "^6.18.2",
     "babel-eslint": "^7.1.1",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-flow-strip-types": "^6.18.0",
-    "babel-preset-es2015": "6.18.0",
     "babel-register": "^6.18.0",
     "del": "^2.2.2",
     "eslint": "^3.11.0",
