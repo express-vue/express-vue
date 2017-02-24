@@ -65,7 +65,12 @@ gulp.task('coveralls', ['test'], function () {
     .pipe(coveralls());
 });
 
-gulp.task('babel', ['clean'], function () {
+gulp.task('typescript', ['clean'], function() {
+    return gulp.src('lib/**/*.ts')
+    .pipe(gulp.dest('dist'));
+});
+
+gulp.task('babel', ['typescript'], function () {
     return gulp.src('lib/**/*.js')
     .pipe(babel())
     .pipe(gulp.dest('dist'));

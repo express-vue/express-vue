@@ -12,7 +12,7 @@
     "dist"
   ],
   "main": "dist/index.js",
-  "typings": "types/index.d.ts",
+  "typings": "dist/index.d.ts",
   "keywords": [
     "vue",
     "express",
