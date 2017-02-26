@@ -63,8 +63,8 @@ router.get('/', (req, res, next) => {
             meta: {
                 title: 'Page Title',
                 head: [
-                    { property:'og:title' content: 'Page Title'},
-                    { name:'twitter:title' content: 'Page Title'},
+                    { property:'og:title', content: 'Page Title'},
+                    { name:'twitter:title', content: 'Page Title'},
                 ]
             }    
         }
@@ -125,7 +125,7 @@ You can now use Mixins, lets say you have an file called `exampleMixin.js` and i
 export default {
     methods: {
         hello: function () {
-            console.log('Hello')
+            console.log('Hello');
         }
     }
 }
