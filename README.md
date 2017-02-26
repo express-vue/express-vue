@@ -234,6 +234,14 @@ Finally you'll need to set the link to your copy of vue.js in the script... (thi
 </style>
 ```
 
+## Typescript support
+
+Typescript declarations are published on NPM, so you don’t need external tools like Typings, as declarations are automatically imported with express-vue. That means all you need is a simple:
+
+```js
+import expressVue = require('express-vue');
+```
+
 ## Todo
 
 - Have the style sections do something!

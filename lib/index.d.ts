@@ -1,3 +1,3 @@
-import * as expressVue from './index.js';
+declare function expressVue(componentPath: string, options: Object, callback: Function): void;
 
 export = expressVue;
