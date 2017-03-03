@@ -2,8 +2,6 @@ language: node_js
 node_js:
 - v7
 - v6
-- v5
-- v4
 deploy:
   skip_cleanup: true
   provider: npm

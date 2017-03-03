@@ -1,11 +1,11 @@
 <p align="center"><img width="150"src="http://i.imgur.com/qs9EUdv.png"></p>
 
 <p align="center">
-    <a href="https://npmjs.org/package/express-vue"><img src="https://badge.fury.io/js/express-vue.svg" alt="Version"></a>
-    <a href="https://travis-ci.org/danmademe/express-vue"><img src="https://travis-ci.org/danmademe/express-vue.svg?branch=master" alt="Build Status"></a>
-    <a href="https://david-dm.org/danmademe/express-vue"><img src="https://david-dm.org/danmademe/express-vue.svg?theme=shields.io" alt="Dependency Status"></a>
-    <a href="https://coveralls.io/r/danmademe/express-vue"><img src="https://coveralls.io/repos/danmademe/express-vue/badge.svg" alt="Coverage Status"></a>
-    <a href="https://lima.codeclimate.com/github/danmademe/express-vue"><img src="https://lima.codeclimate.com/github/danmademe/express-vue/badges/gpa.svg" /></a>
+<a href="https://npmjs.org/package/express-vue"><img src="https://badge.fury.io/js/express-vue.svg" alt="Version"></a>
+<a href="https://travis-ci.org/danmademe/express-vue"><img src="https://travis-ci.org/danmademe/express-vue.svg?branch=master" alt="Build Status"></a>
+<a href="https://david-dm.org/danmademe/express-vue"><img src="https://david-dm.org/danmademe/express-vue.svg?theme=shields.io" alt="Dependency Status"></a>
+<a href="https://coveralls.io/r/danmademe/express-vue"><img src="https://coveralls.io/repos/danmademe/express-vue/badge.svg" alt="Coverage Status"></a>
+<a href="https://lima.codeclimate.com/github/danmademe/express-vue"><img src="https://lima.codeclimate.com/github/danmademe/express-vue/badges/gpa.svg" /></a>
 </p>
 
 
@@ -24,6 +24,10 @@ The idea is simple use Node+Express for your Controller and Models, and Vue.js f
 ```sh
 $ npm install --save express-vue
 ```
+
+## Requirements
+
+Requires Node V6 or greater
 
 ## Examples
 
@@ -60,7 +64,7 @@ router.get('/', (req, res, next) => {
             otherData: 'Something Else'
         },
         vue: {
-            meta: {
+            head: {
                 title: 'Page Title',
                 head: [
                     { property:'og:title', content: 'Page Title'},
@@ -90,7 +94,7 @@ router.get('/', (req, res, next) => {
             otherData: 'Something Else'
         },
         vue: {
-            meta: {
+            head: {
                 title: 'Page Title',
             },
             components: ['myheader', 'myfooter']
@@ -106,11 +110,11 @@ Then in your .vue file you can just use the element directive and it will work o
 
 ```vue
 <template>
-    <div>
-        <myheader></myheader>
-        <h1>{{otherData}}</h1>
-        <myfooter></myfooter>
-    </div>
+<div>
+<myheader></myheader>
+<h1>{{otherData}}</h1>
+<myfooter></myfooter>
+</div>
 </template>
 ```
 
@@ -141,7 +145,7 @@ router.get('/', (req, res, next) => {
             otherData: 'Something Else'
         },
         vue: {
-            meta: {
+            head: {
                 title: 'Page Title',
             },
             components: ['myheader', 'myfooter'],
@@ -164,10 +168,10 @@ work here. Just add a `meta` array into your `head` object, with support for bot
 (Note we don't support shorthand here, and no support for google+ just yet, that will come soon).
 
 ```js
-meta: {
+head: {
     title: 'It will be a pleasure',
     // Meta tags
-    head: [
+    meta: [
         { name: 'application-name', content: 'Name of my application' },
         { name: 'description', content: 'A description of the page', id: 'desc' } // id to replace intead of create element
         // ...
@@ -193,13 +197,32 @@ meta: {
 }
 ```
 
+## Structured Data
+
+This also supports Google Structured data
+https://developers.google.com/search/docs/guides/intro-structured-data
+
+
+```js
+head: {
+    title: 'It will be a pleasure',
+    structuredData: {
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "url": "http://www.your-company-site.com",
+        "contactPoint": [{
+            "@type": "ContactPoint",
+            "telephone": "+1-401-555-1212",
+            "contactType": "customer service"
+        }]
+    }
+}
+```
+
+
 ## DevTools
 
 To use the amazing Vue.js DevTools please set the environment variable `VUE_DEV=true`
-
-## Requirements
-
-Requires Node V4 or greater
 
 ## Optional
 
@@ -213,18 +236,18 @@ Finally you'll need to set the link to your copy of vue.js in the script... (thi
 
 ```vue
 <template>
-    <!DOCTYPE html>
-    <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-            <script src="assets/scripts/vue.js" charset="utf-8"></script>
-        </head>
-        <body>
-            {{{app}}}
-            {{{script}}}
-        </body>
-    </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<script src="assets/scripts/vue.js" charset="utf-8"></script>
+</head>
+<body>
+{{{app}}}
+{{{script}}}
+</body>
+</html>
 </template>
 
 <script>

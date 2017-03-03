@@ -8,7 +8,7 @@ import {
     renderVueComponents,
     renderVueMixins,
     scriptToString,
-    metaUtil
+    headUtil
 } from '../lib/utils';
 import {
     componentParser,
@@ -84,8 +84,9 @@ describe('express-vue', function () {
 
     it('it should do head', function() {
         const object = {
+            head: {
                 title: 'It was a Pleasure',
-                head: [
+                meta: [
                     { name: 'application-name', content: 'Name of my application' },
                     { name: 'description', content: 'A description of the page', id: 'desc' },
                     { name: 'twitter:title', content: 'Content Title' },
@@ -97,9 +98,10 @@ describe('express-vue', function () {
                     { style: '/assets/rendered/style.css', type: 'text/css' },
                     { style: '/assets/rendered/style.css', type: 'text/css', rel: 'stylesheet' }
                 ]
-            };
+            }
+        };
 
-        const metaString = metaUtil(object);
+        const metaString = headUtil(object);
 
         //Booleans
         const stringIsCorrect = metaString === '<title>It was a Pleasure</title><meta name="application-name" content="Name of my application" /><meta name="description" content="A description of the page" /><meta name="twitter:title" content="Content Title" /><meta property="fb:app_id" content="123456789" /><meta property="og:title" content="Content Title" /><script src="/assets/scripts/hammer.min.js" charset="utf-8"></script><script src="/assets/scripts/vue-touch.min.js" charset="utf-8"></script><link rel="stylesheet" type="text/css" href="/assets/rendered/style.css"><link rel="stylesheet" type="text/css" href="/assets/rendered/style.css"><link rel="stylesheet" type="text/css" href="/assets/rendered/style.css"></head>'
@@ -117,6 +119,42 @@ describe('express-vue', function () {
         assert(hasStyle, 'has style 🎷');
     });
 
+    it('it should do old Head', function() {
+        const object = {
+            meta: {
+                title: 'It was a Pleasure',
+                head: [
+                    { name: 'application-name', content: 'Name of my application' },
+                    { name: 'description', content: 'A description of the page', id: 'desc' },
+                    { name: 'twitter:title', content: 'Content Title' },
+                    { property: 'fb:app_id', content: '123456789' },
+                    { property: 'og:title', content: 'Content Title' },
+                    { script: '/assets/scripts/hammer.min.js' },
+                    { script: '/assets/scripts/vue-touch.min.js', charset: 'utf-8' },
+                    { style: '/assets/rendered/style.css' },
+                    { style: '/assets/rendered/style.css', type: 'text/css' },
+                    { style: '/assets/rendered/style.css', type: 'text/css', rel: 'stylesheet' }
+                ]
+            }
+        };
+
+        const metaString = headUtil(object);
+
+        //Booleans
+        const stringIsCorrect = metaString === '<title>It was a Pleasure</title><meta name="application-name" content="Name of my application" /><meta name="description" content="A description of the page" /><meta name="twitter:title" content="Content Title" /><meta property="fb:app_id" content="123456789" /><meta property="og:title" content="Content Title" /><script src="/assets/scripts/hammer.min.js" charset="utf-8"></script><script src="/assets/scripts/vue-touch.min.js" charset="utf-8"></script><link rel="stylesheet" type="text/css" href="/assets/rendered/style.css"><link rel="stylesheet" type="text/css" href="/assets/rendered/style.css"><link rel="stylesheet" type="text/css" href="/assets/rendered/style.css"></head>'
+        const hasTitle        = metaString.includes('<title>It was a Pleasure</title>');
+        const hasMetaName     = metaString.includes(`<meta name="application-name" content="Name of my application" />`);
+        const hasMetaProperty = metaString.includes(`<meta property="og:title" content="Content Title" />`);
+        const hasScript       = metaString.includes(`<script src="/assets/scripts/hammer.min.js" charset="utf-8">`)
+        const hasStyle        = metaString.includes(`<link rel="stylesheet" type="text/css" href="/assets/rendered/style.css">`)
+
+        assert(stringIsCorrect, 'String is correct');
+        assert(hasTitle, 'has title section');
+        assert(hasMetaName, 'has meta name section');
+        assert(hasMetaProperty, 'has meta property section');
+        assert(hasScript, 'has scripts');
+        assert(hasStyle, 'has style 🎷');
+    });
 
     it('it should parse components', function() {
         let types    = new Types();
