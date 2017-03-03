@@ -25,6 +25,10 @@ The idea is simple use Node+Express for your Controller and Models, and Vue.js f
 $ npm install --save express-vue
 ```
 
+## Requirements
+
+Requires Node V6 or greater
+
 ## Examples
 
 A Super Simple example can be found at [danmademe/express-vue-super-simple](https://github.com/danmademe/express-vue-super-simple)
@@ -219,10 +223,6 @@ head: {
 ## DevTools
 
 To use the amazing Vue.js DevTools please set the environment variable `VUE_DEV=true`
-
-## Requirements
-
-Requires Node V4 or greater
 
 ## Optional
 
