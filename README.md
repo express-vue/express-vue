@@ -11,6 +11,8 @@
 
 # express-vue
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/danmademe/express-vue.svg)](https://greenkeeper.io/)
+
 A Simple way of using Server Side rendered Vue.js natively in Express using `res.render()`
 
 If you want to use vue.js and setup a large scale web application that is server side rendered, using Node+Express, but you want to use all the fantastic tools
