@@ -1,19 +1,9 @@
-import assert     from 'assert';
-import expressVue from '../lib';
-import {Defaults, Types} from '../lib/defaults';
-import {
-    renderUtil,
-    layoutUtil,
-    renderHtmlUtil,
-    renderVueComponents,
-    renderVueMixins,
-    scriptToString,
-    headUtil
-} from '../lib/utils';
-import {
-    componentParser,
-    layoutParser
-} from '../lib/parser';
+const assert     = require('assert');
+const expressVue = require('../lib');
+const Models = require('../lib/defaults');
+const Utils = require('../lib/utils');
+const Parser = require('../lib/parser');
+
 
 describe('express-vue', function () {
     it('Express Vue loads', function () {
@@ -28,7 +18,7 @@ describe('express-vue', function () {
             defaultLayout: 'qux'
         };
         const viewsPath = '/foo/bar';
-        const defaultObject = new Defaults(object, viewsPath);
+        const defaultObject = new Models.Defaults(object, viewsPath);
 
         //Booleans
         const componentsDir = defaultObject.componentsDir === '/baz/';
@@ -58,7 +48,7 @@ describe('express-vue', function () {
             'boolean': true
         }
 
-        const string = scriptToString(object);
+        const string = Utils.scriptToString(object);
 
         //Booleans
         const hasString   = string.includes(`string: "foo"`);
@@ -101,15 +91,15 @@ describe('express-vue', function () {
             }
         };
 
-        const metaString = headUtil(object);
+        const metaString = Utils.headUtil(object);
 
         //Booleans
-        const stringIsCorrect = metaString === '<title>It was a Pleasure</title><meta name="application-name" content="Name of my application" /><meta name="description" content="A description of the page" /><meta name="twitter:title" content="Content Title" /><meta property="fb:app_id" content="123456789" /><meta property="og:title" content="Content Title" /><script src="/assets/scripts/hammer.min.js" charset="utf-8"></script><script src="/assets/scripts/vue-touch.min.js" charset="utf-8"></script><link rel="stylesheet" type="text/css" href="/assets/rendered/style.css"><link rel="stylesheet" type="text/css" href="/assets/rendered/style.css"><link rel="stylesheet" type="text/css" href="/assets/rendered/style.css"></head>'
+        const stringIsCorrect = metaString === '<title>It was a Pleasure</title><meta name="application-name" content="Name of my application" /><meta name="description" content="A description of the page" /><meta name="twitter:title" content="Content Title" /><meta property="fb:app_id" content="123456789" /><meta property="og:title" content="Content Title" /><script src="/assets/scripts/hammer.min.js" charset="utf-8"></script><script src="/assets/scripts/vue-touch.min.js" charset="utf-8"></script><link rel="stylesheet" type="text/css" href="/assets/rendered/style.css"><link rel="stylesheet" type="text/css" href="/assets/rendered/style.css"><link rel="stylesheet" type="text/css" href="/assets/rendered/style.css"></head>';
         const hasTitle        = metaString.includes('<title>It was a Pleasure</title>');
-        const hasMetaName     = metaString.includes(`<meta name="application-name" content="Name of my application" />`);
-        const hasMetaProperty = metaString.includes(`<meta property="og:title" content="Content Title" />`);
-        const hasScript       = metaString.includes(`<script src="/assets/scripts/hammer.min.js" charset="utf-8">`)
-        const hasStyle        = metaString.includes(`<link rel="stylesheet" type="text/css" href="/assets/rendered/style.css">`)
+        const hasMetaName     = metaString.includes('<meta name="application-name" content="Name of my application" />');
+        const hasMetaProperty = metaString.includes('<meta property="og:title" content="Content Title" />');
+        const hasScript       = metaString.includes('<script src="/assets/scripts/hammer.min.js" charset="utf-8">');
+        const hasStyle        = metaString.includes('<link rel="stylesheet" type="text/css" href="/assets/rendered/style.css">');
 
         assert(stringIsCorrect, 'String is correct');
         assert(hasTitle, 'has title section');
@@ -138,15 +128,15 @@ describe('express-vue', function () {
             }
         };
 
-        const metaString = headUtil(object);
+        const metaString = Utils.headUtil(object);
 
         //Booleans
-        const stringIsCorrect = metaString === '<title>It was a Pleasure</title><meta name="application-name" content="Name of my application" /><meta name="description" content="A description of the page" /><meta name="twitter:title" content="Content Title" /><meta property="fb:app_id" content="123456789" /><meta property="og:title" content="Content Title" /><script src="/assets/scripts/hammer.min.js" charset="utf-8"></script><script src="/assets/scripts/vue-touch.min.js" charset="utf-8"></script><link rel="stylesheet" type="text/css" href="/assets/rendered/style.css"><link rel="stylesheet" type="text/css" href="/assets/rendered/style.css"><link rel="stylesheet" type="text/css" href="/assets/rendered/style.css"></head>'
+        const stringIsCorrect = metaString === '<title>It was a Pleasure</title><meta name="application-name" content="Name of my application" /><meta name="description" content="A description of the page" /><meta name="twitter:title" content="Content Title" /><meta property="fb:app_id" content="123456789" /><meta property="og:title" content="Content Title" /><script src="/assets/scripts/hammer.min.js" charset="utf-8"></script><script src="/assets/scripts/vue-touch.min.js" charset="utf-8"></script><link rel="stylesheet" type="text/css" href="/assets/rendered/style.css"><link rel="stylesheet" type="text/css" href="/assets/rendered/style.css"><link rel="stylesheet" type="text/css" href="/assets/rendered/style.css"></head>';
         const hasTitle        = metaString.includes('<title>It was a Pleasure</title>');
-        const hasMetaName     = metaString.includes(`<meta name="application-name" content="Name of my application" />`);
-        const hasMetaProperty = metaString.includes(`<meta property="og:title" content="Content Title" />`);
-        const hasScript       = metaString.includes(`<script src="/assets/scripts/hammer.min.js" charset="utf-8">`)
-        const hasStyle        = metaString.includes(`<link rel="stylesheet" type="text/css" href="/assets/rendered/style.css">`)
+        const hasMetaName     = metaString.includes('<meta name="application-name" content="Name of my application" />');
+        const hasMetaProperty = metaString.includes('<meta property="og:title" content="Content Title" />');
+        const hasScript       = metaString.includes('<script src="/assets/scripts/hammer.min.js" charset="utf-8">');
+        const hasStyle        = metaString.includes('<link rel="stylesheet" type="text/css" href="/assets/rendered/style.css">');
 
         assert(stringIsCorrect, 'String is correct');
         assert(hasTitle, 'has title section');
@@ -157,22 +147,22 @@ describe('express-vue', function () {
     });
 
     it('it should parse components', function() {
-        let types    = new Types();
+        let types    = new Models.Types();
         const component = __dirname + '/component.vue';
         const object  = {
             componentsDir:  __dirname + ''
         };
         const viewsPath = '/foo/bar';
-        const defaultObject = new Defaults(object, viewsPath);
+        const defaultObject = new Models.Defaults(object, viewsPath);
         defaultObject.options = {
             vue: {}
-        }
+        };
         const componentArray = [
-            layoutParser('', defaultObject, types.LAYOUT),
-            componentParser(component, defaultObject, types.COMPONENT)
+            Parser.layoutParser('', defaultObject, types.LAYOUT),
+            Parser.componentParser(component, defaultObject, types.COMPONENT)
         ];
         Promise.all(componentArray).then(function(components) {
-            renderHtmlUtil(components, defaultObject).then(function(html) {
+            Utils.renderHtmlUtil(components, defaultObject).then(function() {
                 assert(true, 'it cant parse components');
             }).catch(function(error) {
                 assert(false, 'it cant parse components' + error);
@@ -185,17 +175,17 @@ describe('express-vue', function () {
     it('it should render global mixins', function() {
         var mixin = {
             created: function () {
-                var myOption = this.$options.myOption
+                var myOption = this.$options.myOption;
                 if (myOption) {
-                    console.log(myOption)
+                    console.log(myOption);
                 }
             }
-        }
-        const mixinString = renderVueMixins([mixin]);
-        const hasMixinString = mixinString.includes('Vue.mixin')
+        };
+        const mixinString = Utils.renderVueMixins([mixin]);
+        const hasMixinString = mixinString.includes('Vue.mixin');
 
-        assert(hasMixinString, 'it cant render global mixins')
-    })
+        assert(hasMixinString, 'it cant render global mixins');
+    });
 
         // it('it should render global components', function() {
         //     var component = {
@@ -207,7 +197,7 @@ describe('express-vue', function () {
         //             headerComponent: component
         //         }
         //     }
-        //     const componentString = renderVueComponents(script, [component]);
+        //     const componentString = Utils.renderVueComponents(script, [component]);
         //     console.log(componentString);
         //     const hasComponentString = componentString.includes('Vue.component')
         //
