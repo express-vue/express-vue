@@ -58,15 +58,10 @@
     "gulp-ava": "^0.16.0",
     "gulp-babel": "^6.1.2",
     "gulp-concat": "^2.6.1",
-    "gulp-coveralls": "^0.1.4",
     "gulp-eslint": "^3.0.1",
     "gulp-exclude-gitignore": "^1.1.1",
-    "gulp-istanbul": "^1.1.1",
     "gulp-line-ending-corrector": "^1.0.1",
-    "gulp-mocha": "4.1.0",
     "gulp-nsp": "^2.4.2",
-    "gulp-plumber": "^1.1.0",
-    "isparta": "^4.0.0",
     "nyc": "^10.1.2"
   },
   "eslintConfig": {
