@@ -21,7 +21,29 @@
   "engines": {
     "node": ">=6.0.0"
   },
+  "ava": {
+    "files": [
+      "test/*.js"
+    ],
+    "source": [
+      "lib/**/*.js",
+      "!dist/**/*"
+    ],
+    "concurrency": 5,
+    "failFast": false,
+    "powerAssert": false,
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit"
+  },
+  "nyc": {
+    "include": [
+        "lib/**/*.js"
+    ]
+  },
   "devDependencies": {
+    "ava": "^0.18.2",
     "babel-eslint": "^7.1.1",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
@@ -31,19 +53,16 @@
     "eslint-config-xo-space": "^0.15.0",
     "eslint-plugin-babel": "^4.0.0",
     "express": "^4.14.0",
-    "flow-bin": "^0.40.0",
+    "flow-bin": "^0.41.0",
     "gulp": "^3.9.1",
+    "gulp-ava": "^0.16.0",
     "gulp-babel": "^6.1.2",
     "gulp-concat": "^2.6.1",
-    "gulp-coveralls": "^0.1.4",
     "gulp-eslint": "^3.0.1",
     "gulp-exclude-gitignore": "^1.1.1",
-    "gulp-istanbul": "^1.1.1",
     "gulp-line-ending-corrector": "^1.0.1",
-    "gulp-mocha": "3.0.1",
     "gulp-nsp": "^2.4.2",
-    "gulp-plumber": "^1.1.0",
-    "isparta": "^4.0.0"
+    "nyc": "^10.1.2"
   },
   "eslintConfig": {
     "extends": "xo-space",
@@ -54,7 +73,7 @@
   "repository": "danmademe/express-vue",
   "scripts": {
     "prepublish": "gulp build",
-    "test": "gulp",
+    "test": "gulp test",
     "preversion": "npm test",
     "version": "gulp build && git add -A",
     "postversion": "git push && git push --tags"

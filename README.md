@@ -6,6 +6,7 @@
 <a href="https://david-dm.org/danmademe/express-vue"><img src="https://david-dm.org/danmademe/express-vue.svg?theme=shields.io" alt="Dependency Status"></a>
 <a href="https://coveralls.io/r/danmademe/express-vue"><img src="https://coveralls.io/repos/danmademe/express-vue/badge.svg" alt="Coverage Status"></a>
 <a href="https://lima.codeclimate.com/github/danmademe/express-vue"><img src="https://lima.codeclimate.com/github/danmademe/express-vue/badges/gpa.svg" /></a>
+<a href="https://greenkeeper.io"><img src="https://badges.greenkeeper.io/danmademe/express-vue.svg" /></a>
 </p>
 
 
