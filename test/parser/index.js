@@ -6,11 +6,17 @@ import {renderHtmlUtil} from '../../lib/utils';
 
 let types    = new Types();
 const component = __dirname + '/../component.vue';
-const object  = {
-    componentsDir:  __dirname + ''
+const defaults = {
+    settings: {
+        vue: {
+            componentsDir: '',
+            defaultLayout: 'qux'
+        },
+        views: '/foo/bar'
+    }
 };
-const viewsPath = '/foo/bar';
-const defaultObject = new Defaults(object, viewsPath);
+
+const defaultObject = new Defaults(defaults);
 defaultObject.options = {
     vue: {}
 }
