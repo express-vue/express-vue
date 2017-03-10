@@ -6,6 +6,11 @@ const object = {
     'function': function() {
         return 'baz';
     },
+    data: function() {
+        return {
+            foo: 'bar'
+        }
+    },
     'array': ['one', 'two', 'three'],
     'object': {
         dog: true,
@@ -15,6 +20,11 @@ const object = {
     'boolean': true
 }
 
+const object2 = {
+    data: {
+        foo: 'bar'
+    }
+}
 
 const string = scriptToString(object);
 
@@ -27,9 +37,13 @@ const hasBoolean  = string.includes(`boolean: true`);
 const hasFunction = string.includes(`function: function _function() {
         return 'baz';
     }`);
+const hasDataFunc = string.includes(`data: function(){return {"foo":"bar"}}`);
+const hasDataObj  = scriptToString(object2).includes(`data: {"foo":"bar"}`);
 const hasFinal    = string === `{string: "foo",function: function _function() {
         return 'baz';
-    },array: ["one","two","three"],object: {dog: true,cat: false,},number: 42,boolean: true,}`;
+    },data: function(){return {"foo":"bar"}},array: ["one","two","three"],object: {dog: true,cat: false,},number: 42,boolean: true,}`;
+
+
 
 test('Has a String' , t => {
     t.is(hasString, true);
@@ -54,6 +68,14 @@ test('Has a Boolean' , t => {
 test('Has a Function' , t => {
     t.is(hasFunction, true);
 });
+
+test('Has Data Function', t => {
+    t.is(hasDataFunc, true);
+})
+
+test('Has Data Object', t => {
+    t.is(hasDataObj, true);
+})
 
 test('Has a Fully formed String' , t => {
     t.is(hasFinal, true);
