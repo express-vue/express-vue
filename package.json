@@ -39,7 +39,7 @@
   },
   "nyc": {
     "include": [
-        "lib/**/*.js"
+      "lib/**/*.js"
     ]
   },
   "devDependencies": {
@@ -48,6 +48,7 @@
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-register": "^6.18.0",
+    "coveralls": "^2.12.0",
     "del": "^2.2.2",
     "eslint": "^3.11.0",
     "eslint-config-xo-space": "^0.15.0",
@@ -76,7 +77,8 @@
     "test": "gulp test",
     "preversion": "npm test",
     "version": "gulp build && git add -A",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push --tags",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "license": "Apache-2.0",
   "dependencies": {
