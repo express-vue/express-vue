@@ -1,12 +1,19 @@
 import test   from 'ava';
-import {Defaults, Types} from '../lib/defaults';
+import {Defaults, Types, DataObject} from '../../lib/models';
 
-const object  = {
-    componentsDir: '/baz',
-    defaultLayout: 'qux'
+const defaults = {
+    settings: {
+        vue: {
+            componentsDir: '/baz',
+            defaultLayout: 'qux'
+        },
+        views: '/foo/bar'
+    }
 };
-const viewsPath = '/foo/bar';
-const defaultObject = new Defaults(object, viewsPath);
+const types         = new Types();
+const defaultObject = new Defaults(defaults);
+const dataObject    = new DataObject(defaults, defaultObject, types.COMPONENT);
+const dataObjectSub = new DataObject(defaults, defaultObject, types.SUBCOMPONENT);
 
 //Examples
 const componentsDir = '/baz/';
