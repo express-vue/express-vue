@@ -1,12 +1,15 @@
 import test   from 'ava';
-import {Defaults, Types} from '../lib/defaults';
+import {Defaults, Types, DataObject} from '../../lib/models';
 
 const object  = {
     componentsDir: '/baz',
     defaultLayout: 'qux'
 };
 const viewsPath = '/foo/bar';
+const types         = new Types();
 const defaultObject = new Defaults(object, viewsPath);
+const dataObject    = new DataObject(object, defaultObject, types.COMPONENT);
+const dataObjectSub = new DataObject(object, defaultObject, types.SUBCOMPONENT);
 
 //Examples
 const componentsDir = '/baz/';

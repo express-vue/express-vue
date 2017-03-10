@@ -1,5 +1,5 @@
 import test   from 'ava';
-import {scriptToString} from '../lib/utils';
+import {scriptToString} from '../../lib/utils';
 
 const object = {
     'string': 'foo',
@@ -14,6 +14,7 @@ const object = {
     'number': 42,
     'boolean': true
 }
+
 
 const string = scriptToString(object);
 
