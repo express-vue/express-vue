@@ -37,6 +37,7 @@ test('Express Vue Works', t => {
         if (error) {
             t.fail();
         } else {
+            console.log(html);
             t.pass();
         }
     })
