@@ -89,7 +89,7 @@
     "pug": "^2.0.0-beta11",
     "require-from-string": "^1.2.1",
     "vue": "^2.2.2",
-    "vue-server-renderer": "^2.2.2",
+    "vue-server-renderer": "^2.2.3",
     "xss": "^0.3.1"
   }
 }
