@@ -88,7 +88,7 @@
     "param-case": "^2.1.0",
     "pug": "^2.0.0-beta11",
     "require-from-string": "^1.2.1",
-    "vue": "^2.2.2",
+    "vue": "^2.2.3",
     "vue-server-renderer": "^2.2.2",
     "xss": "^0.3.1"
   }
