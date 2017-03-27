@@ -2,7 +2,7 @@
   "name": "express-vue",
   "version": "3.9.8",
   "description": "Vue rendering engine for Express.js",
-  "homepage": "https://github.com/danmademe/express-vue",
+  "homepage": "https://github.com/express-vue/express-vue",
   "author": {
     "name": "Daniel Cherubini",
     "email": "daniel@cherubini.casa",
@@ -71,7 +71,7 @@
       "mocha": true
     }
   },
-  "repository": "danmademe/express-vue",
+  "repository": "express-vue/express-vue",
   "scripts": {
     "prepublish": "gulp build",
     "test": "gulp test",
