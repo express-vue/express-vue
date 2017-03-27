@@ -12,7 +12,7 @@ deploy:
   on:
     branch: master
     tags: true
-    repo: danmademe/express-vue
+    repo: express-vue/express-vue
 addons:
     code_climate:
         repo_token: 308db9eefcafd79785ed545433e7930a43b926b5bdea95014274a4b7ffe4b06b
