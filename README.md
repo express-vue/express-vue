@@ -2,11 +2,11 @@
 
 <p align="center">
 <a href="https://npmjs.org/package/express-vue"><img src="https://badge.fury.io/js/express-vue.svg" alt="Version"></a>
-<a href="https://travis-ci.org/danmademe/express-vue"><img src="https://travis-ci.org/danmademe/express-vue.svg?branch=master" alt="Build Status"></a>
-<a href="https://david-dm.org/danmademe/express-vue"><img src="https://david-dm.org/danmademe/express-vue.svg?theme=shields.io" alt="Dependency Status"></a>
-<a href="https://coveralls.io/r/danmademe/express-vue"><img src="https://coveralls.io/repos/danmademe/express-vue/badge.svg" alt="Coverage Status"></a>
-<a href="https://lima.codeclimate.com/github/danmademe/express-vue"><img src="https://lima.codeclimate.com/github/danmademe/express-vue/badges/gpa.svg" /></a>
-<a href="https://greenkeeper.io"><img src="https://badges.greenkeeper.io/danmademe/express-vue.svg" /></a>
+<a href="https://travis-ci.org/express-vue/express-vue"><img src="https://travis-ci.org/express-vue/express-vue.svg?branch=master" alt="Build Status"></a>
+<a href="https://david-dm.org/express-vue/express-vue"><img src="https://david-dm.org/express-vue/express-vue.svg?theme=shields.io" alt="Dependency Status"></a>
+<a href="https://coveralls.io/r/express-vue/express-vue"><img src="https://coveralls.io/repos/express-vue/express-vue/badge.svg" alt="Coverage Status"></a>
+<a href="https://lima.codeclimate.com/github/express-vue/express-vue"><img src="https://lima.codeclimate.com/github/express-vue/express-vue/badges/gpa.svg" /></a>
+<a href="https://greenkeeper.io"><img src="https://badges.greenkeeper.io/express-vue/express-vue.svg" /></a>
 </p>
 
 
@@ -32,9 +32,9 @@ Requires Node V6 or greater, and Vue 2.0 or greater. (Latest Vue.js is included 
 
 ## Examples
 
-A Super Simple example can be found at [danmademe/express-vue-super-simple](https://github.com/danmademe/express-vue-super-simple)
+A Super Simple example can be found at [express-vue/express-vue-super-simple](https://github.com/express-vue/express-vue-super-simple)
 
-A full example can be found at: [danmademe/express-vue-example](https://github.com/danmademe/express-vue-example)
+A full example can be found at: [express-vue/express-vue-example](https://github.com/express-vue/express-vue-example)
 
 
 ## Usage
@@ -282,7 +282,7 @@ Sorry for the breaking change, but I'm only one person.
 Apache-2.0 © [Daniel Cherubini](https://cherubini.casa)
 
 
-[daviddm-image]: https://david-dm.org/danmademe/express-vue.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/danmademe/express-vue
-[coveralls-image]: https://coveralls.io/repos/danmademe/express-vue/badge.svg
-[coveralls-url]: https://coveralls.io/r/danmademe/express-vue
+[daviddm-image]: https://david-dm.org/express-vue/express-vue.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/express-vue/express-vue
+[coveralls-image]: https://coveralls.io/repos/express-vue/express-vue/badge.svg
+[coveralls-url]: https://coveralls.io/r/express-vue/express-vue
