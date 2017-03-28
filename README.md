@@ -121,7 +121,7 @@ Then in your .vue file you can just use the element directive and it will work o
 
 Note: This isn't available in the layout.vue file yet, only the .vue files you specify in your express route.
 
-## mixins
+## Mixins
 
 You can now use Mixins, lets say you have an file called `exampleMixin.js` and it looks like this:
 
