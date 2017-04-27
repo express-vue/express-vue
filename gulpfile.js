@@ -45,6 +45,6 @@ gulp.task('test', ['eslint'], function() {
 
 gulp.task('build', ['nsp', 'babel']);
 
-gulp.task('watch', function () {
+gulp.task('default', ['clean', 'build'], function () {
     gulp.watch(['lib/**/*.js'], ['build']);
 });
