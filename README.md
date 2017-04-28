@@ -111,11 +111,11 @@ Then in your .vue file you can just use the element directive and it will work o
 
 ```vue
 <template>
-<div>
-<myheader></myheader>
-<h1>{{otherData}}</h1>
-<myfooter></myfooter>
-</div>
+    <div>
+        <myheader></myheader>
+        <h1>{{otherData}}</h1>
+        <myfooter></myfooter>
+    </div>
 </template>
 ```
 
@@ -237,18 +237,18 @@ Finally you'll need to set the link to your copy of vue.js in the script... (thi
 
 ```vue
 <template>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<script src="assets/scripts/vue.js" charset="utf-8"></script>
-</head>
-<body>
-{{{app}}}
-{{{script}}}
-</body>
-</html>
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+            <script src="assets/scripts/vue.js" charset="utf-8"></script>
+        </head>
+        <body>
+            {{{app}}}
+            {{{script}}}
+        </body>
+    </html>
 </template>
 
 <script>
