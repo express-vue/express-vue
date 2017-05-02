@@ -19,7 +19,7 @@ test('finds test Path ', t => {
 
 test('shows error for fake test Path ', t => {
     const testPath = __dirname + '/../componentDoesntExist.vue';
-    const errMessage = 'Could not find test file at /Users/danielcherubini/Coding/Node/express-vue/test/utils/../componentDoesntExist.vue'
+    const errMessage = `Could not find test file at ${__dirname}/../componentDoesntExist.vue`
     const err = new Error(errMessage);
 
     // const paramPath = getCorrectPathForFile(testPath, 'test');
