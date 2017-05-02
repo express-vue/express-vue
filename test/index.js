@@ -37,7 +37,7 @@ test('Renders Component Promise Array', t => {
 });
 
 test('Express Vue Works', t => {
-    expressVue('component', options, function(error, html) {
+    expressVue(__dirname +'/component', options, function(error, html) {
         if (error) {
             t.fail(error);
         } else {
