@@ -84,6 +84,7 @@
   "dependencies": {
     "babel-core": "^6.24.1",
     "babel-preset-es2015": "^6.24.1",
+    "camel-case": "^3.0.0",
     "html-minifier": "^3.4.3",
     "param-case": "^2.1.1",
     "pug": "2.0.0-beta11",
