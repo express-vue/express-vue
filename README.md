@@ -121,6 +121,23 @@ Then in your .vue file you can just use the element directive and it will work o
 
 Note: This isn't available in the layout.vue file yet, only the .vue files you specify in your express route.
 
+## CSS inside components/views
+
+Please use regular CSS for now, SCSS/LESS/etc are compiled languages, and this is a runtime library for now.
+In the future I will be creating build tools to handle compiling the .vue files into .js files so that it runs faster,
+and more efficient at runtime. But for dev mode, it will compile everything at runtime, so you can edit and preview faster.
+
+```html
+<style lang="css">
+    .test {
+        border: 2px;
+    }
+    .test a {
+        color: #FFF;
+    }
+</style>
+```
+
 ## Mixins
 
 You can now use Mixins, lets say you have an file called `exampleMixin.js` and it looks like this:
@@ -254,7 +271,7 @@ Finally you'll need to set the link to your copy of vue.js in the script... (thi
 <script>
 </script>
 
-<style>
+<style lang="css">
 </style>
 ```
 
@@ -266,9 +283,61 @@ Typescript declarations are published on NPM, so you don’t need external tools
 import expressVue = require('express-vue');
 ```
 
-## Todo
+## Sailsjs Support
 
-- Have the style sections do something!
+Thanks to @duffpod for this help.
+
+Generate a Sails project with sails new your-app --no-frontend
+Install express-vue with npm install express-vue --save
+Go to the view config of Sails app at your-app/config/views.js and replace the engine: 'ejs', with this:
+
+```js
+  engine: {
+    ext: 'vue',
+    fn: (function() {
+      return require('express-vue');
+    })()
+  },
+```
+
+Also need to set the layout: 'layout', to layout: false, as it will be ignored by Sails anyway.
+
+Now we need to create views folder in the Sails app. mkdir your-app/views/ && touch your-app/views/homepage.vue. Note, that your-app/config/routes.js is already pointing the homepage-file to the localhost:1337/.
+Edit the homepage.vue to add your Vue.js content to it, like:
+
+```html
+<template>
+  <div>
+    <h1>Hello, world!</h1>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {}
+  }
+};
+</script>
+```
+
+After all, go to the config/http.js in your project. There will be the middleware object. You need to add the customMiddleware function AFTER it, so everything looks like this:
+
+```js
+module.exports.http = {
+  middleware: {
+
+  },
+  customMiddleware: function(app) {
+    app.set('vue', {
+      // configure express-vue here
+      // do not use __dirname here, otherwise the path will look like:
+      // /Users/username/your-project/config/components
+      // componentsDir: app.settings.views + '/components',
+    });
+  }
+};
+```
 
 ## Changelog
 
