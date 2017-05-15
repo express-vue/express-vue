@@ -67,6 +67,17 @@ test('it should parse html', t => {
     })
 });
 
+test('it should parse style', t => {
+    fs.readFile(component, 'utf-8', function(err, content) {
+        if (err) {
+            content = defaultObject.backupLayout;
+        }
+
+        const style = Parser.styleParser(content);
+        t.is(style, '.test{color:#00f}');
+    })
+});
+
 test('it should parse scripts', t => {
     fs.readFile(component, 'utf-8', function(err, content) {
         if (err) {
