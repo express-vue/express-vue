@@ -2,11 +2,11 @@
 
 <p align="center">
 <a href="https://npmjs.org/package/express-vue"><img src="https://badge.fury.io/js/express-vue.svg" alt="Version"></a>
-<a href="https://travis-ci.org/danmademe/express-vue"><img src="https://travis-ci.org/danmademe/express-vue.svg?branch=master" alt="Build Status"></a>
-<a href="https://david-dm.org/danmademe/express-vue"><img src="https://david-dm.org/danmademe/express-vue.svg?theme=shields.io" alt="Dependency Status"></a>
-<a href="https://coveralls.io/r/danmademe/express-vue"><img src="https://coveralls.io/repos/danmademe/express-vue/badge.svg" alt="Coverage Status"></a>
-<a href="https://lima.codeclimate.com/github/danmademe/express-vue"><img src="https://lima.codeclimate.com/github/danmademe/express-vue/badges/gpa.svg" /></a>
-<a href="https://greenkeeper.io"><img src="https://badges.greenkeeper.io/danmademe/express-vue.svg" /></a>
+<a href="https://travis-ci.org/express-vue/express-vue"><img src="https://travis-ci.org/express-vue/express-vue.svg?branch=master" alt="Build Status"></a>
+<a href="https://david-dm.org/express-vue/express-vue"><img src="https://david-dm.org/express-vue/express-vue.svg?theme=shields.io" alt="Dependency Status"></a>
+<a href="https://coveralls.io/r/express-vue/express-vue"><img src="https://coveralls.io/repos/express-vue/express-vue/badge.svg" alt="Coverage Status"></a>
+<a href="https://lima.codeclimate.com/github/express-vue/express-vue"><img src="https://lima.codeclimate.com/github/express-vue/express-vue/badges/gpa.svg" /></a>
+<a href="https://greenkeeper.io"><img src="https://badges.greenkeeper.io/express-vue/express-vue.svg" /></a>
 </p>
 
 
@@ -32,9 +32,9 @@ Requires Node V6 or greater, and Vue 2.0 or greater. (Latest Vue.js is included 
 
 ## Examples
 
-A Super Simple example can be found at [danmademe/express-vue-super-simple](https://github.com/danmademe/express-vue-super-simple)
+A Super Simple example can be found at [express-vue/express-vue-super-simple](https://github.com/express-vue/express-vue-super-simple)
 
-A full example can be found at: [danmademe/express-vue-example](https://github.com/danmademe/express-vue-example)
+A full example can be found at: [express-vue/express-vue-example](https://github.com/express-vue/express-vue-example)
 
 
 ## Usage
@@ -111,17 +111,34 @@ Then in your .vue file you can just use the element directive and it will work o
 
 ```vue
 <template>
-<div>
-<myheader></myheader>
-<h1>{{otherData}}</h1>
-<myfooter></myfooter>
-</div>
+    <div>
+        <myheader></myheader>
+        <h1>{{otherData}}</h1>
+        <myfooter></myfooter>
+    </div>
 </template>
 ```
 
 Note: This isn't available in the layout.vue file yet, only the .vue files you specify in your express route.
 
-## mixins
+## CSS inside components/views
+
+Please use regular CSS for now, SCSS/LESS/etc are compiled languages, and this is a runtime library for now.
+In the future I will be creating build tools to handle compiling the .vue files into .js files so that it runs faster,
+and more efficient at runtime. But for dev mode, it will compile everything at runtime, so you can edit and preview faster.
+
+```html
+<style lang="css">
+    .test {
+        border: 2px;
+    }
+    .test a {
+        color: #FFF;
+    }
+</style>
+```
+
+## Mixins
 
 You can now use Mixins, lets say you have an file called `exampleMixin.js` and it looks like this:
 
@@ -237,24 +254,24 @@ Finally you'll need to set the link to your copy of vue.js in the script... (thi
 
 ```vue
 <template>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<script src="assets/scripts/vue.js" charset="utf-8"></script>
-</head>
-<body>
-{{{app}}}
-{{{script}}}
-</body>
-</html>
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+            <script src="assets/scripts/vue.js" charset="utf-8"></script>
+        </head>
+        <body>
+            {{{app}}}
+            {{{script}}}
+        </body>
+    </html>
 </template>
 
 <script>
 </script>
 
-<style>
+<style lang="css">
 </style>
 ```
 
@@ -266,9 +283,61 @@ Typescript declarations are published on NPM, so you don’t need external tools
 import expressVue = require('express-vue');
 ```
 
-## Todo
+## Sailsjs Support
 
-- Have the style sections do something!
+Thanks to @duffpod for this help.
+
+Generate a Sails project with sails new your-app --no-frontend
+Install express-vue with npm install express-vue --save
+Go to the view config of Sails app at your-app/config/views.js and replace the engine: 'ejs', with this:
+
+```js
+  engine: {
+    ext: 'vue',
+    fn: (function() {
+      return require('express-vue');
+    })()
+  },
+```
+
+Also need to set the layout: 'layout', to layout: false, as it will be ignored by Sails anyway.
+
+Now we need to create views folder in the Sails app. mkdir your-app/views/ && touch your-app/views/homepage.vue. Note, that your-app/config/routes.js is already pointing the homepage-file to the localhost:1337/.
+Edit the homepage.vue to add your Vue.js content to it, like:
+
+```html
+<template>
+  <div>
+    <h1>Hello, world!</h1>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {}
+  }
+};
+</script>
+```
+
+After all, go to the config/http.js in your project. There will be the middleware object. You need to add the customMiddleware function AFTER it, so everything looks like this:
+
+```js
+module.exports.http = {
+  middleware: {
+
+  },
+  customMiddleware: function(app) {
+    app.set('vue', {
+      // configure express-vue here
+      // do not use __dirname here, otherwise the path will look like:
+      // /Users/username/your-project/config/components
+      // componentsDir: app.settings.views + '/components',
+    });
+  }
+};
+```
 
 ## Changelog
 
@@ -282,7 +351,7 @@ Sorry for the breaking change, but I'm only one person.
 Apache-2.0 © [Daniel Cherubini](https://cherubini.casa)
 
 
-[daviddm-image]: https://david-dm.org/danmademe/express-vue.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/danmademe/express-vue
-[coveralls-image]: https://coveralls.io/repos/danmademe/express-vue/badge.svg
-[coveralls-url]: https://coveralls.io/r/danmademe/express-vue
+[daviddm-image]: https://david-dm.org/express-vue/express-vue.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/express-vue/express-vue
+[coveralls-image]: https://coveralls.io/repos/express-vue/express-vue/badge.svg
+[coveralls-url]: https://coveralls.io/r/express-vue/express-vue
