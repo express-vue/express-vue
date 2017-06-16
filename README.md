@@ -246,6 +246,18 @@ To use the amazing Vue.js DevTools please set the environment variable `VUE_DEV=
 
 This has caching, and its highly recomended, if you want to enable caching please use the environment variable `VUE_CACHE_ENABLED=true`
 
+To disable caching on keys in your data object use this
+
+```js
+app.set('vue', {
+    componentsDir: path.join(__dirname, '/views/components'),
+    defaultLayout: 'layout',
+    cache: {
+        ignoredKeys: ['csrf', 'foo', 'bar']
+    }
+});
+```
+
 ## Optional
 
 If you want to have a custom layout you can, here is an example layout.vue file which you can place relative to your views path.

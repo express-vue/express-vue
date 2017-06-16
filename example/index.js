@@ -8,7 +8,10 @@ app.set('view engine', 'vue');
 app.set('views', path.join(__dirname, '/views'));
 app.set('vue', {
     componentsDir: path.join(__dirname, '/views/components'),
-    defaultLayout: 'layout'
+    defaultLayout: 'layout',
+    cache: {
+        ignoredKeys: ['csrf']
+    }
 });
 
 var users = [];
