@@ -1,11 +1,13 @@
-var path = require('path');
-var gulp = require('gulp');
-var eslint = require('gulp-eslint');
-var excludeGitignore = require('gulp-exclude-gitignore');
-var nsp = require('gulp-nsp');
-var babel = require('gulp-babel');
-var del = require('del');
-var ava = require('gulp-ava');
+const path = require('path');
+const gulp = require('gulp');
+const eslint = require('gulp-eslint');
+const excludeGitignore = require('gulp-exclude-gitignore');
+const nsp = require('gulp-nsp');
+const babel = require('gulp-babel');
+const del = require('del');
+const ava = require('gulp-ava');
+const livereload = require('gulp-livereload');
+const nodemon = require('gulp-nodemon');
 
 // Initialize the babel transpiler so ES2015 files gets compiled
 // when they're loaded
@@ -34,6 +36,27 @@ gulp.task('babel', ['typescript'], function () {
     .pipe(gulp.dest('dist'));
 });
 
+gulp.task('watch', ['babel'], function () {
+    livereload.listen({
+        port: 35730
+    });
+    nodemon({
+        script: 'example/',
+        stdout: true,
+        watch : ['lib', 'example'],
+        ext   : 'js scss vue',
+        tasks : ['clean', 'babel'],
+    }).on('readable', function() {
+        this.stdout.on('data', function(chunk) {
+            if (/^listening/.test(chunk)) {
+                livereload.reload();
+            }
+            process.stdout.write(chunk);
+        });
+    });
+});
+
+
 gulp.task('clean', function () {
     return del('dist');
 });
@@ -45,6 +68,6 @@ gulp.task('test', ['eslint'], function() {
 
 gulp.task('build', ['nsp', 'babel']);
 
-gulp.task('default', ['clean', 'build'], function () {
-    gulp.watch(['lib/**/*.js'], ['build']);
+gulp.task('default', ['watch'], function () {
+    gulp.watch(['lib/**/*.js'], ['babel']);
 });

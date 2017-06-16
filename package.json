@@ -73,6 +73,8 @@
   },
   "repository": "express-vue/express-vue",
   "scripts": {
+    "start": "gulp",
+    "build": "gulp build",
     "prepublish": "gulp build",
     "test": "gulp test",
     "preversion": "npm test",
@@ -86,6 +88,8 @@
     "babel-preset-es2015": "^6.24.1",
     "camel-case": "^3.0.0",
     "clean-css": "^4.1.2",
+    "gulp-livereload": "^3.8.1",
+    "gulp-nodemon": "^2.2.1",
     "html-minifier": "^3.4.3",
     "param-case": "^2.1.1",
     "pug": "2.0.0-beta11",
