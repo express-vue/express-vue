@@ -26,7 +26,7 @@ const componentArray = [
 ];
 
 test('it should parse components', t => {
-    Parser.componentParser(component, defaultObject, types.COMPONENT)
+    return Parser.componentParser(component, defaultObject, types.COMPONENT)
     .then(function(layout) {
         t.pass();
     })
@@ -36,7 +36,7 @@ test('it should parse components', t => {
 });
 
 test('it should parse layout', t => {
-    Parser.layoutParser('', defaultObject, types.LAYOUT)
+    return Parser.layoutParser('', defaultObject, types.LAYOUT)
     .then(function(layout) {
         t.pass();
     })
@@ -46,7 +46,7 @@ test('it should parse layout', t => {
 });
 
 test('it should parse both components and layout', t =>  {
-    Promise.all(componentArray).then(function(components) {
+    return Promise.all(componentArray).then(function(components) {
         renderHtmlUtil(components, defaultObject).then(function(html) {
             t.pass();
         }).catch(function(error) {
@@ -57,17 +57,18 @@ test('it should parse both components and layout', t =>  {
     });
 });
 
-test('it should parse html', t => {
+test.cb('it should parse html', t => {
     fs.readFile(component, 'utf-8', function(err, content) {
         if (err) {
             content = defaultObject.backupLayout;
         }
         const html = Parser.htmlParser(content, true);
         t.is(html, '<div class=""><h1>{{message}}</h1></div>');
+        t.end();
     })
 });
 
-test('it should parse style', t => {
+test.cb('it should parse style', t => {
     fs.readFile(component, 'utf-8', function(err, content) {
         if (err) {
             content = defaultObject.backupLayout;
@@ -75,15 +76,17 @@ test('it should parse style', t => {
 
         const style = Parser.styleParser(content);
         t.is(style, '.test{color:#00f}');
+        t.end();
     })
 });
 
-test('it should parse scripts', t => {
+test.cb('it should parse scripts', t => {
     fs.readFile(component, 'utf-8', function(err, content) {
         if (err) {
             content = defaultObject.backupLayout;
         }
         const script = Parser.scriptParser(content, defaultObject, types.SUBCOMPONENT)
-        t.is(script, '{ props: [ \'message\' ] }');
+        t.is(script.props[0], 'message');
+        t.end();
     })
 })

@@ -45,7 +45,7 @@ gulp.task('watch', ['babel'], function () {
         stdout: true,
         watch : ['lib', 'example'],
         ext   : 'js scss vue',
-        tasks : ['clean', 'babel'],
+        tasks : ['clean', 'typescript', 'babel'],
     }).on('readable', function() {
         this.stdout.on('data', function(chunk) {
             if (/^listening/.test(chunk)) {
@@ -66,8 +66,6 @@ gulp.task('test', ['eslint'], function() {
         .pipe(ava({nyc:true}));
 });
 
-gulp.task('build', ['nsp', 'babel']);
+gulp.task('build', ['babel']);
 
-gulp.task('default', ['watch'], function () {
-    gulp.watch(['lib/**/*.js'], ['babel']);
-});
+gulp.task('default', ['watch']);

@@ -32,16 +32,24 @@ test('Renders Errors', t => {
 });
 
 test('Renders Component Promise Array', t => {
-    const array = setupComponentArray(component, defaults);
-    t.is(array.length, 2);
+    return setupComponentArray(component, defaults)
+    .then(array => {
+        t.is(array.length, 2);
+    })
+    .catch(error => {
+        t.fail(error);
+    });
+
 });
 
-test('Express Vue Works', t => {
+test.cb('Express Vue Works', t => {
     expressVue(__dirname +'/component', options, function(error, html) {
         if (error) {
             t.fail(error);
+            t.end();
         } else {
             t.pass();
+            t.end();
         }
     })
 });
