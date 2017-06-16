@@ -13,19 +13,21 @@ test('Params Path', t => {
 
 test('finds test Path ', t => {
     const testPath = __dirname + '/../component.vue';
-    const paramPath = getCorrectPathForFile(testPath, 'test');
-    t.pass(typeof paramPath, 'string');
+    return getCorrectPathForFile(testPath, 'test')
+    .then(paramPath => {
+        t.pass(typeof paramPath, 'string');
+    }).catch(err => {
+        t.fail(err);
+    });
+
 });
 
 test('shows error for fake test Path ', t => {
     const testPath = __dirname + '/../componentDoesntExist.vue';
     const errMessage = `Could not find test file at ${__dirname}/../componentDoesntExist.vue`
-    const err = new Error(errMessage);
 
-    // const paramPath = getCorrectPathForFile(testPath, 'test');
-    const error = t.throws(() => {
-        getCorrectPathForFile(testPath, 'test');
-    }, Error);
-
-    t.is(error.message, errMessage);
+    return getCorrectPathForFile(testPath, 'test')
+    .catch(error => {
+        t.is(error.message, errMessage);
+    })
 });

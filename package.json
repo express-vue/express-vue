@@ -23,7 +23,7 @@
   },
   "ava": {
     "files": [
-      "test/*.js"
+      "test/**/*.js"
     ],
     "source": [
       "lib/**/*.js",
@@ -76,7 +76,7 @@
     "start": "gulp",
     "build": "gulp build",
     "prepublish": "gulp build",
-    "test": "gulp test",
+    "test": "eslint lib && nyc ava",
     "preversion": "npm test",
     "version": "gulp build && git add -A",
     "postversion": "git push && git push --tags",
