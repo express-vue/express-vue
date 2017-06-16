@@ -242,6 +242,10 @@ head: {
 
 To use the amazing Vue.js DevTools please set the environment variable `VUE_DEV=true`
 
+## Caching
+
+This has caching, and its highly recomended, if you want to enable caching please use the environment variable `VUE_CACHE_ENABLED=true`
+
 ## Optional
 
 If you want to have a custom layout you can, here is an example layout.vue file which you can place relative to your views path.

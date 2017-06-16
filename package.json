@@ -91,6 +91,7 @@
     "gulp-livereload": "^3.8.1",
     "gulp-nodemon": "^2.2.1",
     "html-minifier": "^3.4.3",
+    "node-cache": "^4.1.1",
     "param-case": "^2.1.1",
     "pug": "^2.0.0-rc.2",
     "require-from-string": "^1.2.1",
