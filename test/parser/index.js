@@ -62,7 +62,8 @@ test.cb('it should parse html', t => {
         if (err) {
             content = defaultObject.backupLayout;
         }
-        const html = Parser.htmlParser(content, true);
+        const htmlRegex = /(<template.*?>)([\s\S]*)(<\/template>)/gm;
+        const html = Parser.htmlParser(content, htmlRegex, true);
         t.is(html, '<div class=""><h1>{{message}}</h1></div>');
         t.end();
     })
