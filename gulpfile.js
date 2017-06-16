@@ -66,6 +66,6 @@ gulp.task('test', ['eslint'], function() {
         .pipe(ava({nyc:true}));
 });
 
-gulp.task('build', ['nsp', 'babel']);
+gulp.task('build', ['babel']);
 
 gulp.task('default', ['watch']);
