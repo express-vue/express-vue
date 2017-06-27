@@ -2,6 +2,7 @@ import test   from 'ava';
 import {Defaults, Types, DataObject} from '../../lib/models';
 
 const defaults = {
+    layout: 'fooBar',
     settings: {
         vue: {
             componentsDir: '/baz',
@@ -21,6 +22,7 @@ const exampleObject = {
   rootPath: '/foo/bar/',
   layoutsDir: '',
   componentsDir: '/baz/',
+  customLayout: '/foo/bar/fooBar',
   defaultLayout: '/foo/bar/qux',
   options: {
       settings: {
@@ -53,6 +55,10 @@ test('Default Layout', t => {
 
 test('layoutsDir', t => {
     t.is(defaultObject.layoutsDir, exampleObject.layoutsDir);
+});
+
+test('customLayout', t => {
+    t.is(defaultObject.customLayout, exampleObject.customLayout);
 });
 
 
