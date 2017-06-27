@@ -26,7 +26,7 @@ var exampleMixin = {
             console.log('Hello');
         }
     }
-}
+};
 
 app.get('/', function(req, res){
     var scope = {
