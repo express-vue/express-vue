@@ -85,10 +85,11 @@
   "license": "Apache-2.0",
   "dependencies": {
     "babel-core": "^6.24.1",
+    "babel-preset-env": "^1.6.0",
     "babel-preset-es2015": "^6.24.1",
     "camel-case": "^3.0.0",
     "clean-css": "^4.1.6",
-    "express-vue-renderer": "^0.2.1",
+    "express-vue-renderer": "^0.2.4",
     "gulp-livereload": "^3.8.1",
     "gulp-nodemon": "^2.2.1",
     "html-minifier": "^3.4.3",

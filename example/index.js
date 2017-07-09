@@ -3,16 +3,22 @@ const express = require('express');
 const expressVue = require('../dist');
 const app = express();
 
-app.engine('vue', expressVue);
-app.set('view engine', 'vue');
-app.set('views', path.join(__dirname, '/views'));
-app.set('vue', {
-    componentsDir: path.join(__dirname, '/views/components'),
-    defaultLayout: 'layout',
-    cache: {
-        ignoredKeys: ['csrf']
+// app.engine('vue', expressVue.default);
+// app.set('view engine', 'vue');
+// app.set('views', path.join(__dirname, '/views'));
+const vueOptions = {
+    settings: {
+        vue: {
+            componentsDir: path.join(__dirname, '/views/components'),
+            defaultLayout: 'layout',
+            cache: {
+                ignoredKeys: ['csrf']
+            }
+        }
     }
-});
+};
+const expressVueMiddleware = expressVue.init(vueOptions);
+app.use(expressVueMiddleware);
 
 var users = [];
 var pageTitle = 'Express Vue';
@@ -43,13 +49,13 @@ app.get('/', function(req, res){
                     { name:'twitter:title', content: pageTitle}
                 ],
                 structuredData: {
-                    "@context": "http://schema.org",
-                    "@type": "Organization",
-                    "url": "http://www.your-company-site.com",
-                    "contactPoint": [{
-                        "@type": "ContactPoint",
-                        "telephone": "+1-401-555-1212",
-                        "contactType": "customer service"
+                    '@context': 'http://schema.org',
+                    '@type': 'Organization',
+                    'url': 'http://www.your-company-site.com',
+                    'contactPoint': [{
+                        '@type': 'ContactPoint',
+                        'telephone': '+1-401-555-1212',
+                        'contactType': 'customer service'
                     }]
                 }
             },
@@ -57,18 +63,16 @@ app.get('/', function(req, res){
             mixins: [exampleMixin]
         }
     };
-    res.render('index', scope);
+    res.renderVue('index', scope.data, scope.vue);
 });
 
 app.get('/users/:userName', function(req, res){
     var user = users.filter(function(item) {
         return item.name === req.params.userName;
     })[0];
-    res.render('user', {
-        data: {
-            title: 'Hello My Name is',
-            user: user
-        }
+    res.renderVue('user', {
+        title: 'Hello My Name is',
+        user: user
     });
 });
 
