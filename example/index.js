@@ -3,18 +3,14 @@ const express = require('express');
 const expressVue = require('../dist');
 const app = express();
 
-// app.engine('vue', expressVue.default);
-// app.set('view engine', 'vue');
-// app.set('views', path.join(__dirname, '/views'));
 const vueOptions = {
-    settings: {
-        vue: {
-            componentsDir: path.join(__dirname, '/views/components'),
-            defaultLayout: 'layout',
-            cache: {
-                ignoredKeys: ['csrf']
-            }
-        }
+    rootPath: path.join(__dirname, '/'),
+    viewsPath: 'views',
+    componentsPath: 'views/components',
+    layout: {
+        start: '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><script src="https://unpkg.com/vue@2.3.4/dist/vue.js"></script>',
+        middle: '<body><div id="app">',
+        end: '</div></body></html>'
     }
 };
 const expressVueMiddleware = expressVue.init(vueOptions);
@@ -35,35 +31,34 @@ var exampleMixin = {
 };
 
 app.get('/', function(req, res){
-    var scope = {
-        data: {
-            title: pageTitle,
-            message: 'Hello!',
-            users: users
-        },
-        vue: {
-            head: {
-                title: pageTitle,
-                meta: [
-                    { property:'og:title', content: pageTitle},
-                    { name:'twitter:title', content: pageTitle}
-                ],
-                structuredData: {
-                    '@context': 'http://schema.org',
-                    '@type': 'Organization',
-                    'url': 'http://www.your-company-site.com',
-                    'contactPoint': [{
-                        '@type': 'ContactPoint',
-                        'telephone': '+1-401-555-1212',
-                        'contactType': 'customer service'
-                    }]
-                }
-            },
-            components: ['users', 'messageComp'],
-            mixins: [exampleMixin]
-        }
+    const data = {
+        title: pageTitle,
+        message: 'Hello!',
+        users: users
     };
-    res.renderVue('index', scope.data, scope.vue);
+
+    const vue = {
+        head: {
+            title: pageTitle,
+            meta: [
+                { property:'og:title', content: pageTitle},
+                { name:'twitter:title', content: pageTitle}
+            ],
+            structuredData: {
+                '@context': 'http://schema.org',
+                '@type': 'Organization',
+                'url': 'http://www.your-company-site.com',
+                'contactPoint': [{
+                    '@type': 'ContactPoint',
+                    'telephone': '+1-401-555-1212',
+                    'contactType': 'customer service'
+                }]
+            }
+        },
+        components: ['users', 'messageComp'],
+        mixins: [exampleMixin]
+    };
+    res.renderVue('index', data, vue);
 });
 
 app.get('/users/:userName', function(req, res){
