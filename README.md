@@ -81,42 +81,28 @@ will overwrite it.
 
 ### Remember to always write your data objects in your .vue files as functions!
 
-## Components
+## Components / Mixins / Etc
 
-To add components to your .vue files you can either write them in manually.. or pass them in through res.render
+When including components/mixins/etc the directory it looks is going to be relative to your `rootPath` you set in the options
 
-```js
-router.get('/', (req, res, next) => {
-    res.render('main', {
-        data : {
-            otherData: 'Something Else'
-        },
-        vue: {
-            head: {
-                title: 'Page Title',
-            },
-            components: ['myheader', 'myfooter']
+```html
+<script>
+import messageComp from './components/message-comp.vue';
+import users from './components/users.vue';
+import exampleMixin from '../mixins/exampleMixin';
+export default {
+    mixins: [exampleMixin],
+    data: function () {
+        return {
         }
-
-    });
-})
+    },
+    components: {
+        messageComp: messageComp,
+        users: users
+    }
+}
+</script>
 ```
-
-This will trigger the library to look in the `componentsDir` folder for any component matching, it _MUST_ be an array
-
-Then in your .vue file you can just use the element directive and it will work out of the box
-
-```vue
-<template>
-    <div>
-        <myheader></myheader>
-        <h1>{{otherData}}</h1>
-        <myfooter></myfooter>
-    </div>
-</template>
-```
-
-Note: This isn't available in the layout.vue file yet, only the .vue files you specify in your express route.
 
 ## CSS inside components/views
 
@@ -141,7 +127,7 @@ You can now use Mixins, lets say you have an file called `exampleMixin.js` and i
 
 `examplemixin.js`
 ```js
-export default {
+module.exports {
     methods: {
         hello: function () {
             console.log('Hello');
@@ -152,23 +138,17 @@ export default {
 
 In your route you would declare it by placing `mixins: [exampleMixin]` in your vue object.
 
-```js
-import exampleMixin from '.exampleMixin';
-router.get('/', (req, res, next) => {
-    res.render('main', {
-        data : {
-            otherData: 'Something Else'
-        },
-        vue: {
-            head: {
-                title: 'Page Title',
-            },
-            components: ['myheader', 'myfooter'],
-            mixins: [exampleMixin]
+```html
+<script>
+import exampleMixin from '../mixins/exampleMixin';
+export default {
+    mixins: [exampleMixin],
+    data: function () {
+        return {
         }
-
-    });
-})
+    }
+}
+</script>
 ```
 You can now use this in your .Vue file, like so
 
@@ -241,52 +221,42 @@ To use the amazing Vue.js DevTools please set the environment variable `VUE_DEV=
 
 ## Caching
 
-This has caching, and its highly recomended, if you want to enable caching please use the environment variable `VUE_CACHE_ENABLED=true`
+Caching is now enabled by default, in dev mode hopefuly you're using something like nodemon/gulp/grunt etc, which restarts the server on file change.. otherwise you will need to stop and restart the server if you change your files.. which is normal.
 
-To disable caching on keys in your data object use this
+
+## Layout
+
+If you want to have a custom layout you can, here is the default layout
 
 ```js
-app.set('vue', {
-    componentsDir: path.join(__dirname, '/views/components'),
-    defaultLayout: 'layout',
-    cache: {
-        ignoredKeys: ['csrf', 'foo', 'bar']
+const options = {
+    layout: {
+        start: '<body><div id="app">',
+        end: '</div></body>'
     }
-});
+}
+const expressVueMiddleware = expressVue.init(options);
 ```
 
-## Optional
 
-If you want to have a custom layout you can, here is an example layout.vue file which you can place relative to your views path.
+## Finally
 
-It's required to set the `{{{app}}}` and `{{{script}}}` tags where you want the layout body and script to go.
-If you want to set a title or other meta data, you can add them to the vue metadata object, you can look at the above
-examples for how to do that.
+Finally you'll need to set the link to your copy of vue.js in the options like so
 
-Finally you'll need to set the link to your copy of vue.js in the script... (this will become automatic soon)
-
-```vue
-<template>
-    <!DOCTYPE html>
-    <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-            <script src="assets/scripts/vue.js" charset="utf-8"></script>
-        </head>
-        <body>
-            {{{app}}}
-            {{{script}}}
-        </body>
-    </html>
-</template>
-
-<script>
-</script>
-
-<style lang="css">
-</style>
+```js
+const options = {
+    vue: {
+        head: {
+            meta: [{
+                    script: 'https://unpkg.com/vue@2.4.2/dist/vue.js'
+                }
+            ]
+        }
+    }
+};
 ```
+
+the reasoning for doing this is that you can control which version of vue you're using, and you can swap which version of vue depending on however you like
 
 ## Typescript support
 
@@ -298,66 +268,21 @@ import expressVue = require('express-vue');
 
 ## Sailsjs Support
 
-Thanks to @duffpod for this help.
-
-Generate a Sails project with sails new your-app --no-frontend
-Install express-vue with npm install express-vue --save
-Go to the view config of Sails app at your-app/config/views.js and replace the engine: 'ejs', with this:
-
-```js
-  engine: {
-    ext: 'vue',
-    fn: (function() {
-      return require('express-vue');
-    })()
-  },
-```
-
-Also need to set the layout: 'layout', to layout: false, as it will be ignored by Sails anyway.
-
-Now we need to create views folder in the Sails app. mkdir your-app/views/ && touch your-app/views/homepage.vue. Note, that your-app/config/routes.js is already pointing the homepage-file to the localhost:1337/.
-Edit the homepage.vue to add your Vue.js content to it, like:
-
-```html
-<template>
-  <div>
-    <h1>Hello, world!</h1>
-  </div>
-</template>
-
-<script>
-export default {
-  data() {
-    return {}
-  }
-};
-</script>
-```
-
-After all, go to the config/http.js in your project. There will be the middleware object. You need to add the customMiddleware function AFTER it, so everything looks like this:
-
-```js
-module.exports.http = {
-  middleware: {
-
-  },
-  customMiddleware: function(app) {
-    app.set('vue', {
-      // configure express-vue here
-      // do not use __dirname here, otherwise the path will look like:
-      // /Users/username/your-project/config/components
-      // componentsDir: app.settings.views + '/components',
-    });
-  }
-};
-```
+This is middleware now so support for sails should just work as middleware.
 
 ## Changelog
 
-v3 has seriously changed the object you pass into the vue file.. so please if migrating from
-an earlier version (and you should). Take the time to look at the new object.
+#### V4
+- v4 was a complete re-write.. migrating from v3 to v4 will break everything.
+- No longer is res.render used, its now res.renderVue
+- Now replies with streams instead of a single sync call
+- massive performance increase
+- import vue components in your vue files!
+- lots of other changes
 
-Sorry for the breaking change, but I'm only one person.
+#### V3
+- v3 has seriously changed the object you pass into the vue file.. so please if migrating from
+an earlier version (and you should). Take the time to look at the new object. Sorry for the breaking change, but I'm only one person.
 
 ## License
 

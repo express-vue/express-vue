@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import messageComp from '../example/views/components/message-comp.vue';
-import users from '../example/views/components/users.vue';
-import exampleMixin from '../example/mixins/exampleMixin';
+import messageComp from './components/message-comp.vue';
+import users from './components/users.vue';
+import exampleMixin from '../mixins/exampleMixin';
 export default {
     mixins: [exampleMixin],
     data: function () {

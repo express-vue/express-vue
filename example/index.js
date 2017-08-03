@@ -4,8 +4,7 @@ const expressVue = require('../dist');
 const app = express();
 
 const vueOptions = {
-    rootPath: path.join(__dirname, '/'),
-    viewsPath: 'views',
+    rootPath: path.join(__dirname, '/views'),
     layout: {
         start: '<body><div id="app">',
         end: '</div></body>'
@@ -72,9 +71,7 @@ app.get('/', function (req, res) {
                     'contactType': 'customer service'
                 }]
             }
-        },
-        components: ['users', 'messageComp'],
-        mixins: [exampleMixin]
+        }
     };
     res.renderVue('index', data, vue);
 });
