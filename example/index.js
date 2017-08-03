@@ -18,9 +18,18 @@ app.use(expressVueMiddleware);
 
 var users = [];
 var pageTitle = 'Express Vue';
-users.push({ name: 'tobi', age: 12 });
-users.push({ name: 'loki', age: 14  });
-users.push({ name: 'jane', age: 16  });
+users.push({
+    name: 'tobi',
+    age: 12
+});
+users.push({
+    name: 'loki',
+    age: 14
+});
+users.push({
+    name: 'jane',
+    age: 16
+});
 
 var exampleMixin = {
     methods: {
@@ -30,7 +39,7 @@ var exampleMixin = {
     }
 };
 
-app.get('/', function(req, res){
+app.get('/', function (req, res) {
     const data = {
         title: pageTitle,
         message: 'Hello!',
@@ -40,9 +49,14 @@ app.get('/', function(req, res){
     const vue = {
         head: {
             title: pageTitle,
-            meta: [
-                { property:'og:title', content: pageTitle},
-                { name:'twitter:title', content: pageTitle}
+            meta: [{
+                    property: 'og:title',
+                    content: pageTitle
+                },
+                {
+                    name: 'twitter:title',
+                    content: pageTitle
+                }
             ],
             structuredData: {
                 '@context': 'http://schema.org',
@@ -61,8 +75,8 @@ app.get('/', function(req, res){
     res.renderVue('index', data, vue);
 });
 
-app.get('/users/:userName', function(req, res){
-    var user = users.filter(function(item) {
+app.get('/users/:userName', function (req, res) {
+    var user = users.filter(function (item) {
         return item.name === req.params.userName;
     })[0];
     res.renderVue('user', {
