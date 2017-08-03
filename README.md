@@ -12,12 +12,11 @@
 
 # express-vue
 
-A Simple way of using Server Side rendered Vue.js 2.0+ natively in Express using `res.render()`
+A Simple way of using Server Side rendered Vue.js 2.0+ natively in Express using streams
 
-If you want to use vue.js and setup a large scale web application that is server side rendered, using Node+Express, but you want to use all the fantastic tools
-given to you by Vue.js. Then this is the library for you.
+If you want to use vue.js and setup a large scale web application that is server side rendered, using Node+Express, but you want to use all the fantastic tools given to you by Vue.js. Then this is the library for you.
 
-The idea is simple use Node+Express for your Controller and Models, and Vue.js for your Views.. you can have a secure server side rendered website without all the hassle. Your Controller will pass in the data to your View through `res.render('view', {data})`.
+The idea is simple use Node+Express for your Controller and Models, and Vue.js for your Views.. you can have a secure server side rendered website without all the hassle. Your Controller will pass in the data to your View through `res.renderVue('view', {data}, [{vueOptions}])`.
 
 
 ## Installation
@@ -43,37 +42,35 @@ A full example can be found at: [express-vue/express-vue-example](https://github
 var expressVue = require('express-vue');
 
 var app = express();
-app.set('views', __dirname + '/app/views');
-//Optional if you want to specify the components directory separate to your views, and/or specify a custom layout.
-app.set('vue', {
-    //ComponentsDir is optional if you are storing your components in a different directory than your views
-    componentsDir: __dirname + '/components',
-    //Default layout is optional it's a file and relative to the views path, it does not require a .vue extension.
-    //If you want a custom layout set this to the location of your layout.vue file.
-    defaultLayout: 'layout'
-});
-app.engine('vue', expressVue);
-app.set('view engine', 'vue');
+const vueOptions = {
+    rootPath: path.join(__dirname, '../example'),
+    viewsPath: 'views',
+    layout: {
+        start: '<body><div id="app">',
+        end: '</div></body>'
+    }
+};
+const expressVueMiddleware = expressVue.init(vueOptions);
+app.use(expressVueMiddleware);
 ```
 
 In your route, assuming you have a main.vue
 
 ```js
 router.get('/', (req, res, next) => {
-    res.render('main', {
-        data: {
-            otherData: 'Something Else'
-        },
-        vue: {
-            head: {
-                title: 'Page Title',
-                head: [
-                    { property:'og:title', content: 'Page Title'},
-                    { name:'twitter:title', content: 'Page Title'},
-                ]
-            }    
-        }
-    });
+    const data: {
+        otherData: 'Something Else'
+    };
+    const vueOptions: {
+        head: {
+            title: 'Page Title',
+            head: [
+                { property:'og:title', content: 'Page Title'},
+                { name:'twitter:title', content: 'Page Title'},
+            ]
+        }    
+    }
+    res.renderVue('main', data, vueOptions);
 })
 ```
 

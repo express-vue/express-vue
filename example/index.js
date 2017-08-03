@@ -6,11 +6,9 @@ const app = express();
 const vueOptions = {
     rootPath: path.join(__dirname, '/'),
     viewsPath: 'views',
-    componentsPath: 'views/components',
     layout: {
-        start: '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><script src="https://unpkg.com/vue@2.3.4/dist/vue.js"></script>',
-        middle: '<body><div id="app">',
-        end: '</div></body></html>'
+        start: '<body><div id="app">',
+        end: '</div></body>'
     }
 };
 const expressVueMiddleware = expressVue.init(vueOptions);
@@ -56,6 +54,12 @@ app.get('/', function (req, res) {
                 {
                     name: 'twitter:title',
                     content: pageTitle
+                },
+                {
+                    script: 'https://unpkg.com/vue@2.4.2/dist/vue.js'
+                }, {
+                    name: 'viewport',
+                    content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
                 }
             ],
             structuredData: {
