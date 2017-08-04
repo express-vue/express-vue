@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div>
         <h1>{{title}}</h1>
         <p>Welcome to the {{title}} demo. Click a link:</p>
@@ -6,18 +6,26 @@
         <input v-model="message" placeholder="edit me">
         <message-comp :message="message"></message-comp>
         <users :users="users"></users>
-
     </div>
 </template>
 
 <script>
+import messageComp from './components/message-comp.vue';
+import users from './components/users.vue';
+import exampleMixin from '../mixins/exampleMixin';
 export default {
-    data: function() {
+    mixins: [exampleMixin],
+    data: function () {
         return {
         }
+    },
+    components: {
+        messageComp: messageComp,
+        users: users
     }
 }
 </script>
 
 <style lang="css">
+
 </style>

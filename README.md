@@ -12,12 +12,11 @@
 
 # express-vue
 
-A Simple way of using Server Side rendered Vue.js 2.0+ natively in Express using `res.render()`
+A Simple way of using Server Side rendered Vue.js 2.0+ natively in Express using streams
 
-If you want to use vue.js and setup a large scale web application that is server side rendered, using Node+Express, but you want to use all the fantastic tools
-given to you by Vue.js. Then this is the library for you.
+If you want to use vue.js and setup a large scale web application that is server side rendered, using Node+Express, but you want to use all the fantastic tools given to you by Vue.js. Then this is the library for you.
 
-The idea is simple use Node+Express for your Controller and Models, and Vue.js for your Views.. you can have a secure server side rendered website without all the hassle. Your Controller will pass in the data to your View through `res.render('view', {data})`.
+The idea is simple use Node+Express for your Controller and Models, and Vue.js for your Views.. you can have a secure server side rendered website without all the hassle. Your Controller will pass in the data to your View through `res.renderVue('view', {data}, [{vueOptions}])`.
 
 
 ## Installation
@@ -43,37 +42,34 @@ A full example can be found at: [express-vue/express-vue-example](https://github
 var expressVue = require('express-vue');
 
 var app = express();
-app.set('views', __dirname + '/app/views');
-//Optional if you want to specify the components directory separate to your views, and/or specify a custom layout.
-app.set('vue', {
-    //ComponentsDir is optional if you are storing your components in a different directory than your views
-    componentsDir: __dirname + '/components',
-    //Default layout is optional it's a file and relative to the views path, it does not require a .vue extension.
-    //If you want a custom layout set this to the location of your layout.vue file.
-    defaultLayout: 'layout'
-});
-app.engine('vue', expressVue);
-app.set('view engine', 'vue');
+const vueOptions = {
+    rootPath: path.join(__dirname, '../example/views'),
+    layout: {
+        start: '<body><div id="app">',
+        end: '</div></body>'
+    }
+};
+const expressVueMiddleware = expressVue.init(vueOptions);
+app.use(expressVueMiddleware);
 ```
 
 In your route, assuming you have a main.vue
 
 ```js
 router.get('/', (req, res, next) => {
-    res.render('main', {
-        data: {
-            otherData: 'Something Else'
-        },
-        vue: {
-            head: {
-                title: 'Page Title',
-                head: [
-                    { property:'og:title', content: 'Page Title'},
-                    { name:'twitter:title', content: 'Page Title'},
-                ]
-            }    
-        }
-    });
+    const data: {
+        otherData: 'Something Else'
+    };
+    const vueOptions: {
+        head: {
+            title: 'Page Title',
+            meta: [
+                { property:'og:title', content: 'Page Title'},
+                { name:'twitter:title', content: 'Page Title'},
+            ]
+        }    
+    }
+    res.renderVue('main', data, vueOptions);
 })
 ```
 
@@ -84,42 +80,80 @@ will overwrite it.
 
 ### Remember to always write your data objects in your .vue files as functions!
 
-## Components
+## Options
 
-To add components to your .vue files you can either write them in manually.. or pass them in through res.render
+|key|type|description|required?|default value|
+|-|-|-|-|-|
+|rootpath|string|this is the path the library will use as the base for all lookups| required| no default value|
+|layout|Object|this is the object for customzing the html, body, and template tags| optional| has default value which is in the example below|
+|vue|Object|this is the global config for vue for example you can set a global title, or a script tag in your head block everything here is global|optional|no default value|
+|data|Object|this is the global data object, this will be merged in to your .vue file's data block on every route, you can override this per route.|optional|no default value|
+
+Here's an example, with the default layout config included for you to see... note `rootPath` has no default value, and will crash if you don't set it.
+
+**note**, its very wise to set a version of vue in your `vue.head.meta` array an example is in the one below.
+if you don't add this, you wont see vue.js included in your head. This will be made automatic later, but for now you are in control of including vue.js in a `script` object in your `meta` array
 
 ```js
-router.get('/', (req, res, next) => {
-    res.render('main', {
-        data : {
-            otherData: 'Something Else'
+const vueOptions = {
+    rootPath: path.join(__dirname, '../example/views'),
+    layout: {
+        html: {
+            start: '<!DOCTYPE html><html>',
+            end: '</html>'
         },
-        vue: {
-            head: {
-                title: 'Page Title',
-            },
-            components: ['myheader', 'myfooter']
+        body: {
+            start: '<body>',
+            end: '</body>'
         }
-
-    });
-})
+        template: {
+            start: '<div id="app">',
+            end: '</div>'
+        }
+    },
+    vue: {
+        head: {
+            title: 'Hello this is a global title',
+            meta: [
+                { script: 'https://unpkg.com/vue' },
+                { style: '/assets/rendered/style.css' }
+            ]
+        }
+    },
+    data: {
+        foo: true,
+        bar: 'yes',
+        qux: {
+            id: 123,
+            baz: 'anything you wish, you can have any kind of object in the data object, it will be global and on every route'
+        }
+    }
+};
+const expressVueMiddleware = expressVue.init(vueOptions);
 ```
 
-This will trigger the library to look in the `componentsDir` folder for any component matching, it _MUST_ be an array
+## Components / Mixins / Etc
 
-Then in your .vue file you can just use the element directive and it will work out of the box
+When including components/mixins/etc the directory it looks is going to be relative to your `rootPath` you set in the options
 
-```vue
-<template>
-    <div>
-        <myheader></myheader>
-        <h1>{{otherData}}</h1>
-        <myfooter></myfooter>
-    </div>
-</template>
+```html
+<script>
+import messageComp from './components/message-comp.vue';
+import users from './components/users.vue';
+import exampleMixin from '../mixins/exampleMixin';
+export default {
+    mixins: [exampleMixin],
+    data: function () {
+        return {
+        }
+    },
+    components: {
+        messageComp: messageComp,
+        users: users
+    }
+}
+</script>
 ```
-
-Note: This isn't available in the layout.vue file yet, only the .vue files you specify in your express route.
 
 ## CSS inside components/views
 
@@ -144,7 +178,7 @@ You can now use Mixins, lets say you have an file called `exampleMixin.js` and i
 
 `examplemixin.js`
 ```js
-export default {
+module.exports {
     methods: {
         hello: function () {
             console.log('Hello');
@@ -155,23 +189,17 @@ export default {
 
 In your route you would declare it by placing `mixins: [exampleMixin]` in your vue object.
 
-```js
-import exampleMixin from '.exampleMixin';
-router.get('/', (req, res, next) => {
-    res.render('main', {
-        data : {
-            otherData: 'Something Else'
-        },
-        vue: {
-            head: {
-                title: 'Page Title',
-            },
-            components: ['myheader', 'myfooter'],
-            mixins: [exampleMixin]
+```html
+<script>
+import exampleMixin from '../mixins/exampleMixin';
+export default {
+    mixins: [exampleMixin],
+    data: function () {
+        return {
         }
-
-    });
-})
+    }
+}
+</script>
 ```
 You can now use this in your .Vue file, like so
 
@@ -186,33 +214,38 @@ work here. Just add a `meta` array into your `head` object, with support for bot
 (Note we don't support shorthand here, and no support for google+ just yet, that will come soon).
 
 ```js
-head: {
-    title: 'It will be a pleasure',
-    // Meta tags
-    meta: [
-        { name: 'application-name', content: 'Name of my application' },
-        { name: 'description', content: 'A description of the page', id: 'desc' } // id to replace intead of create element
-        // ...
-        // Twitter
-        { name: 'twitter:title', content: 'Content Title' },
-        // ...
-        // Facebook / Open Graph
-        { property: 'fb:app_id', content: '123456789' },
-        { property: 'og:title', content: 'Content Title' },
-        // ...
-        // Scripts
-        { script: '/assets/scripts/hammer.min.js' },
-        { script: '/assets/scripts/vue-touch.min.js', charset: 'utf-8' },
-        // Note with Scripts [charset] is optional defaults to utf-8
-        // ...
-        // Styles
-        { style: '/assets/rendered/style.css' }
-        { style: '/assets/rendered/style.css', type: 'text/css' }
-        { style: '/assets/rendered/style.css', type: 'text/css', rel: 'stylesheet' }
-        // Note with Styles, [type] and [rel] are optional...
-        // ...
-    ],
+const vueOptions = {
+    vue: {
+        head: {
+            title: 'It will be a pleasure',
+            // Meta tags
+            meta: [
+                { name: 'application-name', content: 'Name of my application' },
+                { name: 'description', content: 'A description of the page', id: 'desc' } // id to replace intead of create element
+                // ...
+                // Twitter
+                { name: 'twitter:title', content: 'Content Title' },
+                // ...
+                // Facebook / Open Graph
+                { property: 'fb:app_id', content: '123456789' },
+                { property: 'og:title', content: 'Content Title' },
+                // ...
+                // Scripts
+                { script: '/assets/scripts/hammer.min.js' },
+                { script: '/assets/scripts/vue-touch.min.js', charset: 'utf-8' },
+                // Note with Scripts [charset] is optional defaults to utf-8
+                // ...
+                // Styles
+                { style: '/assets/rendered/style.css' }
+                { style: '/assets/rendered/style.css', type: 'text/css' }
+                { style: '/assets/rendered/style.css', type: 'text/css', rel: 'stylesheet' }
+                // Note with Styles, [type] and [rel] are optional...
+                // ...
+            ],
+        }
+    }
 }
+const expressVueMiddleware = expressVue.init(vueOptions);
 ```
 
 ## Structured Data
@@ -222,17 +255,21 @@ https://developers.google.com/search/docs/guides/intro-structured-data
 
 
 ```js
-head: {
-    title: 'It will be a pleasure',
-    structuredData: {
-        "@context": "http://schema.org",
-        "@type": "Organization",
-        "url": "http://www.your-company-site.com",
-        "contactPoint": [{
-            "@type": "ContactPoint",
-            "telephone": "+1-401-555-1212",
-            "contactType": "customer service"
-        }]
+const vueOptions = {
+    vue: {
+        head: {
+            title: 'It will be a pleasure',
+            structuredData: {
+                "@context": "http://schema.org",
+                "@type": "Organization",
+                "url": "http://www.your-company-site.com",
+                "contactPoint": [{
+                    "@type": "ContactPoint",
+                    "telephone": "+1-401-555-1212",
+                    "contactType": "customer service"
+                }]
+            }
+        }
     }
 }
 ```
@@ -241,55 +278,89 @@ head: {
 ## DevTools
 
 To use the amazing Vue.js DevTools please set the environment variable `VUE_DEV=true`
-
-## Caching
-
-This has caching, and its highly recomended, if you want to enable caching please use the environment variable `VUE_CACHE_ENABLED=true`
-
-To disable caching on keys in your data object use this
+You'll also need to use the non-production version of vue, here's an example on how you can switch between the two based on a environment variable like `VUE_DEV` or better yet, the official one that express uses `NODE_ENV='production'` [(highly reccomended click here for why)](https://expressjs.com/en/advanced/best-practice-performance.html#set-nodeenv-to-production)
 
 ```js
-app.set('vue', {
-    componentsDir: path.join(__dirname, '/views/components'),
-    defaultLayout: 'layout',
-    cache: {
-        ignoredKeys: ['csrf', 'foo', 'bar']
+var expressVue = require('express-vue');
+
+var app = express();
+
+//Latest non-production version of vue as of writing this doc, 
+//you can go to https://unpkg.com/vue/ to find the latest version
+//check the vuejs.org docs for more info
+let vueScript = 'https://unpkg.com/vue@2.4.2/dist/vue.js';
+
+if (process.env.NODE_ENV === 'production') {
+    //its production so use the minimised production build of vuejs
+    vueScript = 'https://unpkg.com/vue';
+}
+
+const vueOptions = {
+    rootPath: path.join(__dirname, '../example/views'),
+    vue: {
+        head: {
+            meta: [{ script: vueScript }]
+        }
     }
-});
+};
+const expressVueMiddleware = expressVue.init(vueOptions);
+app.use(expressVueMiddleware);
+```
+## Caching
+
+Caching is now enabled by default, in dev mode hopefuly you're using something like nodemon/gulp/grunt etc, which restarts the server on file change.. otherwise you will need to stop and restart the server if you change your files.. which is normal.
+
+## Layout
+
+If you want to have a custom layout you can, here is the default layout, each part is overridable.
+
+```js
+const vueOptions = {
+    //...
+    layout: {
+        html: {
+            start: '<!DOCTYPE html><html>',
+            end: '</html>'
+        },
+        body: {
+            start: '<body>',
+            end: '</body>'
+        }
+        template: {
+            start: '<div id="app">',
+            end: '</div>'
+        }
+    }
+    //...
+};
+const expressVueMiddleware = expressVue.init(vueOptions);
 ```
 
-## Optional
 
-If you want to have a custom layout you can, here is an example layout.vue file which you can place relative to your views path.
+## Finally
 
-It's required to set the `{{{app}}}` and `{{{script}}}` tags where you want the layout body and script to go.
-If you want to set a title or other meta data, you can add them to the vue metadata object, you can look at the above
-examples for how to do that.
+Finally you'll need to set the link to your copy of vue.js in the options like so
 
-Finally you'll need to set the link to your copy of vue.js in the script... (this will become automatic soon)
-
-```vue
-<template>
-    <!DOCTYPE html>
-    <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-            <script src="assets/scripts/vue.js" charset="utf-8"></script>
-        </head>
-        <body>
-            {{{app}}}
-            {{{script}}}
-        </body>
-    </html>
-</template>
-
-<script>
-</script>
-
-<style lang="css">
-</style>
+```js
+const vueOptions = {
+    vue: {
+        head: {
+            meta: [{
+                    script: 'https://unpkg.com/vue@2.4.2/dist/vue.js'
+                }
+            ]
+        }
+    }
+};
 ```
+
+or alternativly
+
+```js
+vueOptions.vue.head.meta.push({ script: 'https://unpkg.com/vue@2.4.2/dist/vue.js'});
+```
+
+the reasoning for doing this is that you can control which version of vue you're using, and you can swap which version of vue depending on however you like. If you've read this far you've seen the example i gave for switching between the two versions.
 
 ## Typescript support
 
@@ -301,66 +372,21 @@ import expressVue = require('express-vue');
 
 ## Sailsjs Support
 
-Thanks to @duffpod for this help.
-
-Generate a Sails project with sails new your-app --no-frontend
-Install express-vue with npm install express-vue --save
-Go to the view config of Sails app at your-app/config/views.js and replace the engine: 'ejs', with this:
-
-```js
-  engine: {
-    ext: 'vue',
-    fn: (function() {
-      return require('express-vue');
-    })()
-  },
-```
-
-Also need to set the layout: 'layout', to layout: false, as it will be ignored by Sails anyway.
-
-Now we need to create views folder in the Sails app. mkdir your-app/views/ && touch your-app/views/homepage.vue. Note, that your-app/config/routes.js is already pointing the homepage-file to the localhost:1337/.
-Edit the homepage.vue to add your Vue.js content to it, like:
-
-```html
-<template>
-  <div>
-    <h1>Hello, world!</h1>
-  </div>
-</template>
-
-<script>
-export default {
-  data() {
-    return {}
-  }
-};
-</script>
-```
-
-After all, go to the config/http.js in your project. There will be the middleware object. You need to add the customMiddleware function AFTER it, so everything looks like this:
-
-```js
-module.exports.http = {
-  middleware: {
-
-  },
-  customMiddleware: function(app) {
-    app.set('vue', {
-      // configure express-vue here
-      // do not use __dirname here, otherwise the path will look like:
-      // /Users/username/your-project/config/components
-      // componentsDir: app.settings.views + '/components',
-    });
-  }
-};
-```
+This is middleware now so support for sails should just work as middleware.
 
 ## Changelog
 
-v3 has seriously changed the object you pass into the vue file.. so please if migrating from
-an earlier version (and you should). Take the time to look at the new object.
+#### V4
+- v4 was a complete re-write.. migrating from v3 to v4 will break everything.
+- No longer is res.render used, its now res.renderVue
+- Now replies with streams instead of a single sync call
+- massive performance increase
+- import vue components in your vue files!
+- lots of other changes
 
-Sorry for the breaking change, but I'm only one person.
+#### V3
+- v3 has seriously changed the object you pass into the vue file.. so please if migrating from
+an earlier version (and you should). Take the time to look at the new object. Sorry for the breaking change, but I'm only one person.
 
 ## License
 

@@ -1,3 +1,3 @@
-declare function expressVue(componentPath: string, options: Object, callback: Function): void;
+declare function init(options: Object): void;
 
-export = expressVue;
+export = init;
