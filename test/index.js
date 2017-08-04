@@ -3,37 +3,46 @@ const test = require('ava');
 const expressVue = require('../lib');
 const path = require('path');
 
-const vueOptions = {
-    rootPath: path.join(__dirname, '../example/views'),
-    layout: {
-        start: '<body><div id="app">',
-        end: '</div></body>'
-    }
-};
-const expressVueMiddleware = expressVue.init(vueOptions);
+let vueOptions = {};
+let expressVueMiddleware = {};
+let data = {};
+let vue = {};
+let exampleResponse = '';
+let exampleError = '';
 
-const data = {
-    title: 'pageTitle',
-    message: 'Hello!',
-    users: []
-};
+test.beforeEach(t => {
 
-const vue = {
-    head: {
+    vueOptions = {
+        rootPath: path.join(__dirname, '../example/views'),
+        layout: {
+            start: '<body><div id="app">',
+            end: '</div></body>'
+        }
+    };
+    expressVueMiddleware = expressVue.init(vueOptions);
+
+    data = {
         title: 'pageTitle',
-        meta: [{
-                property: 'og:title',
-                content: 'pageTitle'
-            },
-            {
-                name: 'twitter:title',
-                content: 'pageTitle'
-            }
-        ]
-    }
-};
+        message: 'Hello!',
+        users: []
+    };
 
-const exampleResponse = `<!DOCTYPE html><html><head>
+    vue = {
+        head: {
+            title: 'pageTitle',
+            meta: [{
+                    property: 'og:title',
+                    content: 'pageTitle'
+                },
+                {
+                    name: 'twitter:title',
+                    content: 'pageTitle'
+                }
+            ]
+        }
+    };
+
+    exampleResponse = `<!DOCTYPE html><html><head>
 <title>pageTitle</title>
 <meta property="og:title" content="pageTitle"/>
 <meta name="twitter:title" content="pageTitle"/>
@@ -43,7 +52,8 @@ const exampleResponse = `<!DOCTYPE html><html><head>
         },},},],data: function(){return {"title":"pageTitle","message":"Hello!","users":[]}},components: {messageComp: {props: ["message"],template: "<div class=\\"\\"><h1>{{message}}</h1></div>",},users: {props: ["users","title"],template: "<div class=\\"\\"><ul><li v-for=\\"user in users\\"><a v-bind:href=\\"'/users/' + user.name\\" class=\\"test\\">{{ user.name }}</a></li></ul></div>",},},template: "<div><h1>{{title}}</h1><p>Welcome to the {{title}} demo. Click a link:</p><button type=\\"button\\" name=\\"button\\" v-on:click=\\"hello\\">Say FOO</button> <input v-model=\\"message\\" placeholder=\\"edit me\\"><message-comp :message=\\"message\\"></message-comp><users :users=\\"users\\"></users></div>",})};if (typeof module !== 'undefined' && module.exports) {module.exports = createApp} else {this.app = createApp()}}).call(this);app.$mount('#app');
 </script></body></html>`
 
-const exampleError = `Could not find view file at ${vueOptions.rootPath}/indexfake.vue`;
+    exampleError = `Could not find view file at ${vueOptions.rootPath}/indexfake.vue`;
+});
 
 test.cb('renders App object', t => {
 
