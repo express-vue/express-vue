@@ -3,22 +3,30 @@ const express = require('express');
 const expressVue = require('../dist');
 const app = express();
 
-app.engine('vue', expressVue);
-app.set('view engine', 'vue');
-app.set('views', path.join(__dirname, '/views'));
-app.set('vue', {
-    componentsDir: path.join(__dirname, '/views/components'),
-    defaultLayout: 'layout',
-    cache: {
-        ignoredKeys: ['csrf']
+const vueOptions = {
+    rootPath: path.join(__dirname, '/views'),
+    layout: {
+        start: '<body><div id="app">',
+        end: '</div></body>'
     }
-});
+};
+const expressVueMiddleware = expressVue.init(vueOptions);
+app.use(expressVueMiddleware);
 
 var users = [];
 var pageTitle = 'Express Vue';
-users.push({ name: 'tobi', age: 12 });
-users.push({ name: 'loki', age: 14  });
-users.push({ name: 'jane', age: 16  });
+users.push({
+    name: 'tobi',
+    age: 12
+});
+users.push({
+    name: 'loki',
+    age: 14
+});
+users.push({
+    name: 'jane',
+    age: 16
+});
 
 var exampleMixin = {
     methods: {
@@ -28,47 +36,53 @@ var exampleMixin = {
     }
 };
 
-app.get('/', function(req, res){
-    var scope = {
-        data: {
+app.get('/', function (req, res) {
+    const data = {
+        title: pageTitle,
+        message: 'Hello!',
+        users: users
+    };
+
+    const vue = {
+        head: {
             title: pageTitle,
-            message: 'Hello!',
-            users: users
-        },
-        vue: {
-            head: {
-                title: pageTitle,
-                meta: [
-                    { property:'og:title', content: pageTitle},
-                    { name:'twitter:title', content: pageTitle}
-                ],
-                structuredData: {
-                    "@context": "http://schema.org",
-                    "@type": "Organization",
-                    "url": "http://www.your-company-site.com",
-                    "contactPoint": [{
-                        "@type": "ContactPoint",
-                        "telephone": "+1-401-555-1212",
-                        "contactType": "customer service"
-                    }]
+            meta: [{
+                    property: 'og:title',
+                    content: pageTitle
+                },
+                {
+                    name: 'twitter:title',
+                    content: pageTitle
+                },
+                {
+                    script: 'https://unpkg.com/vue@2.4.2/dist/vue.js'
+                }, {
+                    name: 'viewport',
+                    content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
                 }
-            },
-            components: ['users', 'messageComp'],
-            mixins: [exampleMixin]
+            ],
+            structuredData: {
+                '@context': 'http://schema.org',
+                '@type': 'Organization',
+                'url': 'http://www.your-company-site.com',
+                'contactPoint': [{
+                    '@type': 'ContactPoint',
+                    'telephone': '+1-401-555-1212',
+                    'contactType': 'customer service'
+                }]
+            }
         }
     };
-    res.render('index', scope);
+    res.renderVue('index', data, vue);
 });
 
-app.get('/users/:userName', function(req, res){
-    var user = users.filter(function(item) {
+app.get('/users/:userName', function (req, res) {
+    var user = users.filter(function (item) {
         return item.name === req.params.userName;
     })[0];
-    res.render('user', {
-        data: {
-            title: 'Hello My Name is',
-            user: user
-        }
+    res.renderVue('user', {
+        title: 'Hello My Name is',
+        user: user
     });
 });
 
