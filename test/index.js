@@ -4,8 +4,7 @@ const expressVue = require('../lib');
 const path = require('path');
 
 const vueOptions = {
-    rootPath: path.join(__dirname, '../example'),
-    viewsPath: 'views',
+    rootPath: path.join(__dirname, '../example/views'),
     layout: {
         start: '<body><div id="app">',
         end: '</div></body>'
@@ -43,7 +42,7 @@ const exampleResponse = `<!DOCTYPE html><html><head><title>pageTitle</title>
         },},},],data: function(){return {"title":"pageTitle","message":"Hello!","users":[]}},components: {messageComp: {props: ["message"],template: "<div class=\\"\\"><h1>{{message}}</h1></div>",},users: {props: ["users","title"],template: "<div class=\\"\\"><ul><li v-for=\\"user in users\\"><a v-bind:href=\\"'/users/' + user.name\\" class=\\"test\\">{{ user.name }}</a></li></ul></div>",},},template: "<div><h1>{{title}}</h1><p>Welcome to the {{title}} demo. Click a link:</p><button type=\\"button\\" name=\\"button\\" v-on:click=\\"hello\\">Say FOO</button> <input v-model=\\"message\\" placeholder=\\"edit me\\"><message-comp :message=\\"message\\"></message-comp><users :users=\\"users\\"></users></div>",})};if (typeof module !== 'undefined' && module.exports) {module.exports = createApp} else {this.app = createApp()}}).call(this);app.$mount('#app');
 </script></div></body>`
 
-const exampleError = `Could not find view file at ${vueOptions.rootPath}/views/indexfake.vue`;
+const exampleError = `Could not find view file at ${vueOptions.rootPath}/indexfake.vue`;
 
 test.cb('renders App object', t => {
 
