@@ -43,8 +43,7 @@ var expressVue = require('express-vue');
 
 var app = express();
 const vueOptions = {
-    rootPath: path.join(__dirname, '../example'),
-    viewsPath: 'views',
+    rootPath: path.join(__dirname, '../example/views'),
     layout: {
         start: '<body><div id="app">',
         end: '</div></body>'
@@ -64,7 +63,7 @@ router.get('/', (req, res, next) => {
     const vueOptions: {
         head: {
             title: 'Page Title',
-            head: [
+            meta: [
                 { property:'og:title', content: 'Page Title'},
                 { name:'twitter:title', content: 'Page Title'},
             ]
@@ -80,6 +79,58 @@ You do not need to have anything in data in your .vue file, but if you did what 
 will overwrite it.
 
 ### Remember to always write your data objects in your .vue files as functions!
+
+## Options
+
+|key|type|description|required?|default value|
+|-|-|-|-|-|
+|rootpath|string|this is the path the library will use as the base for all lookups| required| no default value|
+|layout|Object|this is the object for customzing the html, body, and template tags| optional| has default value which is in the example below|
+|vue|Object|this is the global config for vue for example you can set a global title, or a script tag in your head block everything here is global|optional|no default value|
+|data|Object|this is the global data object, this will be merged in to your .vue file's data block on every route, you can override this per route.|optional|no default value|
+
+Here's an example, with the default layout config included for you to see... note `rootPath` has no default value, and will crash if you don't set it.
+
+**note**, its very wise to set a version of vue in your `vue.head.meta` array an example is in the one below.
+if you don't add this, you wont see vue.js included in your head. This will be made automatic later, but for now you are in control of including vue.js in a `script` object in your `meta` array
+
+```js
+const vueOptions = {
+    rootPath: path.join(__dirname, '../example/views'),
+    layout: {
+        html: {
+            start: '<!DOCTYPE html><html>',
+            end: '</html>'
+        },
+        body: {
+            start: '<body>',
+            end: '</body>'
+        }
+        template: {
+            start: '<div id="app">',
+            end: '</div>'
+        }
+    },
+    vue: {
+        head: {
+            title: 'Hello this is a global title',
+            meta: [
+                { script: 'https://unpkg.com/vue' },
+                { style: '/assets/rendered/style.css' }
+            ]
+        }
+    },
+    data: {
+        foo: true,
+        bar: 'yes',
+        qux: {
+            id: 123,
+            baz: 'anything you wish, you can have any kind of object in the data object, it will be global and on every route'
+        }
+    }
+};
+const expressVueMiddleware = expressVue.init(vueOptions);
+```
 
 ## Components / Mixins / Etc
 
@@ -163,33 +214,38 @@ work here. Just add a `meta` array into your `head` object, with support for bot
 (Note we don't support shorthand here, and no support for google+ just yet, that will come soon).
 
 ```js
-head: {
-    title: 'It will be a pleasure',
-    // Meta tags
-    meta: [
-        { name: 'application-name', content: 'Name of my application' },
-        { name: 'description', content: 'A description of the page', id: 'desc' } // id to replace intead of create element
-        // ...
-        // Twitter
-        { name: 'twitter:title', content: 'Content Title' },
-        // ...
-        // Facebook / Open Graph
-        { property: 'fb:app_id', content: '123456789' },
-        { property: 'og:title', content: 'Content Title' },
-        // ...
-        // Scripts
-        { script: '/assets/scripts/hammer.min.js' },
-        { script: '/assets/scripts/vue-touch.min.js', charset: 'utf-8' },
-        // Note with Scripts [charset] is optional defaults to utf-8
-        // ...
-        // Styles
-        { style: '/assets/rendered/style.css' }
-        { style: '/assets/rendered/style.css', type: 'text/css' }
-        { style: '/assets/rendered/style.css', type: 'text/css', rel: 'stylesheet' }
-        // Note with Styles, [type] and [rel] are optional...
-        // ...
-    ],
+const vueOptions = {
+    vue: {
+        head: {
+            title: 'It will be a pleasure',
+            // Meta tags
+            meta: [
+                { name: 'application-name', content: 'Name of my application' },
+                { name: 'description', content: 'A description of the page', id: 'desc' } // id to replace intead of create element
+                // ...
+                // Twitter
+                { name: 'twitter:title', content: 'Content Title' },
+                // ...
+                // Facebook / Open Graph
+                { property: 'fb:app_id', content: '123456789' },
+                { property: 'og:title', content: 'Content Title' },
+                // ...
+                // Scripts
+                { script: '/assets/scripts/hammer.min.js' },
+                { script: '/assets/scripts/vue-touch.min.js', charset: 'utf-8' },
+                // Note with Scripts [charset] is optional defaults to utf-8
+                // ...
+                // Styles
+                { style: '/assets/rendered/style.css' }
+                { style: '/assets/rendered/style.css', type: 'text/css' }
+                { style: '/assets/rendered/style.css', type: 'text/css', rel: 'stylesheet' }
+                // Note with Styles, [type] and [rel] are optional...
+                // ...
+            ],
+        }
+    }
 }
+const expressVueMiddleware = expressVue.init(vueOptions);
 ```
 
 ## Structured Data
@@ -199,17 +255,21 @@ https://developers.google.com/search/docs/guides/intro-structured-data
 
 
 ```js
-head: {
-    title: 'It will be a pleasure',
-    structuredData: {
-        "@context": "http://schema.org",
-        "@type": "Organization",
-        "url": "http://www.your-company-site.com",
-        "contactPoint": [{
-            "@type": "ContactPoint",
-            "telephone": "+1-401-555-1212",
-            "contactType": "customer service"
-        }]
+const vueOptions = {
+    vue: {
+        head: {
+            title: 'It will be a pleasure',
+            structuredData: {
+                "@context": "http://schema.org",
+                "@type": "Organization",
+                "url": "http://www.your-company-site.com",
+                "contactPoint": [{
+                    "@type": "ContactPoint",
+                    "telephone": "+1-401-555-1212",
+                    "contactType": "customer service"
+                }]
+            }
+        }
     }
 }
 ```
@@ -218,24 +278,62 @@ head: {
 ## DevTools
 
 To use the amazing Vue.js DevTools please set the environment variable `VUE_DEV=true`
+You'll also need to use the non-production version of vue, here's an example on how you can switch between the two based on a environment variable like `VUE_DEV` or better yet, the official one that express uses `NODE_ENV='production'` [(highly reccomended click here for why)](https://expressjs.com/en/advanced/best-practice-performance.html#set-nodeenv-to-production)
 
+```js
+var expressVue = require('express-vue');
+
+var app = express();
+
+//Latest non-production version of vue as of writing this doc, 
+//you can go to https://unpkg.com/vue/ to find the latest version
+//check the vuejs.org docs for more info
+let vueScript = 'https://unpkg.com/vue@2.4.2/dist/vue.js';
+
+if (process.env.NODE_ENV === 'production') {
+    //its production so use the minimised production build of vuejs
+    vueScript = 'https://unpkg.com/vue';
+}
+
+const vueOptions = {
+    rootPath: path.join(__dirname, '../example/views'),
+    vue: {
+        head: {
+            meta: [{ script: vueScript }]
+        }
+    }
+};
+const expressVueMiddleware = expressVue.init(vueOptions);
+app.use(expressVueMiddleware);
+```
 ## Caching
 
 Caching is now enabled by default, in dev mode hopefuly you're using something like nodemon/gulp/grunt etc, which restarts the server on file change.. otherwise you will need to stop and restart the server if you change your files.. which is normal.
 
-
 ## Layout
 
-If you want to have a custom layout you can, here is the default layout
+If you want to have a custom layout you can, here is the default layout, each part is overridable.
 
 ```js
-const options = {
+const vueOptions = {
+    //...
     layout: {
-        start: '<body><div id="app">',
-        end: '</div></body>'
+        html: {
+            start: '<!DOCTYPE html><html>',
+            end: '</html>'
+        },
+        body: {
+            start: '<body>',
+            end: '</body>'
+        }
+        template: {
+            start: '<div id="app">',
+            end: '</div>'
+        }
     }
-}
-const expressVueMiddleware = expressVue.init(options);
+    //...
+};
+const expressVueMiddleware = expressVue.init(vueOptions);
 ```
 
 
@@ -244,7 +342,7 @@ const expressVueMiddleware = expressVue.init(options);
 Finally you'll need to set the link to your copy of vue.js in the options like so
 
 ```js
-const options = {
+const vueOptions = {
     vue: {
         head: {
             meta: [{
@@ -256,7 +354,13 @@ const options = {
 };
 ```
 
-the reasoning for doing this is that you can control which version of vue you're using, and you can swap which version of vue depending on however you like
+or alternativly
+
+```js
+vueOptions.vue.head.meta.push({ script: 'https://unpkg.com/vue@2.4.2/dist/vue.js'});
+```
+
+the reasoning for doing this is that you can control which version of vue you're using, and you can swap which version of vue depending on however you like. If you've read this far you've seen the example i gave for switching between the two versions.
 
 ## Typescript support
 
