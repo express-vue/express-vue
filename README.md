@@ -31,10 +31,7 @@ Requires Node V6 or greater, and Vue 2.0 or greater. (Latest Vue.js is included 
 
 ## Examples
 
-A Super Simple example can be found at [express-vue/express-vue-super-simple](https://github.com/express-vue/express-vue-super-simple)
-
-A full example can be found at: [express-vue/express-vue-example](https://github.com/express-vue/express-vue-example)
-
+An example can be found in this project, in the example folder.
 
 ## Usage
 
