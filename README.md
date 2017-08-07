@@ -42,8 +42,8 @@ var app = express();
 const vueOptions = {
     rootPath: path.join(__dirname, '../example/views'),
     layout: {
-        start: '<body><div id="app">',
-        end: '</div></body>'
+        start: '<div id="app">',
+        end: '</div>'
     }
 };
 const expressVueMiddleware = expressVue.init(vueOptions);
