@@ -235,9 +235,11 @@ const vueOptions = {
                 // Styles
                 { style: '/assets/rendered/style.css' }
                 { style: '/assets/rendered/style.css', type: 'text/css' }
-                { style: '/assets/rendered/style.css', type: 'text/css', rel: 'stylesheet' }
-                // Note with Styles, [type] and [rel] are optional...
+                // Note with Styles, [type] is optional...
                 // ...
+                // Rel
+                { rel: 'icon', type: 'image/png', href: '/assets/favicons/favicon-32x32.png', sizes: '32x32' }
+                // Generic rel for things like icons and stuff
             ],
         }
     }
