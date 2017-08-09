@@ -1,6 +1,6 @@
 const path = require('path');
 const express = require('express');
-const expressVue = require('../dist');
+const expressVue = require('../src');
 const app = express();
 
 const vueOptions = {
@@ -47,19 +47,19 @@ app.get('/', function (req, res) {
         head: {
             title: pageTitle,
             meta: [{
-                    property: 'og:title',
-                    content: pageTitle
-                },
-                {
-                    name: 'twitter:title',
-                    content: pageTitle
-                },
-                {
-                    script: 'https://unpkg.com/vue@2.4.2/dist/vue.js'
-                }, {
-                    name: 'viewport',
-                    content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
-                }
+                property: 'og:title',
+                content: pageTitle
+            },
+            {
+                name: 'twitter:title',
+                content: pageTitle
+            },
+            {
+                script: 'https://unpkg.com/vue@2.4.2/dist/vue.js'
+            }, {
+                name: 'viewport',
+                content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
+            }
             ],
             structuredData: {
                 '@context': 'http://schema.org',

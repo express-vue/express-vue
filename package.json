@@ -1,6 +1,6 @@
 {
     "name": "express-vue",
-    "version": "4.0.1",
+    "version": "4.0.2",
     "description": "Vue rendering engine for Express.js",
     "homepage": "https://github.com/express-vue/express-vue",
     "author": {
@@ -9,10 +9,10 @@
         "url": "https://cherubini.casa"
     },
     "files": [
-        "dist"
+        "lib"
     ],
-    "main": "dist/index.js",
-    "typings": "dist/index.d.ts",
+    "main": "lib/index.js",
+    "typings": "lib/index.d.ts",
     "keywords": [
         "vue",
         "express",
@@ -26,8 +26,8 @@
             "test/**/*.js"
         ],
         "source": [
-            "lib/**/*.js",
-            "!dist/**/*"
+            "src/**/*.js",
+            "!lib/**/*"
         ],
         "concurrency": 5,
         "failFast": false,
@@ -42,11 +42,12 @@
             "**/*.vue"
         ],
         "include": [
-            "lib/**/*.js"
+            "src/**/*.js"
         ]
     },
     "devDependencies": {
         "ava": "^0.21.0",
+        "babel-cli": "^6.24.1",
         "babel-eslint": "^7.2.3",
         "babel-plugin-add-module-exports": "^0.2.1",
         "babel-plugin-transform-flow-strip-types": "^6.22.0",
@@ -58,15 +59,11 @@
         "eslint-plugin-babel": "^4.1.2",
         "express": "^4.15.4",
         "flow-bin": "^0.52.0",
-        "gulp": "^3.9.1",
-        "gulp-ava": "^0.18.0",
-        "gulp-babel": "^7.0.0",
-        "gulp-concat": "^2.6.1",
-        "gulp-eslint": "^4.0.0",
-        "gulp-exclude-gitignore": "^1.1.1",
-        "gulp-line-ending-corrector": "^1.0.1",
-        "gulp-nsp": "^2.4.2",
-        "nyc": "^11.1.0"
+        "flow-remove-types": "^1.2.1",
+        "ncp": "^2.0.0",
+        "nsp": "^2.7.0",
+        "nyc": "^11.1.0",
+        "rimraf": "^2.6.1"
     },
     "eslintConfig": {
         "extends": "xo-space",
@@ -76,12 +73,15 @@
     },
     "repository": "express-vue/express-vue",
     "scripts": {
-        "start": "gulp",
-        "build": "gulp build",
-        "prepublish": "gulp build",
-        "test": "eslint lib && nyc ava",
+        "start": "node example/index.js",
+        "debug": "node --inspect example/index.js",
+        "clean": "rimraf dist",
+        "build": "npm run clean && npm run copy",
+        "copy": "ncp src lib && babel lib -d lib",
+        "prepublish": "npm run build",
+        "test": "eslint lib && nsp check && nyc ava",
         "preversion": "npm test",
-        "version": "gulp build && git add -A",
+        "version": "npm run build && git add -A",
         "postversion": "git push && git push --tags",
         "coverage": "nyc report --reporter=text-lcov | coveralls"
     },
@@ -93,8 +93,6 @@
         "camel-case": "^3.0.0",
         "clean-css": "^4.1.7",
         "express-vue-renderer": "^0.6.2",
-        "gulp-livereload": "^3.8.1",
-        "gulp-nodemon": "^2.2.1",
         "html-minifier": "^3.5.3",
         "lru-cache": "^4.1.1",
         "node-cache": "^4.1.1",
