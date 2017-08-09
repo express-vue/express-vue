@@ -52,7 +52,7 @@
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-register": "^6.24.1",
-    "coveralls": "^2.13.0",
+    "codecov": "^2.3.0",
     "del": "^3.0.0",
     "eslint": "^4.4.1",
     "eslint-config-xo-space": "^0.16.0",
@@ -85,7 +85,7 @@
     "preversion": "npm test",
     "version": "npm run build && git add -A",
     "postversion": "git push && git push --tags",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc report --reporter=lcov > coverage.lcov && codecov"
   },
   "license": "Apache-2.0",
   "dependencies": {

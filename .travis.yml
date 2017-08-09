@@ -3,7 +3,14 @@ node_js:
   - v8
   - v7
   - v6
-after_success: npm run coverage
+before_install:
+    - npm install -g npm
+    - npm install -g codecov
+    - npm install -g greenkeeper-lockfile@1
+before_script: greenkeeper-lockfile-update
+after_script: greenkeeper-lockfile-upload
+after_success:  npm run coverage
+before_deploy: npm run build
 deploy:
   skip_cleanup: true
   provider: npm
