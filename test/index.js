@@ -1,6 +1,6 @@
 // @flow
 const test = require('ava');
-const expressVue = require('../lib');
+const expressVue = require('../src');
 const path = require('path');
 
 let vueOptions = {};

@@ -4,7 +4,7 @@
 <a href="https://npmjs.org/package/express-vue"><img src="https://badge.fury.io/js/express-vue.svg" alt="Version"></a>
 <a href="https://travis-ci.org/express-vue/express-vue"><img src="https://travis-ci.org/express-vue/express-vue.svg?branch=master" alt="Build Status"></a>
 <a href="https://david-dm.org/express-vue/express-vue"><img src="https://david-dm.org/express-vue/express-vue.svg?theme=shields.io" alt="Dependency Status"></a>
-<a href="https://coveralls.io/r/express-vue/express-vue"><img src="https://coveralls.io/repos/express-vue/express-vue/badge.svg" alt="Coverage Status"></a>
+<a href="https://codecov.io/gh/express-vue/express-vue"><img src="https://codecov.io/gh/express-vue/express-vue/branch/master/graph/badge.svg" alt="Codecov" /></a>
 <a href="https://lima.codeclimate.com/github/express-vue/express-vue"><img src="https://lima.codeclimate.com/github/express-vue/express-vue/badges/gpa.svg" /></a>
 <a href="https://greenkeeper.io"><img src="https://badges.greenkeeper.io/express-vue/express-vue.svg" /></a>
 </p>
