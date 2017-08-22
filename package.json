@@ -94,7 +94,7 @@
     "babel-preset-es2015": "^6.24.1",
     "camel-case": "^3.0.0",
     "clean-css": "^4.1.7",
-    "express-vue-renderer": "^0.6.4",
+    "express-vue-renderer": "^0.6.5",
     "html-minifier": "^3.5.3",
     "lru-cache": "^4.1.1",
     "node-cache": "^4.1.1",
