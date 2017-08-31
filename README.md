@@ -29,9 +29,9 @@ $ npm install --save express-vue
 
 Requires Node V6 or greater, and Vue 2.0 or greater. (Latest Vue.js is included in this project)
 
-## Examples
+## Example / Starter
 
-An example can be found in this project, in the example folder.
+An example / starter can be found [here](https://github.com/express-vue/express-vue-mvc-starter)
 
 ## Usage
 
