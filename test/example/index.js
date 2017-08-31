@@ -1,6 +1,6 @@
 const path = require('path');
 const express = require('express');
-const expressVue = require('../src');
+const expressVue = require('../../src');
 const app = express();
 
 const vueOptions = {
