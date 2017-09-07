@@ -49,9 +49,12 @@
   "devDependencies": {
     "ava": "^0.22.0",
     "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
     "babel-eslint": "^7.2.3",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-es2015": "^6.24.1",
     "babel-register": "^6.26.0",
     "codecov": "^2.3.0",
     "del": "^3.0.0",
@@ -90,20 +93,6 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "babel-core": "^6.26.0",
-    "babel-preset-env": "^1.6.0",
-    "babel-preset-es2015": "^6.24.1",
-    "camel-case": "^3.0.0",
-    "clean-css": "^4.1.7",
-    "express-vue-renderer": "^0.6.10",
-    "html-minifier": "^3.5.3",
-    "lru-cache": "^4.1.1",
-    "node-cache": "^4.1.1",
-    "param-case": "^2.1.1",
-    "pug": "^2.0.0-rc.3",
-    "require-from-string": "^1.2.1",
-    "vue": "^2.4.2",
-    "vue-server-renderer": "^2.4.2",
-    "xss": "^0.3.4"
+    "express-vue-renderer": "^0.6.10"
   }
 }
