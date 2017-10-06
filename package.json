@@ -50,7 +50,7 @@
     "ava": "^0.22.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
-    "babel-eslint": "^7.2.3",
+    "babel-eslint": "^8.0.1",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-preset-env": "^1.6.0",
@@ -58,17 +58,17 @@
     "babel-register": "^6.26.0",
     "codecov": "^2.3.0",
     "del": "^3.0.0",
-    "eslint": "^4.5.0",
+    "eslint": "^4.8.0",
     "eslint-config-xo-space": "^0.16.0",
     "eslint-plugin-babel": "^4.1.2",
-    "express": "^4.15.4",
-    "flow-bin": "^0.54.0",
+    "express": "^4.16.1",
+    "flow-bin": "^0.56.0",
     "flow-remove-types": "^1.2.1",
-    "generate-release": "^0.13.1",
+    "generate-release": "^0.14.0",
     "ncp": "^2.0.0",
-    "nsp": "^2.7.0",
-    "nyc": "^11.1.0",
-    "rimraf": "^2.6.1"
+    "nsp": "^2.8.1",
+    "nyc": "^11.2.1",
+    "rimraf": "^2.6.2"
   },
   "eslintConfig": {
     "extends": "xo-space",
@@ -93,6 +93,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "express-vue-renderer": "^0.6.10"
+    "debug": "^2.6.9",
+    "express-vue-renderer": "^0.7.0"
   }
 }
