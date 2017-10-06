@@ -94,6 +94,6 @@
   "license": "Apache-2.0",
   "dependencies": {
     "debug": "^2.6.9",
-    "express-vue-renderer": "^0.7.0"
+    "express-vue-renderer": "^0.7.1"
   }
 }
