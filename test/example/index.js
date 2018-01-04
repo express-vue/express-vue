@@ -8,6 +8,11 @@ const vueOptions = {
     layout: {
         start: '<body><div id="app">',
         end: '</div></body>'
+    },
+    head: {
+        scripts: [
+            { src: 'https://unpkg.com/vue@2.4.2/dist/vue.js' }
+        ]
     }
 };
 const expressVueMiddleware = expressVue.init(vueOptions);
@@ -46,16 +51,13 @@ app.get('/', function (req, res) {
     const vue = {
         head: {
             title: pageTitle,
-            meta: [{
+            metas: [{
                 property: 'og:title',
                 content: pageTitle
             },
             {
                 name: 'twitter:title',
                 content: pageTitle
-            },
-            {
-                script: 'https://unpkg.com/vue@2.4.2/dist/vue.js'
             }, {
                 name: 'viewport',
                 content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
@@ -73,14 +75,14 @@ app.get('/', function (req, res) {
             }
         }
     };
-    res.renderVue('index', data, vue);
+    res.renderVue('index.vue', data, vue);
 });
 
 app.get('/users/:userName', function (req, res) {
     var user = users.filter(function (item) {
         return item.name === req.params.userName;
     })[0];
-    res.renderVue('user', {
+    res.renderVue('user.vue', {
         title: 'Hello My Name is',
         user: user
     });

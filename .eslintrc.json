@@ -9,17 +9,27 @@
     "extends": "eslint:recommended",
     "parser": "babel-eslint",
     "rules": {
+        "valid-jsdoc":[
+            "error",
+            {
+                "requireParamDescription": false,
+                "requireReturnDescription": false
+            }
+        ],
+        "require-jsdoc":"error",
         "indent": [
             "error",
-            4
+            4,
+            {
+                "SwitchCase": 1
+            }
         ],
         "linebreak-style": [
-            "error",
-            "unix"
+            "off"
         ],
         "quotes": [
             "error",
-            "single"
+            "double"
         ],
         "semi": [
             "error",
@@ -27,7 +37,7 @@
         ],
         "no-console": [
             "error", {
-                "allow": ["warn", "error"] 
+                "allow": ["warn", "error"]
             }
         ]
     }

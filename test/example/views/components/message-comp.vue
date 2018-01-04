@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
   <div class="">
       <h1>{{message}}</h1>
   </div>
