@@ -87,7 +87,7 @@
   "dependencies": {
     "debug": "^3.1.0",
     "vue": "^2.5.13",
-    "vue-pronto": "^0.2.2",
+    "vue-pronto": "^0.2.3",
     "vue-template-compiler": "^2.5.13"
   }
 }
