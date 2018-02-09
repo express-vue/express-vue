@@ -1,6 +1,6 @@
 {
   "name": "express-vue",
-  "version": "5.0.1",
+  "version": "5.0.0",
   "description": "Vue rendering engine for Express.js",
   "homepage": "https://github.com/express-vue/express-vue",
   "author": {
@@ -46,7 +46,8 @@
     ]
   },
   "devDependencies": {
-    "ava": "^0.24.0",
+    "@types/node": "^8.9.1",
+    "ava": "^0.25.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.1",
@@ -56,7 +57,7 @@
     "babel-register": "^6.26.0",
     "codecov": "^3.0.0",
     "del": "^3.0.0",
-    "eslint": "^4.16.0",
+    "eslint": "^4.17.0",
     "eslint-config-xo-space": "^0.17.0",
     "eslint-plugin-babel": "^4.1.2",
     "express": "^4.16.1",
@@ -64,7 +65,9 @@
     "ncp": "^2.0.0",
     "nsp": "^3.1.0",
     "nyc": "^11.4.1",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "tslint": "^5.9.1",
+    "typescript": "^2.7.1"
   },
   "eslintConfig": {
     "extends": "xo-space",
@@ -77,7 +80,8 @@
     "start": "node test/example/index.js",
     "debug": "node --inspect test/example/index.js",
     "release": "generate-release",
-    "test": "eslint lib && nsp check && nyc ava",
+    "lint": "tslint --project tsconfig.json",
+    "test": "npm run lint && nsp check && nyc ava",
     "preversion": "npm test",
     "version": "git add -A",
     "postversion": "git push && git push --tags",
@@ -87,7 +91,7 @@
   "dependencies": {
     "debug": "^3.1.0",
     "vue": "^2.5.13",
-    "vue-pronto": "^0.3.0",
+    "vue-pronto": "^1.0.0",
     "vue-template-compiler": "^2.5.13"
   }
 }
