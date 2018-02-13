@@ -46,7 +46,7 @@
     ]
   },
   "devDependencies": {
-    "@types/node": "^8.9.1",
+    "@types/node": "^9.4.5",
     "ava": "^0.25.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
@@ -91,7 +91,7 @@
   "dependencies": {
     "debug": "^3.1.0",
     "vue": "^2.5.13",
-    "vue-pronto": "^1.0.0",
+    "vue-pronto": "^1.0.3",
     "vue-template-compiler": "^2.5.13"
   }
 }
