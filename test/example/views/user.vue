@@ -1,7 +1,7 @@
-<template lang="html">
+<template>
     <div>
         <h1>{{ title }}</h1>
-        <p>{{user.name}}</p>
+        <p class="test2">{{user.name}}</p>
         <p>I am {{user.age}} years old</p>
     </div>
 </template>
@@ -14,8 +14,8 @@ export default {
 }
 </script>
 
-<style lang="css">
-    .test {
-        color: black;
-    }
+<style>
+.test2 {
+    color: blue;
+}
 </style>

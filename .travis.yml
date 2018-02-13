@@ -10,17 +10,16 @@ before_install:
 before_script: greenkeeper-lockfile-update
 after_script: greenkeeper-lockfile-upload
 after_success:  npm run coverage
-before_deploy: npm run build
 deploy:
-  skip_cleanup: true
-  provider: npm
-  email: daniel@cherubini.casa
-  api_key:
-    secure: V/nvdMMZiMMN+GWSQHigJXd1br1WRm6jJS4ShqQpp3ctakAn6DKaK+LqhTVlLldsyPty0hitro0E/jts5hVJyTnXJ46UO8GrAkz/SgSdCPDVEF3lUecntjYWNqiTumxmjjIhrV0CVZm5GoQM8/W/JND7SEbTSImcAcU7ehVU1Og2c1yC+Xl34LHtI+H8tGWclNtmDfLq3kXVRu8lsnMZjS4j3NagDmwpVeJ28n39gQnhKTpwIEGb9y8bRouTwkGELuqhu0nUNTLba2hXgWdNtA1nXRBZz2XT1YGKjc8fWNb2X7BkerOBbiVuBqBENpZ1piIgaOwIUzh0FFteUdFN1F8TfA7eyBMxvIAsXtTcNjudi/W4vmjZr/ahjKcOU59W+ZCpEXpg3YDLfRj7Gdeu382dPrmGFmNTHmFkbK9c6Jnmj287W+1szpFnprN7wtbeTugjfSNwGsdJOvWNMj5esg/Ci6HRsmTQCvtgw+7c8ZTqz3yJYQA/DjEwd6fO/TQtHMbTi8aRysQ61zgS0zNLysGOoROjr+kgXWkYZHIrxZszqrsS312ajP4TiEPKdbVRSgGWC7Nxzs2oaAimyfwTaw2TJtkH3jNC+AVNj0/e6NDsrmbk6wRKpsF+4wJJPgz3k1OIVJskPd5P5zq3LWbFbr09o0eRKstTzDyCxxQRc8c=
-  on:
-    branch: master
-    tags: true
-    repo: express-vue/express-vue
+  - provider: npm
+    skip_cleanup: true
+    email: daniel@cherubini.casa
+    api_key:
+      secure: V/nvdMMZiMMN+GWSQHigJXd1br1WRm6jJS4ShqQpp3ctakAn6DKaK+LqhTVlLldsyPty0hitro0E/jts5hVJyTnXJ46UO8GrAkz/SgSdCPDVEF3lUecntjYWNqiTumxmjjIhrV0CVZm5GoQM8/W/JND7SEbTSImcAcU7ehVU1Og2c1yC+Xl34LHtI+H8tGWclNtmDfLq3kXVRu8lsnMZjS4j3NagDmwpVeJ28n39gQnhKTpwIEGb9y8bRouTwkGELuqhu0nUNTLba2hXgWdNtA1nXRBZz2XT1YGKjc8fWNb2X7BkerOBbiVuBqBENpZ1piIgaOwIUzh0FFteUdFN1F8TfA7eyBMxvIAsXtTcNjudi/W4vmjZr/ahjKcOU59W+ZCpEXpg3YDLfRj7Gdeu382dPrmGFmNTHmFkbK9c6Jnmj287W+1szpFnprN7wtbeTugjfSNwGsdJOvWNMj5esg/Ci6HRsmTQCvtgw+7c8ZTqz3yJYQA/DjEwd6fO/TQtHMbTi8aRysQ61zgS0zNLysGOoROjr+kgXWkYZHIrxZszqrsS312ajP4TiEPKdbVRSgGWC7Nxzs2oaAimyfwTaw2TJtkH3jNC+AVNj0/e6NDsrmbk6wRKpsF+4wJJPgz3k1OIVJskPd5P5zq3LWbFbr09o0eRKstTzDyCxxQRc8c=
+    on:
+      branch: master
+      tags: true
+      repo: express-vue/express-vue
 addons:
     code_climate:
         repo_token: 308db9eefcafd79785ed545433e7930a43b926b5bdea95014274a4b7ffe4b06b
