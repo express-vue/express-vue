@@ -35,16 +35,15 @@ An example / starter can be found [here](https://github.com/express-vue/express-
 
 ## Usage
 
+this is the minimum required setup, if you don't provide a vueVersion it will use the latest one when the project was published.
+
 ```js
-var expressVue = require('express-vue');
+var expressVue = require("express-vue");
 
 var app = express();
 const vueOptions = {
-    rootPath: path.join(__dirname, '../example/views'),
-    layout: {
-        start: '<div id="app">',
-        end: '</div>'
-    }
+    rootPath: path.join(__dirname, "../example/views"),
+    vueVersion: "2.4.5",
 };
 const expressVueMiddleware = expressVue.init(vueOptions);
 app.use(expressVueMiddleware);
@@ -57,7 +56,7 @@ router.get('/', (req, res, next) => {
     const data: {
         otherData: 'Something Else'
     };
-    const vueOptions: {
+    req.vueOptions: {
         head: {
             title: 'Page Title',
             meta: [
@@ -66,7 +65,7 @@ router.get('/', (req, res, next) => {
             ]
         }    
     }
-    res.renderVue('main', data, vueOptions);
+    res.renderVue('main.vue', data, req.vueOptions);
 })
 ```
 
@@ -82,18 +81,18 @@ will overwrite it.
 |key|type|description|required?|default value|
 |-|-|-|-|-|
 |rootpath|string|this is the path the library will use as the base for all lookups| required| no default value|
+|vueVersion|string|this is where you specify which version of vue.js's library to use from the CDN | optional| the latest version as of publishing this|
 |layout|Object|this is the object for customzing the html, body, and template tags| optional| has default value which is in the example below|
 |vue|Object|this is the global config for vue for example you can set a global title, or a script tag in your head block everything here is global|optional|no default value|
 |data|Object|this is the global data object, this will be merged in to your .vue file's data block on every route, you can override this per route.|optional|no default value|
 
 Here's an example, with the default layout config included for you to see... note `rootPath` has no default value, and will crash if you don't set it.
 
-**note**, its very wise to set a version of vue in your `vue.head.meta` array an example is in the one below.
-if you don't add this, you wont see vue.js included in your head. This will be made automatic later, but for now you are in control of including vue.js in a `script` object in your `meta` array
 
 ```js
 const vueOptions = {
     rootPath: path.join(__dirname, '../example/views'),
+    vueVersion: "2.3.4",
     layout: {
         html: {
             start: '<!DOCTYPE html><html>',
@@ -108,14 +107,14 @@ const vueOptions = {
             end: '</div>'
         }
     },
-    vue: {
-        head: {
-            title: 'Hello this is a global title',
-            meta: [
-                { script: 'https://unpkg.com/vue' },
-                { style: '/assets/rendered/style.css' }
-            ]
-        }
+    head: {
+        title: 'Hello this is a global title',
+        scripts: [
+            { src: 'https://example.com/script.js' },
+        ],
+        styles: [
+            { style: '/assets/rendered/style.css' }
+        ]
     },
     data: {
         foo: true,
@@ -131,13 +130,16 @@ const expressVueMiddleware = expressVue.init(vueOptions);
 
 ## Components / Mixins / Etc
 
-When including components/mixins/etc the directory it looks is going to be relative to your `rootPath` you set in the options
+When including components/mixins/etc the directory it looks is going to be relative to the file you're working in currently.
+assuming the below is running in a folder with a subdirectory `components` and a directory `mixins` in a parent, it would look like this.
+when importing .vue files and .js files from node modules you can just import them the normal way you import a module. 
 
 ```html
 <script>
 import messageComp from './components/message-comp.vue';
 import users from './components/users.vue';
 import exampleMixin from '../mixins/exampleMixin';
+import externalComponent from 'foo/bar/external.vue';
 export default {
     mixins: [exampleMixin],
     data: function () {
@@ -145,8 +147,9 @@ export default {
         }
     },
     components: {
-        messageComp: messageComp,
-        users: users
+        messageComp,
+        users,
+        externalComponent
     }
 }
 </script>
@@ -159,7 +162,7 @@ In the future I will be creating build tools to handle compiling the .vue files 
 and more efficient at runtime. But for dev mode, it will compile everything at runtime, so you can edit and preview faster.
 
 ```html
-<style lang="css">
+<style>
     .test {
         border: 2px;
     }
@@ -212,36 +215,38 @@ work here. Just add a `meta` array into your `head` object, with support for bot
 
 ```js
 const vueOptions = {
-    vue: {
-        head: {
-            title: 'It will be a pleasure',
-            // Meta tags
-            meta: [
-                { name: 'application-name', content: 'Name of my application' },
-                { name: 'description', content: 'A description of the page', id: 'desc' } // id to replace intead of create element
-                // ...
-                // Twitter
-                { name: 'twitter:title', content: 'Content Title' },
-                // ...
-                // Facebook / Open Graph
-                { property: 'fb:app_id', content: '123456789' },
-                { property: 'og:title', content: 'Content Title' },
-                // ...
-                // Scripts
-                { script: '/assets/scripts/hammer.min.js' },
-                { script: '/assets/scripts/vue-touch.min.js', charset: 'utf-8' },
-                // Note with Scripts [charset] is optional defaults to utf-8
-                // ...
-                // Styles
-                { style: '/assets/rendered/style.css' }
-                { style: '/assets/rendered/style.css', type: 'text/css' }
-                // Note with Styles, [type] is optional...
-                // ...
-                // Rel
-                { rel: 'icon', type: 'image/png', href: '/assets/favicons/favicon-32x32.png', sizes: '32x32' }
-                // Generic rel for things like icons and stuff
-            ],
-        }
+    head: {
+        title: 'It will be a pleasure',
+        // Meta tags
+        metas: [
+            { name: 'application-name', content: 'Name of my application' },
+            { name: 'description', content: 'A description of the page', id: 'desc' } // id to replace intead of create element
+            // ...
+            // Twitter
+            { name: 'twitter:title', content: 'Content Title' },
+            // ...
+            // Facebook / Open Graph
+            { property: 'fb:app_id', content: '123456789' },
+            { property: 'og:title', content: 'Content Title' },
+            // ...
+            // Rel
+            { rel: 'icon', type: 'image/png', href: '/assets/favicons/favicon-32x32.png', sizes: '32x32' }
+            // Generic rel for things like icons and stuff
+        ],
+        // Scripts
+        scripts:[
+            { src: '/assets/scripts/hammer.min.js' },
+            { src: '/assets/scripts/vue-touch.min.js', charset: 'utf-8' },
+            // Note with Scripts [charset] is optional defaults to utf-8
+            // ...
+        ],
+        // Styles
+        styles: [
+            { style: '/assets/rendered/style.css' }
+            { style: '/assets/rendered/style.css', type: 'text/css' }
+            // Note with Styles, [type] is optional...
+            // ...
+        ],
     }
 }
 const expressVueMiddleware = expressVue.init(vueOptions);
@@ -255,19 +260,17 @@ https://developers.google.com/search/docs/guides/intro-structured-data
 
 ```js
 const vueOptions = {
-    vue: {
-        head: {
-            title: 'It will be a pleasure',
-            structuredData: {
-                "@context": "http://schema.org",
-                "@type": "Organization",
-                "url": "http://www.your-company-site.com",
-                "contactPoint": [{
-                    "@type": "ContactPoint",
-                    "telephone": "+1-401-555-1212",
-                    "contactType": "customer service"
-                }]
-            }
+    head: {
+        title: 'It will be a pleasure',
+        structuredData: {
+            "@context": "http://schema.org",
+            "@type": "Organization",
+            "url": "http://www.your-company-site.com",
+            "contactPoint": [{
+                "@type": "ContactPoint",
+                "telephone": "+1-401-555-1212",
+                "contactType": "customer service"
+            }]
         }
     }
 }
@@ -276,35 +279,8 @@ const vueOptions = {
 
 ## DevTools
 
-To use the amazing Vue.js DevTools please set the environment variable `VUE_DEV=true`
-You'll also need to use the non-production version of vue, here's an example on how you can switch between the two based on a environment variable like `VUE_DEV` or better yet, the official one that express uses `NODE_ENV='production'` [(highly reccomended click here for why)](https://expressjs.com/en/advanced/best-practice-performance.html#set-nodeenv-to-production)
+To use the amazing Vue.js DevTools please set the environment variable `VUE_DEV=true`this will also trigger the development version of vue to be included in the head.
 
-```js
-var expressVue = require('express-vue');
-
-var app = express();
-
-//Latest non-production version of vue as of writing this doc, 
-//you can go to https://unpkg.com/vue/ to find the latest version
-//check the vuejs.org docs for more info
-let vueScript = 'https://unpkg.com/vue@2.4.2/dist/vue.js';
-
-if (process.env.NODE_ENV === 'production') {
-    //its production so use the minimised production build of vuejs
-    vueScript = 'https://unpkg.com/vue';
-}
-
-const vueOptions = {
-    rootPath: path.join(__dirname, '../example/views'),
-    vue: {
-        head: {
-            meta: [{ script: vueScript }]
-        }
-    }
-};
-const expressVueMiddleware = expressVue.init(vueOptions);
-app.use(expressVueMiddleware);
-```
 ## Caching
 
 Caching is now enabled by default, in dev mode hopefuly you're using something like nodemon/gulp/grunt etc, which restarts the server on file change.. otherwise you will need to stop and restart the server if you change your files.. which is normal.
@@ -338,28 +314,15 @@ const expressVueMiddleware = expressVue.init(vueOptions);
 
 ## Finally
 
-Finally you'll need to set the link to your copy of vue.js in the options like so
+Finally you'll need to set the version of VueJS you want to use in the options like so
 
 ```js
 const vueOptions = {
-    vue: {
-        head: {
-            meta: [{
-                    script: 'https://unpkg.com/vue@2.4.2/dist/vue.js'
-                }
-            ]
-        }
-    }
+    vueVersion: "2.4.2"
 };
 ```
 
-or alternativly
-
-```js
-vueOptions.vue.head.meta.push({ script: 'https://unpkg.com/vue@2.4.2/dist/vue.js'});
-```
-
-the reasoning for doing this is that you can control which version of vue you're using, and you can swap which version of vue depending on however you like. If you've read this far you've seen the example i gave for switching between the two versions.
+Vue versions will switch between min and regular copies of vue based on `VUE_DEV=true` value. (Dev uses the non minified.)
 
 ## Typescript support
 
@@ -374,6 +337,17 @@ import expressVue = require('express-vue');
 This is middleware now so support for sails should just work as middleware.
 
 ## Changelog
+
+#### V5
+- Ditched the custom parser/renderer and moved to using `vue-pronto` which uses Vueify
+- Re-structured the vueOptions
+- Added req.vueOptions as a global.
+- Removed the vue parent object with the child of head, this was un-needed its now just vueOptions.head instead of vueOptions.vue.head
+- when using `res.renderVue` the filename requires an extention now. 
+- Paths are now RELATIVE to the file you're currently in ... YAAAY
+- Node Modules are supported, for both javascript and vue file imports inside .vue files ... YAAAY
+- Massive Performance gains
+- 100% compatability with vueJS
 
 #### V4
 - v4 was a complete re-write.. migrating from v3 to v4 will break everything.
