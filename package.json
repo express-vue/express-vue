@@ -46,7 +46,7 @@
     ]
   },
   "devDependencies": {
-    "@types/node": "^9.4.5",
+    "@types/node": "^9.4.6",
     "ava": "^0.25.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
@@ -63,11 +63,11 @@
     "express": "^4.16.1",
     "generate-release": "^0.14.0",
     "ncp": "^2.0.0",
-    "nsp": "^3.1.0",
-    "nyc": "^11.4.1",
+    "nsp": "^3.2.1",
+    "nyc": "^11.5.0",
     "rimraf": "^2.6.2",
     "tslint": "^5.9.1",
-    "typescript": "^2.7.1"
+    "typescript": "^2.7.2"
   },
   "eslintConfig": {
     "extends": "xo-space",
