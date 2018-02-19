@@ -86,17 +86,16 @@ An example / starter can be found [here](https://github.com/express-vue/express-
 
 ## Usage
 
-this is the minimum required setup, if you don't provide a vueVersion it will use the latest one when the project was published.
+This is the minimum required setup. 
+If you don't provide a `vueVersion` it will use the latest one when the project was published.
+If there is no `rootPath` it will assume the root is the parent directory of `node_modules`.
 
 ```js
 var expressVue = require("express-vue");
 
 var app = express();
-const vueOptions = {
-    rootPath: path.join(__dirname, "../example/views"),
-    vueVersion: "2.4.5",
-};
-const expressVueMiddleware = expressVue.init(vueOptions);
+
+const expressVueMiddleware = expressVue.init();
 app.use(expressVueMiddleware);
 ```
 
@@ -131,14 +130,13 @@ will overwrite it.
 
 |key|type|description|required?|default value|
 |-|-|-|-|-|
-|rootpath|string|this is the path the library will use as the base for all lookups| required| no default value|
+|rootpath|string|this is the path the library will use as the base for all lookups| optional| the directory that your `../node_modules` lives in|
 |vueVersion|string|this is where you specify which version of vue.js's library to use from the CDN | optional| the latest version as of publishing this|
 |layout|Object|this is the object for customzing the html, body, and template tags| optional| has default value which is in the example below|
 |vue|Object|this is the global config for vue for example you can set a global title, or a script tag in your head block everything here is global|optional|no default value|
 |data|Object|this is the global data object, this will be merged in to your .vue file's data block on every route, you can override this per route.|optional|no default value|
 
-Here's an example, with the default layout config included for you to see... note `rootPath` has no default value, and will crash if you don't set it.
-
+Here's an example, with the default layout config included for you to see... 
 
 ```js
 const vueOptions = {

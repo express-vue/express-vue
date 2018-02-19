@@ -1,5 +1,6 @@
 language: node_js
 node_js:
+  - v9
   - v8
   - v7
   - v6
@@ -15,8 +16,9 @@ deploy:
     skip_cleanup: true
     email: daniel@cherubini.casa
     api_key:
-      secure: L6HD8tWjxQCtAnW+fXe3YT0heYX5/a4O2K1lMP+F48ZXYRhtsi0uePOWnCcF9M8f8/0t1vKR6RSx4W+9wI25dtb6kGXhPmrMffHioDlQ7IorPEu9I36LrSzLR8yX2AkuEg8M1f1XjSHQBlfFNKV0db+U+hFG9hScQzOlJEJ5KH8cwTfkNaXT6Co6oLi1k8RyGTIJ14m5RUxqyv8tnrhRYYFXbtPmx038ePLMgfQ9xW0gvPFjOCpl3JlUdwyQLGBgjypLt4MMeNxbUWoPuGSLBxV6masrxagqYYMaW+yFMhWJg7Cks1eERDuKSnp/2wzdnnwHN3wWEz0c7k6DFvmrF64dbLmsdpMvrZpnCIQoNx5Wkm2nTSiLWpcC7vuiswE5XWTMKcITpw6a1oyY8J0Uvt41JxvoNrJAWT6d9OOrOHvUxGPRs6YXjhUm/fslfvE84BMvwSWHah8jGtUxJY7cm7mNOoWGW47WUb424HJ0D2OgTjCHkKlCM6Q8SnJPS80QFN5Xx75P5CxlWnvtn26M00QFlg1YtLrGxw/9pUnemYUukvkzz3Xmu22IfaNnplPVLjKTVD5lVzv5ERHC4VENvdxHxuPh0p2OY3QkVFd9vyK9YqYNrYvQYCuLq+oegquKkxO43ESHFKcDzipUPTxsWAbPHTQ/6i2X7JSbjfRy7P8=
+      secure: Fw5+Z4k/meEj0s6uQkdQGu+w2TefFNBV37szGGFzhcCDmJocSZGoNB46YoMNayxtW6MKyxKJuXbbc+gcGQBdnWK/1FesOFPoKR2ok8774Gb83P5aO/AnQ1bSK5n4pqCSZdkADW15NyYs+ugDtHtVFB32SaHV4saSN6mJOGWTXH2y7PtVUcM05wYAGk/xZpqorApNa660bBdX0W123uTw29boG4fE/SNsxCNi6vuOi+JjtNJ4QsNSrEUPSgsghUUIZ1toiZhlBRjOrzs9RcAdRKQjuPfF6/WnShzBIVym5mPJvfROUleAAsBHw74CiNLv8iV6AtESklp9UBg6Tfn1vhMZir4dLVsAa9KE78gr7lDMGYyvUk/tr0chzkIro045dClE3dcD+ggFapxiOwEY6mTQ5SbS3hs/4FH3FsNugS0/abJSCZPhydJuhZ4T7V2sM4Y0TxnldXWib+kuMJwq0sHBfXf0akE6kpntjsuir6bAhLDA4U2XdGfbB9BjtBfkSpdicXmbmb+7Wh4E/j7e7M9dbfWzuDrrglBn3Pw5FWLUl9pMpwUJqO/YLhxVUaREiel0IkFzSa4Ejxqcaxfy6QZZZgqtnwo62v47fYnMUEXep77e3az1PXp+MeBTqa/hnkrjXcNEV3AxBlbLX9hg/4VwA5W2YkIbZmKUa/+rD1s=
     on:
+      node: "8"
       all_branches: true
       tags: true
       repo: express-vue/express-vue
