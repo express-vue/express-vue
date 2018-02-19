@@ -78,7 +78,7 @@
   "repository": "express-vue/express-vue",
   "scripts": {
     "start": "node test/example/index.js",
-    "debug": "node --inspect test/example/index.js",
+    "debug": "VUE_DEV=true node --inspect test/example/index.js",
     "release": "generate-release",
     "lint": "tslint --project tsconfig.json",
     "test": "npm run lint && nsp check && nyc ava",
@@ -89,9 +89,6 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "debug": "^3.1.0",
-    "vue": "^2.5.13",
-    "vue-pronto": "^1.1.0",
-    "vue-template-compiler": "^2.5.13"
+    "vue-pronto": "^1.1.0"
   }
 }
