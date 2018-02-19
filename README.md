@@ -18,6 +18,27 @@ If you want to use vue.js and setup a large scale web application that is server
 
 The idea is simple use Node+Express for your Controller and Models, and Vue.js for your Views.. you can have a secure server side rendered website without all the hassle. Your Controller will pass in the data to your View through `res.renderVue('view', {data}, [{vueOptions}])`.
 
+# Table of Contents
+
+- [Installation](#installation)
+- [Requirements](#requirements)
+    - [ES Modules](#es-modules)
+- [Example / Starter](#example--starter)
+- [Usage](#usage)
+    - [Options](#options)
+    - [Components / Mixins / Etc](#components--mixins--etc)
+    - [CSS Inside Components/Views](#css-inside-componentsviews)
+    - [Mixins](#mixins)
+    - [Meta](#meta)
+        - [Structured Data](#structured-data)
+    - [Layout](#layout)
+- [Vue Dev Tools](#devtools)
+- [Caching](#caching)
+- [Finally](#finally)
+- [Typescript Support](#typescript-support)
+- [SailsJS Support](#sailsjs-support)
+- [Changelog](#changelog)
+
 
 ## Installation
 
@@ -28,6 +49,36 @@ $ npm install --save express-vue
 ## Requirements
 
 Requires Node V6 or greater, and Vue 2.0 or greater. (Latest Vue.js is included in this project)
+
+### ES Modules 
+
+If using ES module statments like 
+
+```js
+export default {}
+//or 
+import foo from "foo";
+```
+
+Or any other ES features you will need to also install `babel-core` and `babel-preset-env`.
+
+```sh
+npm i -D babel-core babel-preset-env 
+```
+
+Then place a `.babelrc` file in your root. here's an example targeting last two versions
+
+```json
+{
+  "presets": [
+    ["env", {
+      "targets": {
+        "browsers": ["last 2 versions"]
+      }
+    }]
+  ]
+}
+```
 
 ## Example / Starter
 
@@ -275,16 +326,6 @@ const vueOptions = {
     }
 }
 ```
-
-
-## DevTools
-
-To use the amazing Vue.js DevTools please set the environment variable `VUE_DEV=true`this will also trigger the development version of vue to be included in the head.
-
-## Caching
-
-Caching is now enabled by default, in dev mode hopefuly you're using something like nodemon/gulp/grunt etc, which restarts the server on file change.. otherwise you will need to stop and restart the server if you change your files.. which is normal.
-
 ## Layout
 
 If you want to have a custom layout you can, here is the default layout, each part is overridable.
@@ -310,6 +351,15 @@ const vueOptions = {
 };
 const expressVueMiddleware = expressVue.init(vueOptions);
 ```
+
+
+## DevTools
+
+To use the amazing Vue.js DevTools please set the environment variable `VUE_DEV=true`this will also trigger the development version of vue to be included in the head.
+
+## Caching
+
+Caching is now enabled by default, in dev mode hopefuly you're using something like nodemon/gulp/grunt etc, which restarts the server on file change.. otherwise you will need to stop and restart the server if you change your files.. which is normal.
 
 
 ## Finally
