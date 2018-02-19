@@ -9,7 +9,7 @@ interface VueOptionsType {
     template?: Object
 }
 
-declare function init(options: VueOptionsType): Function;
+declare function init(options?: VueOptionsType): Function;
 
 export {
     init
