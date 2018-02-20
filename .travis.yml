@@ -18,7 +18,6 @@ deploy:
     api_key:
       secure: Fw5+Z4k/meEj0s6uQkdQGu+w2TefFNBV37szGGFzhcCDmJocSZGoNB46YoMNayxtW6MKyxKJuXbbc+gcGQBdnWK/1FesOFPoKR2ok8774Gb83P5aO/AnQ1bSK5n4pqCSZdkADW15NyYs+ugDtHtVFB32SaHV4saSN6mJOGWTXH2y7PtVUcM05wYAGk/xZpqorApNa660bBdX0W123uTw29boG4fE/SNsxCNi6vuOi+JjtNJ4QsNSrEUPSgsghUUIZ1toiZhlBRjOrzs9RcAdRKQjuPfF6/WnShzBIVym5mPJvfROUleAAsBHw74CiNLv8iV6AtESklp9UBg6Tfn1vhMZir4dLVsAa9KE78gr7lDMGYyvUk/tr0chzkIro045dClE3dcD+ggFapxiOwEY6mTQ5SbS3hs/4FH3FsNugS0/abJSCZPhydJuhZ4T7V2sM4Y0TxnldXWib+kuMJwq0sHBfXf0akE6kpntjsuir6bAhLDA4U2XdGfbB9BjtBfkSpdicXmbmb+7Wh4E/j7e7M9dbfWzuDrrglBn3Pw5FWLUl9pMpwUJqO/YLhxVUaREiel0IkFzSa4Ejxqcaxfy6QZZZgqtnwo62v47fYnMUEXep77e3az1PXp+MeBTqa/hnkrjXcNEV3AxBlbLX9hg/4VwA5W2YkIbZmKUa/+rD1s=
     on:
-      node: "8"
       all_branches: true
       tags: true
       repo: express-vue/express-vue
