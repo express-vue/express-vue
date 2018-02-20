@@ -89,6 +89,6 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "vue-pronto": "^1.1.1"
+    "vue-pronto": "^1.1.2"
   }
 }
