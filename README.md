@@ -31,7 +31,7 @@ The idea is simple use Node+Express for your Controller and Models, and Vue.js f
     - [Mixins](#mixins)
     - [Meta](#meta)
         - [Structured Data](#structured-data)
-    - [Layout](#layout)
+    - [Template](#template)
 - [Vue Dev Tools](#devtools)
 - [Caching](#caching)
 - [Finally](#finally)
@@ -142,7 +142,7 @@ Here's an example, with the default layout config included for you to see...
 const vueOptions = {
     rootPath: path.join(__dirname, '../example/views'),
     vueVersion: "2.3.4",
-    layout: {
+    template: {
         html: {
             start: '<!DOCTYPE html><html>',
             end: '</html>'
@@ -324,14 +324,14 @@ const vueOptions = {
     }
 }
 ```
-## Layout
+## Template
 
 If you want to have a custom layout you can, here is the default layout, each part is overridable.
 
 ```js
 const vueOptions = {
     //...
-    layout: {
+    template: {
         html: {
             start: '<!DOCTYPE html><html>',
             end: '</html>'
