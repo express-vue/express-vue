@@ -26,6 +26,7 @@ The idea is simple use Node+Express for your Controller and Models, and Vue.js f
 - [Example / Starter](#example--starter)
 - [Usage](#usage)
     - [Options](#options)
+        - [VueVersion](#vueversion)
     - [Components / Mixins / Etc](#components--mixins--etc)
     - [CSS Inside Components/Views](#css-inside-componentsviews)
     - [Mixins](#mixins)
@@ -131,7 +132,7 @@ will overwrite it.
 |key|type|description|required?|default value|
 |-|-|-|-|-|
 |rootpath|string|this is the path the library will use as the base for all lookups| optional| the directory that your `../node_modules` lives in|
-|vueVersion|string|this is where you specify which version of vue.js's library to use from the CDN | optional| the latest version as of publishing this|
+|vueVersion|string or object|this is where you specify which version of vue.js's library to use from the CDN | optional| the latest version as of publishing this|
 |layout|Object|this is the object for customzing the html, body, and template tags| optional| has default value which is in the example below|
 |vue|Object|this is the global config for vue for example you can set a global title, or a script tag in your head block everything here is global|optional|no default value|
 |data|Object|this is the global data object, this will be merged in to your .vue file's data block on every route, you can override this per route.|optional|no default value|
@@ -176,6 +177,36 @@ const vueOptions = {
 };
 const expressVueMiddleware = expressVue.init(vueOptions);
 ```
+
+## VueVersion
+
+We will handle the version of vue for you in the options. We use JSDeliver's CDN to handle this.
+If you want to use the latest, just ignore the key like so
+
+```js
+const expressVueMiddleware = expressVue.init();
+```
+
+If you want to use a specific version?
+
+```js
+const vueOptions = {
+    vueVersion: "2.3.4"
+}
+const expressVueMiddleware = expressVue.init(vueOptions);
+```
+
+If you want to disable it
+```js
+const vueOptions = {
+    vueVersion: {
+        disabled: true
+    }
+}
+const expressVueMiddleware = expressVue.init(vueOptions);
+```
+
+In the future we will have other options like you passing in the location of the vueVersion you want to use.. and other things
 
 ## Components / Mixins / Etc
 
