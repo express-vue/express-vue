@@ -1,6 +1,6 @@
 {
   "name": "express-vue",
-  "version": "5.2.2",
+  "version": "5.2.3",
   "description": "Vue rendering engine for Express.js",
   "homepage": "https://github.com/express-vue/express-vue",
   "author": {
