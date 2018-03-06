@@ -415,6 +415,76 @@ import expressVue = require('express-vue');
 
 This is middleware now so support for sails should just work as middleware.
 
+## V5 Migration
+
+- Ditched the custom parser/renderer and moved to using `vue-pronto` which uses `Vueify`
+- Re-structured the vueOptions
+- Added `req.vueOptions` as a global.
+- Removed the vue parent object with the child of head, this was un-needed its now just `vueOptions.head` instead of `vueOptions.vue.head`
+- When using `res.renderVue` the filename requires an extention now.
+- Paths are now RELATIVE to the file you're currently in ... YAAAY
+- Node Modules are supported, for both javascript and vue file imports inside .vue files ... YAAAY
+- Massive Performance gains
+- 100% compatability with vueJS
+- Migration to Vue-Pronto
+
+Express-vue-renderer got too heavy, the architecture became too messy, and it was slow. It needed to get thrown out. Enter vue-pronto it uses vueify under the hood, and is much more modular. this will be much easier going forward to maintain.
+
+### Changes to the Vue Options Object
+
+There's been some big changes to this object, so before it would look like this
+
+```js
+const vueOptions = {
+    vue: {
+        head: {
+            meta: [
+                { script: 'https://unpkg.com/vue@2.4.2/dist/vue.js'},
+                { name: 'application-name', content: 'Name of my application' },
+                { name: 'description', content: 'A description of the page', id: 'desc' },
+                { style: '/assets/style.css' }
+            ]
+        }
+    }
+};
+```
+### Now its different ..
+
+- We have automated getting vueJS from the CDN for you, and which version (dev/prod) it should use based on the environment variable `VUE_DEV`.
+- We also broke up the meta object, into metas, scripts, and styles arrays.
+scripts now have scriptSrc which is a string including the <script> elements which will be placed in your head as is.
+- The parent vue object that wraps the head object was unneeded and removed.
+here's the same as above but newer
+
+```js
+const vueOptions = {
+    vueOptions: "2.4.2",
+    head: {
+        metas: [
+            { name: 'application-name', content: 'Name of my application' },
+            { name: 'description', content: 'A description of the page', id: 'desc' },
+        ],
+        styles: [
+            { style: '/assets/style.css' }
+        ]
+    }
+};
+```
+### Vue File changes
+
+Routes before were relative to the `rootPath`... now that is gone... routes for requires are relative to the file you are currently in.
+Also `node_module` paths are working for both .js and .vue includes
+
+### Remember to look at this if you're getting errors!
+
+**`res.renderVue` Changes**
+
+`res.renderVue` now requires an extension for the file you're using in the route. `foo/bar` now `foo/bar.vue`
+
+### New
+
+Global `req.vueOptions`. this is super handy for passing options around between middleware.
+
 ## Changelog
 
 #### V5
