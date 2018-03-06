@@ -38,6 +38,7 @@ The idea is simple use Node+Express for your Controller and Models, and Vue.js f
 - [Finally](#finally)
 - [Typescript Support](#typescript-support)
 - [SailsJS Support](#sailsjs-support)
+- [V5 Migration](#v5-migration)
 - [Changelog](#changelog)
 
 
