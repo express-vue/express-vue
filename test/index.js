@@ -78,6 +78,38 @@ test.cb("renders App object", t => {
     res.renderVue("index.vue", data, vue);
 });
 
+test.cb("renders App string", t => {
+
+    let req = {};
+    let res = {
+        response: "",
+        set: function(key, value) {
+            this[key] = value;
+        },
+        write: function(chunk) {
+            this.response += chunk;
+        },
+        send: function(message) {
+            // tslint:disable-next-line:no-console
+            console.log(message);
+        },
+        end: function() {
+            t.is(this.response, exampleResponse);
+            t.end();
+        },
+    };
+
+    // tslint:disable-next-line:no-shadowed-variable
+    function next(error, req, res) {
+        if (error) {
+            t.fail(error);
+        }
+        t.end();
+    }
+    expressVueMiddleware(req, res, next);
+    res.renderVueString("index.vue", data, vue);
+});
+
 test.cb("tests error", t => {
 
     let req = {};
