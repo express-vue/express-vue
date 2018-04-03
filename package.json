@@ -1,6 +1,6 @@
 {
   "name": "express-vue",
-  "version": "5.6.1",
+  "version": "5.6.2",
   "description": "Vue rendering engine for Express.js",
   "homepage": "https://github.com/express-vue/express-vue",
   "author": {
@@ -46,7 +46,7 @@
     ]
   },
   "devDependencies": {
-    "@types/node": "^9.6.0",
+    "@types/node": "^9.6.1",
     "ava": "^0.25.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
@@ -67,7 +67,7 @@
     "nyc": "^11.6.0",
     "rimraf": "^2.6.2",
     "tslint": "^5.9.1",
-    "typescript": "^2.7.2"
+    "typescript": "^2.8.1"
   },
   "eslintConfig": {
     "extends": "xo-space",
@@ -89,6 +89,6 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "vue-pronto": "^1.6.1"
+    "vue-pronto": "^1.6.3"
   }
 }
