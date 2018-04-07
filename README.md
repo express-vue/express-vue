@@ -132,7 +132,7 @@ will overwrite it.
 
 |key|type|description|required?|default value|
 |-|-|-|-|-|
-|rootpath|string|this is the path the library will use as the base for all lookups| optional| the directory that your `../node_modules` lives in|
+|rootPath|string|this is the path the library will use as the base for all lookups| optional| the directory that your `../node_modules` lives in|
 |vueVersion|string or object|this is where you specify which version of vue.js's library to use from the CDN | optional| the latest version as of publishing this|
 |layout|Object|this is the object for customzing the html, body, and template tags| optional| has default value which is in the example below|
 |vue|Object|this is the global config for vue for example you can set a global title, or a script tag in your head block everything here is global|optional|no default value|
