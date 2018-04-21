@@ -111,7 +111,7 @@ router.get('/', (req, res, next) => {
     req.vueOptions: {
         head: {
             title: 'Page Title',
-            meta: [
+            metas: [
                 { property:'og:title', content: 'Page Title'},
                 { name:'twitter:title', content: 'Page Title'},
             ]
@@ -152,7 +152,7 @@ const vueOptions = {
         body: {
             start: '<body>',
             end: '</body>'
-        }
+        },
         template: {
             start: '<div id="app">',
             end: '</div>'
