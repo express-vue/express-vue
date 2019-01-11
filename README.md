@@ -52,20 +52,20 @@ $ npm install --save express-vue
 
 Requires Node V6 or greater, and Vue 2.0 or greater. (Latest Vue.js is included in this project)
 
-### ES Modules 
+### ES Modules
 
-If using ES module statments like 
+If using ES module statements like
 
 ```js
 export default {}
-//or 
+//or
 import foo from "foo";
 ```
 
 Or any other ES features you will need to also install `babel-core` and `babel-preset-env`.
 
 ```sh
-npm i -D babel-core babel-preset-env 
+npm i -D babel-core babel-preset-env
 ```
 
 Then place a `.babelrc` file in your root. here's an example targeting last two versions
@@ -88,14 +88,13 @@ An example / starter can be found [here](https://github.com/express-vue/express-
 
 ## Usage
 
-This is the minimum required setup. 
+This is the minimum required setup.
 If you don't provide a `vueVersion` it will use the latest one when the project was published.
 If there is no `rootPath` it will assume the root is the parent directory of `node_modules`.
 
 ```js
-var expressVue = require("express-vue");
-
-var app = express();
+const expressVue = require("express-vue");
+const app = express();
 
 const expressVueMiddleware = expressVue.init();
 app.use(expressVueMiddleware);
@@ -105,19 +104,20 @@ In your route, assuming you have a main.vue
 
 ```js
 router.get('/', (req, res, next) => {
-    const data: {
+    const data = {
         otherData: 'Something Else'
     };
-    req.vueOptions: {
+
+    const vueOptions = {
         head: {
             title: 'Page Title',
             metas: [
                 { property:'og:title', content: 'Page Title'},
                 { name:'twitter:title', content: 'Page Title'},
             ]
-        }    
+        }
     }
-    res.renderVue('main.vue', data, req.vueOptions);
+    return res.renderVue('main.vue', data, vueOptions);
 })
 ```
 
@@ -133,12 +133,12 @@ will overwrite it.
 |key|type|description|required?|default value|
 |-|-|-|-|-|
 |rootPath|string|this is the path the library will use as the base for all lookups| optional| the directory that your `../node_modules` lives in|
-|vueVersion|string or object|this is where you specify which version of vue.js's library to use from the CDN | optional| the latest version as of publishing this|
-|layout|Object|this is the object for customzing the html, body, and template tags| optional| has default value which is in the example below|
+|vueVersion|string or object|this is where you specify which version of the vue.js library to use from the CDN | optional| the latest version as of publishing this|
+|layout|Object|this is the object for customizing the html, body, and template tags| optional| has default value which is in the example below|
 |vue|Object|this is the global config for vue for example you can set a global title, or a script tag in your head block everything here is global|optional|no default value|
 |data|Object|this is the global data object, this will be merged in to your .vue file's data block on every route, you can override this per route.|optional|no default value|
 
-Here's an example, with the default layout config included for you to see... 
+Here's an example, with the default layout config included for you to see...
 
 ```js
 const vueOptions = {
@@ -213,7 +213,7 @@ In the future we will have other options like you passing in the location of the
 
 When including components/mixins/etc the directory it looks is going to be relative to the file you're working in currently.
 assuming the below is running in a folder with a subdirectory `components` and a directory `mixins` in a parent, it would look like this.
-when importing .vue files and .js files from node modules you can just import them the normal way you import a module. 
+When importing .vue files and .js files from node modules you can just import them the normal way you import a module.
 
 ```html
 <script>
@@ -301,7 +301,7 @@ const vueOptions = {
         // Meta tags
         metas: [
             { name: 'application-name', content: 'Name of my application' },
-            { name: 'description', content: 'A description of the page', id: 'desc' } // id to replace intead of create element
+            { name: 'description', content: 'A description of the page', id: 'desc' } // id to replace instead of create element
             // ...
             // Twitter
             { name: 'twitter:title', content: 'Content Title' },
@@ -358,7 +358,7 @@ const vueOptions = {
 ```
 ## Template
 
-If you want to have a custom layout you can, here is the default layout, each part is overridable.
+If you want to have a custom layout you can, here is the default layout, each part can be overridden.
 
 ```js
 const vueOptions = {
@@ -389,7 +389,7 @@ To use the amazing Vue.js DevTools please set the environment variable `VUE_DEV=
 
 ## Caching
 
-Caching is now enabled by default, in dev mode hopefuly you're using something like nodemon/gulp/grunt etc, which restarts the server on file change.. otherwise you will need to stop and restart the server if you change your files.. which is normal.
+Caching is now enabled by default, in dev mode hopefully you're using something like nodemon/gulp/grunt etc, which restarts the server on file change.. otherwise you will need to stop and restart the server if you change your files.. which is normal.
 
 
 ## Finally
@@ -412,7 +412,7 @@ Typescript declarations are published on NPM, so you don’t need external tools
 import expressVue = require('express-vue');
 ```
 
-## Sailsjs Support
+## Sails.js Support
 
 This is middleware now so support for sails should just work as middleware.
 
@@ -422,11 +422,11 @@ This is middleware now so support for sails should just work as middleware.
 - Re-structured the vueOptions
 - Added `req.vueOptions` as a global.
 - Removed the vue parent object with the child of head, this was un-needed its now just `vueOptions.head` instead of `vueOptions.vue.head`
-- When using `res.renderVue` the filename requires an extention now.
+- When using `res.renderVue` the filename requires an extension now.
 - Paths are now RELATIVE to the file you're currently in ... YAAAY
 - Node Modules are supported, for both javascript and vue file imports inside .vue files ... YAAAY
 - Massive Performance gains
-- 100% compatability with vueJS
+- 100% compatibility with vueJS
 - Migration to Vue-Pronto
 
 Express-vue-renderer got too heavy, the architecture became too messy, and it was slow. It needed to get thrown out. Enter vue-pronto it uses vueify under the hood, and is much more modular. this will be much easier going forward to maintain.
@@ -493,11 +493,11 @@ Global `req.vueOptions`. this is super handy for passing options around between 
 - Re-structured the vueOptions
 - Added req.vueOptions as a global.
 - Removed the vue parent object with the child of head, this was un-needed its now just vueOptions.head instead of vueOptions.vue.head
-- when using `res.renderVue` the filename requires an extention now. 
+- when using `res.renderVue` the filename requires an extension now.
 - Paths are now RELATIVE to the file you're currently in ... YAAAY
 - Node Modules are supported, for both javascript and vue file imports inside .vue files ... YAAAY
 - Massive Performance gains
-- 100% compatability with vueJS
+- 100% compatibility with vueJS
 
 #### V4
 - v4 was a complete re-write.. migrating from v3 to v4 will break everything.
