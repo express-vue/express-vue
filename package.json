@@ -8,6 +8,9 @@
     "email": "daniel@cherubini.casa",
     "url": "https://cherubini.casa"
   },
+  "publishConfig": {
+      "tag": "webpack"
+  },
   "files": [
     "lib"
   ],
