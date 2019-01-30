@@ -13,6 +13,15 @@ test.beforeEach(t => {
 
     vueOptions = {
         rootPath: path.join(__dirname, "example/views"),
+        babel: {
+            "presets": [
+                ["env", {
+                    "targets": {
+                        "browsers": ["last 2 versions"],
+                    },
+                }],
+            ],
+        },
     };
     expressVueMiddleware = ExpressVue.init(vueOptions);
 
