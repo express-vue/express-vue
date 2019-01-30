@@ -9,7 +9,7 @@
     "url": "https://cherubini.casa"
   },
   "publishConfig": {
-      "tag": "webpack"
+    "tag": "webpack"
   },
   "files": [
     "lib"
@@ -68,7 +68,6 @@
     "express": "^4.16.4",
     "generate-release": "^1.1.1",
     "ncp": "^2.0.0",
-    "nsp": "^3.2.1",
     "nyc": "^11.9.0",
     "rimraf": "^2.6.3",
     "tslint": "^5.12.1",
@@ -86,7 +85,7 @@
     "debug": "VUE_DEV=true node --inspect test/example/index.js",
     "release": "npm test && generate-release",
     "lint": "tslint --project tsconfig.json",
-    "test": "npm run lint && nsp check && nyc ava",
+    "test": "npm run lint && nyc ava",
     "preversion": "npm test",
     "version": "git add -A",
     "postversion": "git push && git push --tags",
