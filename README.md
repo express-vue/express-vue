@@ -211,6 +211,8 @@ In the future we will have other options like you passing in the location of the
 
 ## Components / Mixins / Etc
 
+### NOTE: Components and Mixins need to be OUTSIDE of the Pages Root folder.
+
 When including components/mixins/etc the directory it looks is going to be relative to the file you're working in currently.
 assuming the below is running in a folder with a subdirectory `components` and a directory `mixins` in a parent, it would look like this.
 when importing .vue files and .js files from node modules you can just import them the normal way you import a module. 

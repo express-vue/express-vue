@@ -46,7 +46,9 @@
     ]
   },
   "devDependencies": {
-    "@types/node": "^10.12.2",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "@types/node": "^10.12.19",
     "ava": "^0.25.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
@@ -59,14 +61,14 @@
     "del": "^3.0.0",
     "eslint": "^4.19.1",
     "eslint-config-xo-space": "^0.18.0",
-    "eslint-plugin-babel": "^5.2.1",
+    "eslint-plugin-babel": "^5.3.0",
     "express": "^4.16.4",
     "generate-release": "^1.1.1",
     "ncp": "^2.0.0",
     "nsp": "^3.2.1",
     "nyc": "^11.9.0",
-    "rimraf": "^2.6.2",
-    "tslint": "^5.11.0",
+    "rimraf": "^2.6.3",
+    "tslint": "^5.12.1",
     "typescript": "^2.9.2"
   },
   "eslintConfig": {
@@ -89,6 +91,6 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "vue-pronto": "^1.8.2"
+    "vue-pronto": "^1.9.0-1"
   }
 }
