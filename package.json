@@ -51,7 +51,7 @@
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.3.1",
-    "@types/node": "^10.12.19",
+    "@types/node": "^10.12.21",
     "ava": "^0.25.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
@@ -93,6 +93,6 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "vue-pronto": "^1.9.0-2"
+    "vue-pronto": "^1.9.0-3"
   }
 }
