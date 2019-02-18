@@ -211,48 +211,6 @@ test.cb("tests vueOptions", t => {
     }
     expressVueMiddleware(req, res, next);
 
-    const expected = {
-        vueOptions: {
-            title: "",
-            head: {
-                scripts: [],
-                styles: [],
-                metas: [],
-            },
-        },
-    };
-
-    t.deepEqual(expected, req);
-    t.end();
-});
-
-test.cb("tests vueOptions", t => {
-
-    let req = {};
-    let res = {
-        response: "",
-        set: function(key, value) {
-            this[key] = value;
-        },
-        write: function(chunk) {
-            this.response += chunk;
-        },
-        // tslint:disable-next-line:no-empty
-        send: function(error) {
-        },
-        // tslint:disable-next-line:no-empty
-        end: function() {},
-    };
-
-    // tslint:disable-next-line:no-shadowed-variable
-    function next(error, req, res) {
-        if (error) {
-            t.fail(error);
-            t.end();
-        }
-    }
-    expressVueMiddleware(req, res, next);
-
     t.is(typeof res.renderVue, "function");
     t.end();
 });
