@@ -32,7 +32,6 @@
     "sources": [
       "lib/**/*.js"
     ],
-    "concurrency": 8,
     "failFast": false,
     "powerAssert": false,
     "babel": {
