@@ -16,7 +16,9 @@ A Simple way of using Server Side rendered Vue.js 2.0+ natively in Express using
 
 If you want to use vue.js and setup a large scale web application that is server side rendered, using Node+Express, but you want to use all the fantastic tools given to you by Vue.js. Then this is the library for you.
 
-The idea is simple use Node+Express for your Controller and Models, and Vue.js for your Views.. you can have a secure server side rendered website without all the hassle. Your Controller will pass in the data to your View through `res.renderVue('view', {data}, [{vueOptions}])`.
+The idea is simple use Node+Express for your Controller and Models, and Vue.js for your Views.. you can have a secure server side rendered website without all the hassle. Your Controller will pass in the data to your View through 
+
+`res.renderVue('view', {data}, [{vueOptions}])`.
 
 # Table of Contents
 
@@ -94,11 +96,11 @@ If there is no `rootPath` it will assume the root is the parent directory of `no
 
 ```js
 var expressVue = require("express-vue");
-
 var app = express();
 
-const expressVueMiddleware = expressVue.init();
-app.use(expressVueMiddleware);
+//pass your app through express-vue here
+//expressVueOptions is optional and explained later in the docs
+expressVue.use(app, expressVueOptions);
 ```
 
 In your route, assuming you have a main.vue
@@ -143,21 +145,6 @@ Here's an example, with the default layout config included for you to see...
 ```js
 const vueOptions = {
     rootPath: path.join(__dirname, '../example/views'),
-    vueVersion: "2.3.4",
-    template: {
-        html: {
-            start: '<!DOCTYPE html><html>',
-            end: '</html>'
-        },
-        body: {
-            start: '<body>',
-            end: '</body>'
-        },
-        template: {
-            start: '<div id="app">',
-            end: '</div>'
-        }
-    },
     head: {
         title: 'Hello this is a global title',
         scripts: [
@@ -176,38 +163,8 @@ const vueOptions = {
         }
     }
 };
-const expressVueMiddleware = expressVue.init(vueOptions);
+expressVue.use(app, vueOptions);
 ```
-
-## VueVersion
-
-We will handle the version of vue for you in the options. We use JSDeliver's CDN to handle this.
-If you want to use the latest, just ignore the key like so
-
-```js
-const expressVueMiddleware = expressVue.init();
-```
-
-If you want to use a specific version?
-
-```js
-const vueOptions = {
-    vueVersion: "2.3.4"
-}
-const expressVueMiddleware = expressVue.init(vueOptions);
-```
-
-If you want to disable it
-```js
-const vueOptions = {
-    vueVersion: {
-        disabled: true
-    }
-}
-const expressVueMiddleware = expressVue.init(vueOptions);
-```
-
-In the future we will have other options like you passing in the location of the vueVersion you want to use.. and other things
 
 ## Components / Mixins / Etc
 
@@ -332,7 +289,7 @@ const vueOptions = {
         ],
     }
 }
-const expressVueMiddleware = expressVue.init(vueOptions);
+expressVue.use(app, vueOptions);
 ```
 
 ## Structured Data
@@ -381,7 +338,7 @@ const vueOptions = {
     }
     //...
 };
-const expressVueMiddleware = expressVue.init(vueOptions);
+expressVue.use(app, vueOptions);
 ```
 
 
@@ -392,19 +349,6 @@ To use the amazing Vue.js DevTools please set the environment variable `VUE_DEV=
 ## Caching
 
 Caching is now enabled by default, in dev mode hopefuly you're using something like nodemon/gulp/grunt etc, which restarts the server on file change.. otherwise you will need to stop and restart the server if you change your files.. which is normal.
-
-
-## Finally
-
-Finally you'll need to set the version of VueJS you want to use in the options like so
-
-```js
-const vueOptions = {
-    vueVersion: "2.4.2"
-};
-```
-
-Vue versions will switch between min and regular copies of vue based on `VUE_DEV=true` value. (Dev uses the non minified.)
 
 ## Typescript support
 
@@ -417,6 +361,11 @@ import expressVue = require('express-vue');
 ## Sailsjs Support
 
 This is middleware now so support for sails should just work as middleware.
+
+## Migration to Webpack Renderer
+
+- Use the new init syntax `expressVue.use(expressApp, options);`
+- Data on the root of your root view will now be accessable with `$root`, so any data you pass in via a controller will be accessable there.
 
 ## V5 Migration
 
