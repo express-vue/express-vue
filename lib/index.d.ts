@@ -11,6 +11,9 @@ interface VueOptionsType {
 
 declare function init(options?: VueOptionsType): Function;
 
+declare function use(expressApp : Object, options?: VueOptionsType): Function;
+
 export {
-    init
+    init,
+    use,
 };
