@@ -13,6 +13,15 @@ test.beforeEach(t => {
 
     vueOptions = {
         rootPath: path.join(__dirname, "example/views"),
+        babel: {
+            "presets": [
+                ["env", {
+                    "targets": {
+                        "browsers": ["last 2 versions"],
+                    },
+                }],
+            ],
+        },
     };
     expressVueMiddleware = ExpressVue.init(vueOptions);
 
@@ -173,48 +182,6 @@ test.cb("tests content type", t => {
     }
     expressVueMiddleware(req, res, next);
     res.renderVue("index.vue", data, vue);
-});
-
-test.cb("tests vueOptions", t => {
-
-    let req = {};
-    let res = {
-        response: "",
-        set: function(key, value) {
-            this[key] = value;
-        },
-        write: function(chunk) {
-            this.response += chunk;
-        },
-        // tslint:disable-next-line:no-empty
-        send: function(error) {
-        },
-        // tslint:disable-next-line:no-empty
-        end: function() {},
-    };
-
-    // tslint:disable-next-line:no-shadowed-variable
-    function next(error, req, res) {
-        if (error) {
-            t.fail(error);
-            t.end();
-        }
-    }
-    expressVueMiddleware(req, res, next);
-
-    const expected = {
-        vueOptions: {
-            title: "",
-            head: {
-                scripts: [],
-                styles: [],
-                metas: [],
-            },
-        },
-    };
-
-    t.deepEqual(expected, req);
-    t.end();
 });
 
 test.cb("tests vueOptions", t => {
