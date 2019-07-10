@@ -16,7 +16,7 @@ A Simple way of using Server Side rendered Vue.js 2.0+ natively in Express using
 
 If you want to use vue.js and setup a large scale web application that is server side rendered, using Node+Express, but you want to use all the fantastic tools given to you by Vue.js. Then this is the library for you.
 
-The idea is simple use Node+Express for your Controller and Models, and Vue.js for your Views.. you can have a secure server side rendered website without all the hassle. Your Controller will pass in the data to your View through 
+The idea is simple use Node+Express for your Controller and Models, and Vue.js for your Views.. you can have a secure server side rendered website without all the hassle. Your Controller will pass in the data to your View through
 
 `res.renderVue('view', {data}, [{vueOptions}])`.
 
@@ -40,6 +40,7 @@ The idea is simple use Node+Express for your Controller and Models, and Vue.js f
 - [Finally](#finally)
 - [Typescript Support](#typescript-support)
 - [SailsJS Support](#sailsjs-support)
+- [Migration to Webpack Renderer](#migration-to-webpack-renderer)
 - [V5 Migration](#v5-migration)
 - [Changelog](#changelog)
 
@@ -54,20 +55,20 @@ $ npm install --save express-vue
 
 Requires Node V6 or greater, and Vue 2.0 or greater. (Latest Vue.js is included in this project)
 
-### ES Modules 
+### ES Modules
 
-If using ES module statments like 
+If using ES module statments like
 
 ```js
 export default {}
-//or 
+//or
 import foo from "foo";
 ```
 
 Or any other ES features you will need to also install `babel-core` and `babel-preset-env`.
 
 ```sh
-npm i -D babel-core babel-preset-env 
+npm i -D babel-core babel-preset-env
 ```
 
 Then place a `.babelrc` file in your root. here's an example targeting last two versions
@@ -90,7 +91,7 @@ An example / starter can be found [here](https://github.com/express-vue/express-
 
 ## Usage
 
-This is the minimum required setup. 
+This is the minimum required setup.
 If you don't provide a `vueVersion` it will use the latest one when the project was published.
 If there is no `rootPath` it will assume the root is the parent directory of `node_modules`.
 
@@ -117,7 +118,7 @@ router.get('/', (req, res, next) => {
                 { property:'og:title', content: 'Page Title'},
                 { name:'twitter:title', content: 'Page Title'},
             ]
-        }    
+        }
     }
     res.renderVue('main.vue', data, req.vueOptions);
 })
@@ -140,7 +141,7 @@ will overwrite it.
 |vue|Object|this is the global config for vue for example you can set a global title, or a script tag in your head block everything here is global|optional|no default value|
 |data|Object|this is the global data object, this will be merged in to your .vue file's data block on every route, you can override this per route.|optional|no default value|
 
-Here's an example, with the default layout config included for you to see... 
+Here's an example, with the default layout config included for you to see...
 
 ```js
 const vueOptions = {
@@ -172,7 +173,7 @@ expressVue.use(app, vueOptions);
 
 When including components/mixins/etc the directory it looks is going to be relative to the file you're working in currently.
 assuming the below is running in a folder with a subdirectory `components` and a directory `mixins` in a parent, it would look like this.
-when importing .vue files and .js files from node modules you can just import them the normal way you import a module. 
+when importing .vue files and .js files from node modules you can just import them the normal way you import a module.
 
 ```html
 <script>
@@ -364,8 +365,26 @@ This is middleware now so support for sails should just work as middleware.
 
 ## Migration to Webpack Renderer
 
-- Use the new init syntax `expressVue.use(expressApp, options);`
-- Data on the root of your root view will now be accessable with `$root`, so any data you pass in via a controller will be accessable there.
+- change `rootPath` to `pagesPath`
+- remove `vueVersion`
+- install `webpack` `vue-loader` and `css-loader`
+- remove `.babelrc` if you have one
+- if you're using regular babel packages switch to the `@babel` versions `@babel/core @babel/preset-env @babel/preset-es2015`
+- remove vuejs
+- Use the new init syntax `expressVue.use(expressApp, options);` this is a async function, so please either await it or use it in a promise.
+- Data you pass from the controller to the view can be accessed via `this.$root` a quick way to port over is in your `data` block in the `.vue` file to do something like below
+
+```js
+data: function() {
+    return {
+        tabs: this.$root.tabs,
+        news: this.$root.news,
+        picks: this.$root.picks,
+        lazytab: true,
+    };
+},
+```
+
 
 ## V5 Migration
 
@@ -444,7 +463,7 @@ Global `req.vueOptions`. this is super handy for passing options around between 
 - Re-structured the vueOptions
 - Added req.vueOptions as a global.
 - Removed the vue parent object with the child of head, this was un-needed its now just vueOptions.head instead of vueOptions.vue.head
-- when using `res.renderVue` the filename requires an extention now. 
+- when using `res.renderVue` the filename requires an extention now.
 - Paths are now RELATIVE to the file you're currently in ... YAAAY
 - Node Modules are supported, for both javascript and vue file imports inside .vue files ... YAAAY
 - Massive Performance gains
