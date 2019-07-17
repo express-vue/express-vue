@@ -6,27 +6,15 @@ const figlet = require("figlet");
 const chalk = require("chalk").default;
 const yargs = require("yargs");
 const {ProntoWebpack} = require("vue-pronto");
-const fs = require("fs");
-const path = require("path");
-//@ts-ignore
-const findNodeModules = require("find-node-modules");
+const {GetConfig} = require("../lib/utils/config.utils");
 
 //@ts-ignore
+// tslint:disable-next-line:no-console
 console.log(
     chalk.green(
         figlet.textSync("Express Vue"),
     ),
 );
-
-/**
- * @param {String} cwdPath
- * @returns {String}
- */
-function FindNodeModules(cwdPath) {
-    const nodeModulesPath = findNodeModules({cwd: cwdPath});
-    const nodeModulesPathResolved = path.join(cwdPath, nodeModulesPath[0]);
-    return nodeModulesPathResolved;
-}
 
 // tslint:disable-next-line:no-unused-expression
 yargs
@@ -36,25 +24,17 @@ yargs
                 describe: "Config file location",
                 default: "./expressvue.config.js",
             });
-    }, (argv) => {
-        if (argv.verbose) { console.info(`Building with ${argv.config}`); }
-
-        const nodeModulesPath = FindNodeModules(process.cwd());
-        const rootPath = path.resolve(nodeModulesPath, "../");
-        const configPath = path.join(rootPath, argv.config);
-        fs.stat(configPath, function(err, stat) {
-            if (err) {
-                console.error(`ExpressVue cannot find the file at ${configPath}`);
-                process.exit(1);
-            }
-            if (!stat.isFile()) {
-                console.error(`ExpressVue cannot a file at ${configPath}`);
-            } else {
-                const config = require(configPath);
-                const renderer = new ProntoWebpack(config);
-                renderer.Bootstrap();
-            }
-        });
+    }, async (argv) => {
+        try {
+            const config = await GetConfig(process.cwd());
+            if (argv.verbose) {
+            console.info(config);
+        }
+            const renderer = new ProntoWebpack(config);
+            await renderer.Bootstrap(true);
+        } catch (e) {
+            process.exit(1);
+        }
     })
     .option("verbose", {
         alias: "v",
