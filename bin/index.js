@@ -39,7 +39,7 @@ yargs
     }, (argv) => {
         if (argv.verbose) { console.info(`Building with ${argv.config}`); }
 
-        const nodeModulesPath = FindNodeModules(__dirname);
+        const nodeModulesPath = FindNodeModules(process.cwd());
         const rootPath = path.resolve(nodeModulesPath, "../");
         const configPath = path.join(rootPath, argv.config);
         fs.stat(configPath, function(err, stat) {
