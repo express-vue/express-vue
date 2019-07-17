@@ -13,13 +13,16 @@
   ],
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
+  "bin": {
+    "express-vue": "bin/index.js"
+  },
   "keywords": [
     "vue",
     "express",
     "node"
   ],
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=8.0.0"
   },
   "ava": {
     "files": [
@@ -47,9 +50,9 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/preset-env": "^7.4.5",
-    "@types/node": "^10.14.10",
+    "@babel/core": "^7.5.4",
+    "@babel/preset-env": "^7.5.4",
+    "@types/node": "^10.14.12",
     "ava": "^1.4.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
@@ -69,7 +72,7 @@
     "nyc": "^14.1.1",
     "rimraf": "^2.6.3",
     "tslint": "^5.18.0",
-    "typescript": "^3.5.2"
+    "typescript": "^3.5.3"
   },
   "eslintConfig": {
     "extends": "xo-space",
@@ -91,6 +94,9 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "vue-pronto": "^1.9.2"
+    "@types/yargs": "^13.0.0",
+    "chalk": "^2.4.2",
+    "figlet": "^1.2.3",
+    "vue-pronto": "^1.11.0"
   }
 }
