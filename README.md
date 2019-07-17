@@ -101,7 +101,10 @@ var app = express();
 
 //pass your app through express-vue here
 //expressVueOptions is optional and explained later in the docs
-expressVue.use(app, expressVueOptions);
+//this is a promise, so you can either await it or do this.
+expressVue.use(app, expressVueOptions).then(() => {
+    //the rest of your express routes.
+});
 ```
 
 In your route, assuming you have a main.vue
