@@ -9,7 +9,7 @@ const {ProntoWebpack} = require("vue-pronto");
 const {GetConfig} = require("../lib/utils/config.utils");
 
 //@ts-ignore
-// tslint:disable-next-line:no-console
+// tslint: disable - next - line; : no - console;
 console.log(
     chalk.green(
         figlet.textSync("Express Vue"),
@@ -18,27 +18,25 @@ console.log(
 
 // tslint:disable-next-line:no-unused-expression
 yargs
-    .command("build [config]", "Build project", (yarg) => {
-        yarg
-            .positional("config", {
-                describe: "Config file location",
-                default: "./expressvue.config.js",
+    .command("build", "Build project", (yarg) => {
+        return yarg
+            .option("verbose", {
+                alias: "v",
+                default: false,
+                boolean: true,
             });
     }, async (argv) => {
         try {
             const config = await GetConfig(process.cwd());
             if (argv.verbose) {
-            console.info(config);
-        }
+                console.info(config);
+            }
             const renderer = new ProntoWebpack(config);
-            await renderer.Bootstrap(true);
+            return await renderer.Bootstrap(true);
         } catch (e) {
+            console.error(e);
             process.exit(1);
         }
     })
-    .option("verbose", {
-        alias: "v",
-        default: false,
-        boolean: true,
-    })
+    .help()
     .argv;
