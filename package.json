@@ -50,9 +50,9 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.5.4",
-    "@babel/preset-env": "^7.5.4",
-    "@types/node": "^10.14.12",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@types/node": "^10.14.13",
     "ava": "^1.4.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
@@ -97,6 +97,6 @@
     "@types/yargs": "^13.0.0",
     "chalk": "^2.4.2",
     "figlet": "^1.2.3",
-    "vue-pronto": "^1.11.0"
+    "vue-pronto": "^1.11.1"
   }
 }
