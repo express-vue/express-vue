@@ -7,6 +7,7 @@ const chalk = require("chalk").default;
 const yargs = require("yargs");
 const {ProntoWebpack} = require("vue-pronto");
 const {GetConfig} = require("../lib/utils/config.utils");
+const path = require("path");
 
 //@ts-ignore
 // tslint:disable-next-line:no-console
@@ -18,18 +19,31 @@ console.log(
 
 // tslint:disable-next-line:no-unused-expression
 yargs
-    .command("build [config]", "Build project", (yarg) => {
-        yarg
-            .positional("config", {
-                describe: "Config file location",
-                default: "./expressvue.config.js",
+    .command("build [configPath]", "Build project", (yarg) => {
+        return yarg
+            .positional("configPath", {
+                type: "string",
+                default: process.cwd(),
+                normalize: true,
+                describe: "The path where expressvue.config.js lives",
+            })
+            .coerce("configPath", (arg) => {
+                return path.join(process.cwd(), arg);
+            })
+            .option("verbose", {
+                alias: "v",
+                default: false,
+                boolean: true,
             });
     }, async (argv) => {
         try {
-            const config = await GetConfig(process.cwd());
             if (argv.verbose) {
-            console.info(config);
-        }
+                console.info("Loading config from " + argv.configPath);
+            }
+            const config = await GetConfig(argv.configPath);
+            if (argv.verbose) {
+                console.info(config);
+            }
             const renderer = new ProntoWebpack(config);
             await renderer.Bootstrap(true);
         } catch (e) {
