@@ -10,7 +10,7 @@ const {GetConfig} = require("../lib/utils/config.utils");
 const path = require("path");
 
 //@ts-ignore
-// tslint:disable-next-line:no-console
+// tslint: disable - next - line; : no - console;
 console.log(
     chalk.green(
         figlet.textSync("Express Vue"),
@@ -45,14 +45,11 @@ yargs
                 console.info(config);
             }
             const renderer = new ProntoWebpack(config);
-            await renderer.Bootstrap(true);
+            return await renderer.Bootstrap(true);
         } catch (e) {
+            console.error(e);
             process.exit(1);
         }
     })
-    .option("verbose", {
-        alias: "v",
-        default: false,
-        boolean: true,
-    })
+    .help()
     .argv;
