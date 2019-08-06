@@ -49,6 +49,38 @@
       "lib/**/*.js"
     ]
   },
+  "eslintConfig": {
+    "env": {
+      "es6": true,
+      "node": true
+    },
+    "extends": [
+      "eslint:recommended"
+    ],
+    "globals": {
+      "Atomics": "readonly",
+      "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+      "ecmaVersion": 2018,
+      "sourceType": "module",
+      "project": "./tsconfig.json"
+    },
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "vue",
+      "@typescript-eslint"
+    ],
+    "rules": {
+      "no-useless-escape": "off",
+      "no-prototype-builtins": "off"
+    }
+  },
+  "eslintIgnore": [
+    "coverage",
+    "example",
+    "tests"
+  ],
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
@@ -74,18 +106,12 @@
     "tslint": "^5.18.0",
     "typescript": "^3.5.3"
   },
-  "eslintConfig": {
-    "extends": "xo-space",
-    "env": {
-      "mocha": true
-    }
-  },
   "repository": "express-vue/express-vue",
   "scripts": {
     "start": "node test/example/index.js",
     "debug": "VUE_DEV=true node --inspect test/example/index.js",
     "release": "npm test && generate-release",
-    "lint": "tslint --project tsconfig.json",
+    "lint": "eslint lib",
     "test": "npm run lint && nyc ava",
     "preversion": "npm test",
     "version": "git add -A",
@@ -95,7 +121,10 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@types/yargs": "^13.0.2",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/parser": "^1.13.0",
     "chalk": "^2.4.2",
+    "eslint-plugin-vue": "^5.2.3",
     "figlet": "^1.2.3",
     "vue-pronto": "^2.0.1",
     "yargs": "^13.3.0"
