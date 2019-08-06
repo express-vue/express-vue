@@ -52,7 +52,7 @@
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
-    "@types/node": "^10.14.13",
+    "@types/node": "^10.14.14",
     "ava": "^1.4.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
@@ -94,10 +94,10 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@types/yargs": "^13.0.0",
+    "@types/yargs": "^13.0.2",
     "chalk": "^2.4.2",
     "figlet": "^1.2.3",
-    "vue-pronto": "^2.0.0",
+    "vue-pronto": "^2.0.1",
     "yargs": "^13.3.0"
   }
 }
