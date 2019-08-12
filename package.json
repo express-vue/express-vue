@@ -9,7 +9,8 @@
     "url": "https://cherubini.casa"
   },
   "files": [
-    "lib"
+    "lib",
+    "bin"
   ],
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
