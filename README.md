@@ -376,18 +376,6 @@ This is middleware now so support for sails should just work as middleware.
 - remove vuejs
 - move your expressVue options into a file on the root of your directory (same level as node_modules) and call it `expressvue.config.js`
 - Use the new init syntax `expressVue.use(expressApp);` this is a async function, so please either await it or use it in a promise.
-- Data you pass from the controller to the view can be accessed via `this.$root` a quick way to port over is in your `data` block in the `.vue` file to do something like below
-
-```js
-data: function() {
-    return {
-        tabs: this.$root.tabs,
-        news: this.$root.news,
-        picks: this.$root.picks,
-        lazytab: true,
-    };
-},
-```
 
 
 ## V5 Migration
