@@ -85,11 +85,11 @@
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
-    "@types/node": "^10.14.14",
+    "@types/node": "^10.14.17",
     "ava": "^1.4.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
-    "babel-eslint": "^10.0.2",
+    "babel-eslint": "^10.0.3",
     "babel-plugin-add-module-exports": "^1.0.2",
     "babel-preset-env": "^1.7.0",
     "babel-preset-es2015": "^6.24.1",
@@ -103,9 +103,9 @@
     "generate-release": "^1.1.1",
     "ncp": "^2.0.0",
     "nyc": "^14.1.1",
-    "rimraf": "^2.6.3",
-    "tslint": "^5.18.0",
-    "typescript": "^3.5.3"
+    "rimraf": "^2.7.1",
+    "tslint": "^5.19.0",
+    "typescript": "^3.6.2"
   },
   "repository": "express-vue/express-vue",
   "scripts": {
@@ -126,8 +126,8 @@
     "@typescript-eslint/parser": "^1.13.0",
     "chalk": "^2.4.2",
     "eslint-plugin-vue": "^5.2.3",
-    "figlet": "^1.2.3",
-    "vue-pronto": "^2.0.1",
+    "figlet": "^1.2.4",
+    "vue-pronto": "^2.2.0",
     "yargs": "^13.3.0"
   }
 }
