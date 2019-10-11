@@ -1,0 +1,8 @@
+image: "node:lts"
+
+before_script:
+    - npm install
+
+test:
+    script:
+        - npm test
