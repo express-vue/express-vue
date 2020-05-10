@@ -1,3 +1,4 @@
+import * as express from 'express';
 
 interface VueOptionsType {
     title?: String,
@@ -11,7 +12,7 @@ interface VueOptionsType {
 
 declare function init(options?: VueOptionsType): Function;
 
-declare function use(expressApp : Object, options?: VueOptionsType): Function;
+declare function use(expressApp : express.Express, options?: VueOptionsType): Promise<express.Express>;
 
 export {
     init,
