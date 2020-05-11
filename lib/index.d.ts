@@ -1,4 +1,5 @@
 import * as express from 'express';
+import * as http from 'http';
 
 interface VueOptionsType {
     pagesPath: string;
@@ -7,7 +8,7 @@ interface VueOptionsType {
         scripts?: { src: string; charset?: string }[];
         metas?: any[];
         styles?: { style: string; type?: string }[];
-        structuredData: any;
+        structuredData?: any;
     };
     template?: {
         html?: { start: string; end: string };
@@ -20,10 +21,12 @@ interface VueOptionsType {
     baseUrl?: string
 }
 
-interface VueResponse extends express.Response {
-    renderVue(view: string, data?: object, callback?: (err: Error, html: string) => void): void;
-    renderVue(view: string, callback?: (err: Error, html: string) => void): void;
-}
+declare module 'express-serve-static-core' {
+    interface Response<ResBody = any> extends http.ServerResponse, Express.Response {
+      renderVue(view: string, data: ResBody, callback?: (err: Error, html: string) => void): void;
+      renderVue(view: string, callback?: (err: Error, html: string) => void): void;
+    }
+  }
 
 declare function init(options?: VueOptionsType): Function;
 
@@ -32,6 +35,5 @@ declare function use(expressApp : express.Express, options?: VueOptionsType): Pr
 export {
     init,
     use,
-    VueOptionsType,
-    VueResponse
+    VueOptionsType
 };
