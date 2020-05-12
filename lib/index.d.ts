@@ -14,7 +14,7 @@ interface VueOptions {
             defer?: boolean;
         }[];
         metas?: any[];
-        styles?: { href: string; type?: string }[];
+        styles?: { style?: string; src?: string; type?: string }[];
         structuredData?: any;
     };
     template?: {
