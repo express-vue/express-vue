@@ -111,10 +111,10 @@ In your route, assuming you have a main.vue
 
 ```js
 router.get('/', (req, res, next) => {
-    const data: {
+    const data = {
         otherData: 'Something Else'
     };
-    req.vueOptions: {
+    vueOptions = {
         head: {
             title: 'Page Title',
             metas: [
@@ -123,7 +123,7 @@ router.get('/', (req, res, next) => {
             ]
         }
     }
-    res.renderVue('main.vue', data, req.vueOptions);
+    res.renderVue('main.vue', data, vueOptions);
 })
 ```
 
