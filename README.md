@@ -48,7 +48,7 @@ The idea is simple use Node+Express for your Controller and Models, and Vue.js f
 ## Installation
 
 ```sh
-$ npm install --save express-vue
+npm install --save express-vue
 ```
 
 ## Requirements
